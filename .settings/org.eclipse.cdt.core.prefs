@@ -1,0 +1,12 @@
+eclipse.preferences.version=1
+environment/project/0.2114646805=
+environment/project/0.2114646805.866660386/PATH/delimiter=\:
+environment/project/0.2114646805.866660386/PATH/operation=replace
+environment/project/0.2114646805.866660386/PATH/value=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/usr/games\:/home/shagrath/soft/android-ndk
+environment/project/0.2114646805.866660386/append=true
+environment/project/0.2114646805.866660386/appendContributed=true
+environment/project/0.2114646805/PATH/delimiter=\:
+environment/project/0.2114646805/PATH/operation=replace
+environment/project/0.2114646805/PATH/value=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/usr/games\:/home/shagrath/soft/android-ndk
+environment/project/0.2114646805/append=true
+environment/project/0.2114646805/appendContributed=true
