@@ -119,6 +119,7 @@ class Globals {
 
 public class DemoActivity extends Activity implements GameKeyListener {
 
+private static final String LOGTAG = DemoActivity.class.getSimpleName();
 protected VirtualKeypad vKeyPad = null;
 	
 	public class theKeyboardActionListener implements OnKeyboardActionListener{
@@ -219,15 +220,22 @@ protected VirtualKeypad vKeyPad = null;
         	manageTouch(null);
     }
     
-    protected static Thread nativeThread;
+	String df[] = new String[4];
+	String dfKeys[] = {Globals.PREFKEY_F1, Globals.PREFKEY_F2, Globals.PREFKEY_F3, Globals.PREFKEY_F4};
+
+	protected static Thread nativeThread;
+	/*
 	private String romPath = null;
+	*/
     private String romKeyPath = null;
     private String hdPath = null;
     private String hdfPath = null;
+    /*
     private String f1Path = null;
     private String f2Path = null;
     private String f3Path = null;
     private String f4Path = null;
+    */
     private int sound = 0;
     public int joystick = 1;
     public boolean touch;
@@ -248,17 +256,22 @@ protected VirtualKeypad vKeyPad = null;
     	
     	SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
     	onSharedPreferenceChanged(sp, "useInputMethod");
+    	/*
     	String rPath = sp.getString(Globals.PREFKEY_ROM, null);
     	File rPathFile = new File(rPath);
     	if (rPathFile.exists()) {
     		romKeyPath = new File(rPathFile.getParentFile(), "rom.key").getAbsolutePath();
-    	}
+    	}*/
+    	
     	String hdDir = sp.getString(Globals.PREFKEY_HDD, null);
     	String hdFile = sp.getString(Globals.PREFKEY_HDF, null);
-    	String f1P = sp.getString(Globals.PREFKEY_F1, null);
-    	String f2P = sp.getString(Globals.PREFKEY_F2, null);
-    	String f3P = sp.getString(Globals.PREFKEY_F3, null);
-    	String f4P = sp.getString(Globals.PREFKEY_F4, null);
+    	
+    	for(int i=0; i<df.length; i++) {
+    		df[i] = getIntent().getStringExtra("df" + i);
+    		if (df[i] == null)	df[i] = sp.getString(dfKeys[i], null);
+    	}
+    	
+    	
     	boolean autofs = false; //sp.getBoolean(Globals.PREFKEY_AFS, true);
     	boolean bsound = sp.getBoolean(Globals.PREFKEY_SOUND, false);
     	boolean drivestatus = sp.getBoolean(Globals.PREFKEY_DRIVESTATUS, false);
@@ -279,6 +292,7 @@ protected VirtualKeypad vKeyPad = null;
     	if ((sound == 2 && !bsound) || (sound == 0 && bsound))
     		changed_sound = true;
     	sound = bsound?2:0;
+    	/*
     	if (romPath == null)
     		first_start = true;
     	boolean romChange = false;
@@ -290,15 +304,17 @@ protected VirtualKeypad vKeyPad = null;
     	if (!first_start && ((hdDir != null && !hdDir.equals(hdPath)) || (hdFile != null && !hdFile.equals(hdfPath)) || (f1P != null && !f1P.equals(f1Path)) || (f2P != null && !f2P.equals(f2Path)) || (f3P != null && !f3P.equals(f3Path)) || (f4P != null && !f4P.equals(f4Path)))) {
     		changed_disks = true;
     	}
+    	*/
     	hdPath = hdDir;
     	hdfPath = hdFile;
-    	f1Path = f1P;
-    	f2Path = f2P;
-    	f3Path = f3P;
-    	f4Path = f4P;
     	TextView tv = new TextView(this);
         tv.setText("Status:\n");
-        boolean romOk = false;
+        
+        String kickstartsDir = getIntent().getStringExtra("kickstarts_dir");
+        File romFile = new File(kickstartsDir, "kick13.rom");
+        boolean romOk = romFile.exists();
+        
+        /*
         if (romPath == null)
         	tv.append("ROM not configured\n");
         else {
@@ -308,6 +324,7 @@ protected VirtualKeypad vKeyPad = null;
         	else
         		tv.append("ROM invalid\n");
         }
+        */
         
         boolean twoPlayers = sp.getBoolean("twoPlayers", false);
         MainSurfaceView.setNumJoysticks(twoPlayers?2:1);
@@ -317,21 +334,15 @@ protected VirtualKeypad vKeyPad = null;
         	hdDir = hdDir + "/";
         
         if (romOk) {
-        	if (romChange) {
-        		 showDialog(2); 
-        	} else {
-	        	// launch
-	        	setPrefs(romPath, romKeyPath, hdDir, hdFile, f1P, f2P, f3P, f4P, autofs?100:fs, floppy_speed, cpu_model, chip_mem, slow_mem, fast_mem, chipset, cpu_speed, changed_sound?1:0, sound, changed_disks?1:0, force_reset&&!first_start?1:0, drivestatus?1:0, ntsc?1:0);
-	        	//Toast.makeText(this, "Starting...", Toast.LENGTH_SHORT);
-	        	setRightMouse(mouse_button);
-	        	initSDL();
-	        	
-	        	/*if (f1Path != null && new File(f1Path + ".asf").exists())
-	        		loadState(f1Path, 0);*/
-        	}
+        	setPrefs(romFile.getAbsolutePath(), romKeyPath, hdDir, hdFile, df[0], df[1], df[2], df[3], autofs?100:fs, floppy_speed, cpu_model, chip_mem, slow_mem, fast_mem, chipset, cpu_speed, changed_sound?1:0, sound, changed_disks?1:0, force_reset&&!first_start?1:0, drivestatus?1:0, ntsc?1:0);
+        	setRightMouse(mouse_button);
+        	initSDL();
         } else {
+        	Log.d(LOGTAG, "Invalid ROM on " + romFile.getAbsolutePath());
+        	/*
         	tv.append("\nSelect the \"Manage\" menu item !");
         	setContentView(tv);
+        	*/
         }
     }
     
@@ -583,16 +594,16 @@ protected VirtualKeypad vKeyPad = null;
         			loadState(hdfPath, 0);
         		else if (hdPath != null)
         			loadState("save_" + hdPath, 0);
-        		else if (f1Path != null)
-        			loadState(f1Path, 0);
+        		else if (df[0] != null)
+        			loadState(df[0], 0);
         		break;
         	case SAVE_ID:
         		if (hdfPath != null)
         			saveState(hdfPath, 0);
         		else if (hdPath != null)
         			saveState("save_" + hdPath, 0);
-        		else if (f1Path != null)
-        			saveState(f1Path, 0);
+        		else if (df[0] != null)
+        			saveState(df[0], 0);
         		break;
         	case QUIT_ID:
         		nativeQuit();
