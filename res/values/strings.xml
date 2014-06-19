@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">UAE4Droid</string>
+    <string name="app_name">Commodore Amiga support for RetroBox (UAE4DROID)</string>
 <string name="paths_section">Paths</string>
 
 <string name="rom_location">ROM Location (*.rom)</string>
