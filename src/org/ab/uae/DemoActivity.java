@@ -273,8 +273,8 @@ protected VirtualKeypad vKeyPad = null;
     	
     	
     	boolean autofs = false; //sp.getBoolean(Globals.PREFKEY_AFS, true);
-    	boolean bsound = sp.getBoolean(Globals.PREFKEY_SOUND, false);
-    	boolean drivestatus = sp.getBoolean(Globals.PREFKEY_DRIVESTATUS, false);
+    	boolean bsound = sp.getBoolean(Globals.PREFKEY_SOUND, true);
+    	boolean drivestatus = sp.getBoolean(Globals.PREFKEY_DRIVESTATUS, true);
     	boolean ntsc = sp.getBoolean(Globals.PREFKEY_NTSC, false);
     	int fs = Integer.parseInt(sp.getString(Globals.PREFKEY_FS, "1"));
     	
