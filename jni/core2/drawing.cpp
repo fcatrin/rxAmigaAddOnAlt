@@ -2297,7 +2297,7 @@ static _INLINE_ void write_tdletter (int x, int y, char ch)
     }
 }
 
-static _INLINE_ void draw_status_line (int line)
+static _INLINE_ void draw_status_line (int line, int lineStart)
 {
     int x, y, i, j, led, on;
     int on_rgb, off_rgb, c;
@@ -2314,16 +2314,16 @@ static _INLINE_ void draw_status_line (int line)
     else
         x = TD_PADX;
 
-    y = line - (mainMenu_displayedLines - TD_TOTAL_HEIGHT);
+    y = line - lineStart;
     xlinebuffer = row_map[line];
 
 #ifdef WITH_TESTMODE
 	x+=100 - (TD_WIDTH*(mainMenu_drives-1)) - 2*TD_WIDTH;
 #else
-	x+=100 - (TD_WIDTH*(mainMenu_drives-1)) - TD_WIDTH;
+	x+=100 - (TD_WIDTH*(mainMenu_drives-1));
 #endif
 
-  uae4all_memclr (xlinebuffer + (x - 4) * GFXVIDINFO_PIXBYTES, (gfxvid_width - x + 4) * GFXVIDINFO_PIXBYTES);
+  // uae4all_memclr (xlinebuffer + (x - 4) * GFXVIDINFO_PIXBYTES, (gfxvid_width - x + 4) * GFXVIDINFO_PIXBYTES);
 
 #ifdef WITH_TESTMODE
 	if (y >= TD_PADY && y - TD_PADY < TD_NUM_HEIGHT) 
@@ -2338,7 +2338,7 @@ static _INLINE_ void draw_status_line (int line)
 	x+=TD_WIDTH;
 #endif
 
-	for (led = -1; led < (mainMenu_drives+1); led++) {
+	for (led = 0; led < (mainMenu_drives+1); led++) {
 		int track;
 		if (led > 0) {
 			/* Floppy */
@@ -2349,7 +2349,8 @@ static _INLINE_ void draw_status_line (int line)
 		} else if (led < 0) {
 			/* Power */
 			track = -1;
-			on = gui_data.powerled;
+			//on = gui_data.powerled;
+			on = false;
 			on_rgb = 0xf00;
 			off_rgb = 0x400;
 		} else {
@@ -2373,33 +2374,38 @@ static _INLINE_ void draw_status_line (int line)
 					break;
 			}
 		}
-	c = xcolors[on ? on_rgb : off_rgb];
 
-	for (j = 0; j < TD_LED_WIDTH; j++) 
-	    putpixel (x + j, c);
+		if (on) {
+			c = xcolors[on ? on_rgb : off_rgb];
 
-	if (y >= TD_PADY && y - TD_PADY < TD_NUM_HEIGHT) {
-	    if (track >= 0) {
-		int offs = (TD_WIDTH - 2 * TD_NUM_WIDTH) / 2;
-		write_tdnumber (x + offs, y - TD_PADY, track / 10);
-		write_tdnumber (x + offs + TD_NUM_WIDTH, y - TD_PADY, track % 10);
-	    }
-	}
-	x += TD_WIDTH;
+			for (j = 0; j < TD_LED_WIDTH; j++)
+				putpixel (x + j, c);
+
+			if (y >= TD_PADY && y - TD_PADY < TD_NUM_HEIGHT) {
+				if (track >= 0) {
+					int offs = (TD_WIDTH - 2 * TD_NUM_WIDTH) / 2;
+					write_tdnumber (x + offs, y - TD_PADY, track / 10);
+					write_tdnumber (x + offs + TD_NUM_WIDTH, y - TD_PADY, track % 10);
+				}
+			}
+			x += TD_WIDTH;
+		}
     }
 
-        x = gfxvid_width - TD_PADX - 5*TD_WIDTH;
-	x+=100 - (TD_WIDTH*(mainMenu_drives-1)) - TD_WIDTH;
-	if (y >= TD_PADY && y - TD_PADY < TD_NUM_HEIGHT) {
-	    int offs = (TD_WIDTH - 2 * TD_NUM_WIDTH) / 2;
-	    if(fps_counter >= 100)
-	    	write_tdnumber (x + offs - TD_NUM_WIDTH, y - TD_PADY, fps_counter / 100);
-	    write_tdnumber (x + offs, y - TD_PADY, (fps_counter / 10) % 10);
-	    write_tdnumber (x + offs + TD_NUM_WIDTH, y - TD_PADY, fps_counter % 10);
-		
-		if (mainMenu_filesysUnits > 0) {
-			write_tdletter(x + offs + TD_WIDTH, y - TD_PADY, 'H');
-			write_tdletter(x + offs + TD_WIDTH + TD_NUM_WIDTH, y - TD_PADY, 'D');
+	if (mainMenu_showFPS) {
+		x = gfxvid_width - TD_PADX - 5*TD_WIDTH;
+		x+=100 - (TD_WIDTH*(mainMenu_drives-1)) - TD_WIDTH;
+		if (y >= TD_PADY && y - TD_PADY < TD_NUM_HEIGHT) {
+			int offs = (TD_WIDTH - 2 * TD_NUM_WIDTH) / 2;
+			if(fps_counter >= 100)
+				write_tdnumber (x + offs - TD_NUM_WIDTH, y - TD_PADY, fps_counter / 100);
+			write_tdnumber (x + offs, y - TD_PADY, (fps_counter / 10) % 10);
+			write_tdnumber (x + offs + TD_NUM_WIDTH, y - TD_PADY, fps_counter % 10);
+
+			if (mainMenu_filesysUnits > 0) {
+				write_tdletter(x + offs + TD_WIDTH, y - TD_PADY, 'H');
+				write_tdletter(x + offs + TD_WIDTH + TD_NUM_WIDTH, y - TD_PADY, 'D');
+			}
 		}
 	}
 	if (showmsg)
@@ -2513,9 +2519,10 @@ static _INLINE_ void finish_drawing_frame (void)
 			countdown = HDLED_TIMEOUT;
 		}
 
+		int lineStart = 2;
 		for (i = 0; i < TD_TOTAL_HEIGHT; i++) {
-			int line = mainMenu_displayedLines - TD_TOTAL_HEIGHT + i;
-			draw_status_line (line);
+			int line = lineStart+i; // mainMenu_displayedLines - TD_TOTAL_HEIGHT + i;
+			draw_status_line (line, lineStart);
 			do_flush_line (line);
 		}
 	}

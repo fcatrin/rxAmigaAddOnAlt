@@ -23,6 +23,7 @@ extern int mainMenu_cpuSpeed;
 extern int mainMenu_joyConf;
 extern int mainMenu_autofireRate;
 extern int mainMenu_showStatus;
+extern int mainMenu_showFPS;
 extern int mainMenu_mouseMultiplier;
 extern int mainMenu_stylusOffset;
 extern int mainMenu_tapDelay;

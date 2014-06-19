@@ -130,6 +130,7 @@ int mainMenu_cpuSpeed = 600;
 int mainMenu_joyConf = 0;
 int mainMenu_autofireRate = 8;
 int mainMenu_showStatus = DEFAULT_STATUSLN;
+int mainMenu_showFPS = false;
 int mainMenu_mouseMultiplier = 1;
 int mainMenu_stylusOffset = 0;
 int mainMenu_tapDelay = 10;

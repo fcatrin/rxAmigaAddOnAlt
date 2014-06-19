@@ -269,11 +269,15 @@ protected VirtualKeypad vKeyPad = null;
     		df[i] = getIntent().getStringExtra("df" + i);
     		if (df[i] == null)	df[i] = sp.getString(dfKeys[i], null);
     	}
-    	
+
+    	boolean drivestatus = sp.getBoolean(Globals.PREFKEY_DRIVESTATUS, false);
+    	if (getIntent().hasExtra("showstatus")) {
+    		drivestatus = getIntent().getStringExtra("showstatus").equals("1");
+    	}
+    	drivestatus = true;
     	
     	boolean autofs = false; //sp.getBoolean(Globals.PREFKEY_AFS, true);
     	boolean bsound = sp.getBoolean(Globals.PREFKEY_SOUND, true);
-    	boolean drivestatus = sp.getBoolean(Globals.PREFKEY_DRIVESTATUS, true);
     	boolean ntsc = sp.getBoolean(Globals.PREFKEY_NTSC, false);
     	int fs = Integer.parseInt(sp.getString(Globals.PREFKEY_FS, "1"));
     	
