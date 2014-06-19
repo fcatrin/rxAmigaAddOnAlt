@@ -42,10 +42,9 @@
 package org.ab.uae;
 
 import java.io.File;
-
 import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
-
+import retrobox.amiga.uae4droid.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;

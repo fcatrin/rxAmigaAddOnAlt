@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.ab.uae.R;
+import retrobox.amiga.uae4droid.R;
 
 import android.app.ListActivity;
 import android.content.Context;

@@ -2,9 +2,8 @@ package org.ab.uae;
 
 import java.io.File;
 import java.util.ArrayList;
-
 import org.ab.nativelayer.ImportFileView;
-
+import retrobox.amiga.uae4droid.R;
 import android.app.Application;
 
 public class RomImportView extends ImportFileView {

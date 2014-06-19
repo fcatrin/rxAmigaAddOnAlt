@@ -3,7 +3,7 @@ package org.ab.uae;
 import org.ab.nativelayer.DirImportView;
 import org.ab.nativelayer.ImportView;
 import org.ab.nativelayer.KeyPreference;
-
+import retrobox.amiga.uae4droid.R;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;

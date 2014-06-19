@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import retrobox.amiga.uae4droid.R;
 
 public class StartActivity extends Activity {
 
