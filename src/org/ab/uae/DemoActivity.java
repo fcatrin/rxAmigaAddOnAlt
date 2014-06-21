@@ -42,8 +42,10 @@
 package org.ab.uae;
 
 import java.io.File;
+
 import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
+
 import retrobox.amiga.uae4droid.R;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -68,52 +70,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 class Globals {
 	public static String ApplicationName = "uae";
-	
-	public static String PREFKEY_ROM = "rom_location";
-	public static int PREFKEY_ROM_INT = 0;
-	
-	public static String PREFKEY_HDD = "hdd_location";
-	public static int PREFKEY_HDD_INT = 1;
-	
-	public static String PREFKEY_HDF = "hdf_location";
-	public static int PREFKEY_HDF_INT = 2;
-	
-	public static String PREFKEY_F1 = "f1_location";
-	public static int PREFKEY_F1_INT = 3;
-	
-	public static String PREFKEY_F2 = "f2_location";
-	public static int PREFKEY_F2_INT = 4;
-	
-	public static String PREFKEY_F3 = "f3_location";
-	public static int PREFKEY_F3_INT = 5;
-	
-	public static String PREFKEY_F4 = "f4_location";
-	public static int PREFKEY_F4_INT = 6;
-	
-	//public static String PREFKEY_ROMKEY = "romkey_location";
-	//public static int PREFKEY_ROMKEY_INT = 7;
-	
-	public static String PREFKEY_SOUND = "sound";
-	public static String PREFKEY_DRIVESTATUS = "drivestatus";
-	public static String PREFKEY_NTSC = "ntsc";
-	public static String PREFKEY_AFS = "auto_frameskip";
-	public static String PREFKEY_FS = "frameskip";
-	public static String PREFKEY_SC = "system_clock";
-	
-	public static String PREFKEY_START = "start";
-	
-	public static String PREF_CPU_MODEL = "cpu_model";
-	public static String PREF_CHIP_MEM = "chip_mem";
-	public static String PREF_SLOW_MEM = "slow_mem";
-	public static String PREF_FAST_MEM = "fast_mem";
-	public static String PREF_CHIPSET = "chipset";
-	public static String PREF_CPU_SPEED = "cpu_speed";
-	public static String PREF_FLOPPY_SPEED = "floppyspeed";
 }
 
 public class DemoActivity extends Activity implements GameKeyListener {
@@ -219,27 +179,10 @@ protected VirtualKeypad vKeyPad = null;
         	manageTouch(null);
     }
     
-	String df[] = new String[4];
-	String dfKeys[] = {Globals.PREFKEY_F1, Globals.PREFKEY_F2, Globals.PREFKEY_F3, Globals.PREFKEY_F4};
-
 	protected static Thread nativeThread;
-	/*
-	private String romPath = null;
-	*/
-    private String romKeyPath = null;
-    private String hdPath = null;
-    private String hdfPath = null;
-    /*
-    private String f1Path = null;
-    private String f2Path = null;
-    private String f3Path = null;
-    private String f4Path = null;
-    */
-    private int sound = 0;
     public int joystick = 1;
     public boolean touch;
     public int mouse_button;
-    //private int must_reset = 0;
     
     private void checkConf() {
     	SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -255,87 +198,10 @@ protected VirtualKeypad vKeyPad = null;
     	
     	SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
     	onSharedPreferenceChanged(sp, "useInputMethod");
-    	/*
-    	String rPath = sp.getString(Globals.PREFKEY_ROM, null);
-    	File rPathFile = new File(rPath);
-    	if (rPathFile.exists()) {
-    		romKeyPath = new File(rPathFile.getParentFile(), "rom.key").getAbsolutePath();
-    	}*/
     	
-    	String hdDir = sp.getString(Globals.PREFKEY_HDD, null);
-    	String hdFile = sp.getString(Globals.PREFKEY_HDF, null);
-    	
-    	for(int i=0; i<df.length; i++) {
-    		df[i] = getIntent().getStringExtra("df" + i);
-    		if (df[i] == null)	df[i] = sp.getString(dfKeys[i], null);
-    	}
-
-    	boolean drivestatus = sp.getBoolean(Globals.PREFKEY_DRIVESTATUS, false);
-    	if (getIntent().hasExtra("showstatus")) {
-    		drivestatus = getIntent().getStringExtra("showstatus").equals("1");
-    	}
-    	drivestatus = true;
-    	
-    	boolean autofs = false; //sp.getBoolean(Globals.PREFKEY_AFS, true);
-    	boolean bsound = sp.getBoolean(Globals.PREFKEY_SOUND, true);
-    	boolean ntsc = sp.getBoolean(Globals.PREFKEY_NTSC, false);
-    	int fs = Integer.parseInt(sp.getString(Globals.PREFKEY_FS, "1"));
-    	
-    	int cpu_model = Integer.parseInt(sp.getString(Globals.PREF_CPU_MODEL, "0"));
-    	int chip_mem = Integer.parseInt(sp.getString(Globals.PREF_CHIP_MEM, "1"));
-    	int slow_mem = Integer.parseInt(sp.getString(Globals.PREF_SLOW_MEM, "0"));
-    	int fast_mem = Integer.parseInt(sp.getString(Globals.PREF_FAST_MEM, "0"));
-    	int chipset = Integer.parseInt(sp.getString(Globals.PREF_CHIPSET, "0"));
-    	int cpu_speed = Integer.parseInt(sp.getString(Globals.PREF_CPU_SPEED, "0"));
-    	int floppy_speed = Integer.parseInt(sp.getString(Globals.PREF_FLOPPY_SPEED, "100"));
-    	
-    	boolean first_start = false;
-    	boolean changed_disks = false;
-    	boolean changed_sound = false;
-    	if ((sound == 2 && !bsound) || (sound == 0 && bsound))
-    		changed_sound = true;
-    	sound = bsound?2:0;
-    	/*
-    	if (romPath == null)
-    		first_start = true;
-    	boolean romChange = false;
-    	if (rPath != null && !rPath.equals(romPath)) {
-    		if (romPath !=null)
-    			romChange = true;
-    		romPath = rPath;
-    	}
-    	if (!first_start && ((hdDir != null && !hdDir.equals(hdPath)) || (hdFile != null && !hdFile.equals(hdfPath)) || (f1P != null && !f1P.equals(f1Path)) || (f2P != null && !f2P.equals(f2Path)) || (f3P != null && !f3P.equals(f3Path)) || (f4P != null && !f4P.equals(f4Path)))) {
-    		changed_disks = true;
-    	}
-    	*/
-    	hdPath = hdDir;
-    	hdfPath = hdFile;
-    	TextView tv = new TextView(this);
-        tv.setText("Status:\n");
-        
-        String kickstartsDir = getIntent().getStringExtra("kickstarts_dir");
-        File romFile = new File(kickstartsDir, "kick13.rom");
-        boolean romOk = romFile.exists();
-        
-        /*
-        if (romPath == null)
-        	tv.append("ROM not configured\n");
-        else {
-        	File r = new File(romPath);
-        	if (r.exists()&& r.length() > 200000) // lazy check :\
-        		romOk = true;
-        	else
-        		tv.append("ROM invalid\n");
-        }
-        */
-        
         boolean twoPlayers = sp.getBoolean("twoPlayers", false);
         MainSurfaceView.setNumJoysticks(twoPlayers?2:1);
         
-        //hdDir = "/sdcard/Roms/amiga/HD/Superfrog_v1.2_0035/Superfrog";
-        if (hdDir != null && hdDir.length() > 0 && !hdDir.endsWith("/"))
-        	hdDir = hdDir + "/";
-
         String configFile = getIntent().getStringExtra("conf");
     	setPrefs(configFile);
     	setRightMouse(mouse_button);
@@ -555,25 +421,6 @@ protected VirtualKeypad vKeyPad = null;
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
     	if (item != null) {
         switch (item.getItemId()) {
-        	case CONFIGURE_ID:
-        		Intent settingsIntent = new Intent();
-           		settingsIntent.setClass(this, Settings.class);
-           		startActivityForResult(settingsIntent, CONFIGURE_ID);
-           		break;
-        	case RESET_ID: 
-        		nativeReset();
-        		break;
-        	case INPUT_ID: 
-        		if (joystick == 1) {
-        			joystick = 0;
-        			item.setTitle(R.string.joystick_mode);
-        			switchKeyboard(1, false);
-        		} else if (joystick == 0) {
-        			joystick = 1;
-        			item.setTitle(R.string.keyb_mode);
-        			switchKeyboard(0, false);
-        		}
-        		break;
         	case TOUCH_ID:
         		manageTouch(item);
         		break;
@@ -584,22 +431,6 @@ protected VirtualKeypad vKeyPad = null;
         		else
         			Toast.makeText(this, R.string.mouse_left, Toast.LENGTH_SHORT).show();
         		setRightMouse(mouse_button);
-        		break;
-        	case LOAD_ID:
-        		if (hdfPath != null)
-        			loadState(hdfPath, 0);
-        		else if (hdPath != null)
-        			loadState("save_" + hdPath, 0);
-        		else if (df[0] != null)
-        			loadState(df[0], 0);
-        		break;
-        	case SAVE_ID:
-        		if (hdfPath != null)
-        			saveState(hdfPath, 0);
-        		else if (hdPath != null)
-        			saveState("save_" + hdPath, 0);
-        		else if (df[0] != null)
-        			saveState(df[0], 0);
         		break;
         	case QUIT_ID:
         		nativeQuit();
