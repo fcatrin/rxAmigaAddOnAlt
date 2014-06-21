@@ -3,6 +3,10 @@ package org.ab.uae;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 
+import org.ab.controls.vinput.JoystickAnalog;
+import org.ab.controls.vinput.JoystickAnalog.Axis;
+import org.ab.controls.vinput.JoystickAnalogListener;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -21,15 +25,61 @@ import android.view.SurfaceView;
 
 public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callback, Runnable {
 	
+	private static int MOUSE_LEFT = 1; // legacy mouse events
+	private static int MOUSE_MOVE = 2; 
+	private static float refMouseWidth = 640f;
+	private static float refMouseHeight = 480f;
+	
 	DemoRenderer mRenderer;
-	 SurfaceHolder mSurfaceHolder;
+	SurfaceHolder mSurfaceHolder;
+	
+	JoystickAnalog joystickAnalog;
+	
     public MainSurfaceView(Context context, AttributeSet set) {
         super(context, set);
         mParent = (DemoActivity)context;
         mRenderer = new DemoRenderer(mParent);
         
-         mSurfaceHolder = getHolder();
-         mSurfaceHolder.addCallback(this);
+        mSurfaceHolder = getHolder();
+        mSurfaceHolder.addCallback(this);
+        
+        joystickAnalog = new JoystickAnalog((int)refMouseWidth, (int)refMouseWidth, new JoystickAnalogListener() {
+			
+			@Override
+			public void onMouseMoveRelative(float mousex, float mousey) {}
+			
+			@Override
+			public void onMouseMove(int mousex, int mousey) {
+				float evx = (mousex / refMouseWidth) * mRenderer.bufferWidth;
+				float evy = (mousex / refMouseHeight) * mRenderer.bufferHeight;
+	    		int x = (int) (evx / scaleX);
+	    		int y = (int) (evy / scaleY);
+	    		if (x > mRenderer.bufferWidth)
+	    			y = mRenderer.bufferWidth;
+	    		if (y > mRenderer.bufferHeight)
+	    			y = mRenderer.bufferHeight;
+	    		nativeMouse(x , y, MOUSE_MOVE, 0, 0 );
+			}
+			
+			@Override
+			public void onAxisChange(float axisx, float axisy) {
+				joystickAnalog.analogToDigital(axisx, axisy);
+			}
+
+			@Override
+			public void onDigitalX(Axis axis, boolean on) {
+				if (axis == Axis.MIN) DemoActivity.sendNativeKey(KeyEvent.KEYCODE_DPAD_LEFT, on?1:0);
+				if (axis == Axis.MAX) DemoActivity.sendNativeKey(KeyEvent.KEYCODE_DPAD_RIGHT, on?1:0);
+			}
+
+			@Override
+			public void onDigitalY(Axis axis, boolean on) {
+				if (axis == Axis.MIN) DemoActivity.sendNativeKey(KeyEvent.KEYCODE_DPAD_UP, on?1:0);
+				if (axis == Axis.MAX) DemoActivity.sendNativeKey(KeyEvent.KEYCODE_DPAD_DOWN, on?1:0);
+			}
+			
+		});
+        
     }
 
     @Override
@@ -58,12 +108,17 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
     			y = mRenderer.bufferWidth;
     		if (y > mRenderer.bufferHeight)
     			y = mRenderer.bufferHeight;
-    		nativeMouse(x , y, action, 0 );
+    		nativeMouse(x , y, action, MOUSE_LEFT, 0 );
        	}
     
         return true;
     }
     
+    @Override
+	public boolean onGenericMotionEvent(MotionEvent event) {
+		if (joystickAnalog != null && joystickAnalog.onGenericMotionEvent(event)) return true;
+		return super.onGenericMotionEvent(event);
+	}
 
     private static final float FACTOR = 15;
     
@@ -78,7 +133,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
         	action = 2;
         //Log.i("UAE", "" + event.getX() + "/" + event.getY());
         if (  action >= 0 ) {
-           nativeMouse( (int) (FACTOR*event.getX()), (int) (FACTOR*event.getY()), action, 1);
+           nativeMouse( (int) (FACTOR*event.getX()), (int) (FACTOR*event.getY()), action, MOUSE_LEFT, 1);
            actionKey(action == 0, KeyEvent.KEYCODE_DPAD_CENTER);
         }
         return true;
@@ -115,14 +170,14 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 		if (keyCode == KeyEvent.KEYCODE_O || keyCode == (500+KeyEvent.KEYCODE_O)) {
 			mParent.setRightMouse(0);
 			mParent.mouse_button = 0;
-			nativeMouse(0, 0, 0, 1);
+			nativeMouse(0, 0, 0, MOUSE_LEFT, 1);
 			return true;
 		}
 		
 		if (keyCode == KeyEvent.KEYCODE_L || keyCode == (500+KeyEvent.KEYCODE_L)) {
 			mParent.setRightMouse(1);
 			mParent.mouse_button = 1;
-			nativeMouse(0, 0, 0, 1);
+			nativeMouse(0, 0, 0, MOUSE_LEFT, 1);
 			//mParent.setRightMouse(0);
 			return true;
 		}
@@ -158,7 +213,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 			mParent.setRightMouse(0);
 			mParent.mouse_button = 0;
 			try { Thread.sleep(100); } catch (InterruptedException e) {} // if down + up is too fast, it's not recognized in the emu
-			nativeMouse(0, 0, 1, 1);
+			nativeMouse(0, 0, 1, MOUSE_LEFT, 1);
 			return true;
 		}
 		
@@ -166,7 +221,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 			mParent.setRightMouse(1);
 			mParent.mouse_button = 1;
 			try { Thread.sleep(100); } catch (InterruptedException e) {} // if down + up is too fast, it's not recognized in the emu
-			nativeMouse(0, 0, 1, 1);
+			nativeMouse(0, 0, 1, MOUSE_LEFT, 1);
 			//mParent.setRightMouse(0);
 			return true;
 		}
@@ -180,7 +235,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 
     DemoActivity mParent;
 
-    public static native void nativeMouse( int x, int y, int action, int relative );
+    public static native void nativeMouse( int x, int y, int action, int button, int relative );
     public static native void nativeKey( int keyCode, int down, int joystick, int joystick_nr );
     public static native void setNumJoysticks(int numJoysticks);
   
@@ -353,17 +408,20 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-		
+        joystickAnalog.stopGamepadMouseMoveThread();
+
 	}
 	
 	public void onPause() {
 		if (mRenderer != null)
    		 mRenderer.nativePause();
+		joystickAnalog.stopGamepadMouseMoveThread();
 	}
 
 	public void onResume() {
 		if (mRenderer != null)
    		 mRenderer.nativeResume();
+        joystickAnalog.startGamepadMouseMoveThread();
 	}
 
 

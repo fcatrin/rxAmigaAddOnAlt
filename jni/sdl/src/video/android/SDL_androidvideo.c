@@ -542,11 +542,11 @@ JAVA_EXPORT_NAME(DemoRenderer_nativeDone) ( JNIEnv*  env, jobject  thiz )
 enum MOUSE_ACTION { MOUSE_DOWN = 0, MOUSE_UP=1, MOUSE_MOVE=2 };
 
 extern void
-JAVA_EXPORT_NAME(MainSurfaceView_nativeMouse) ( JNIEnv*  env, jobject  thiz, jint x, jint y, jint action, jint relative )
+JAVA_EXPORT_NAME(MainSurfaceView_nativeMouse) ( JNIEnv*  env, jobject  thiz, jint x, jint y, jint action, jint button, jint relative )
 {
 	//__android_log_print(ANDROID_LOG_INFO, "libSDL", "mouse event %i at (%03i, %03i)", action, x, y);
 	if( action == MOUSE_DOWN || action == MOUSE_UP )
-		SDL_PrivateMouseButton( (action == MOUSE_DOWN) ? SDL_PRESSED : SDL_RELEASED, 1, x, y );
+		SDL_PrivateMouseButton( (action == MOUSE_DOWN) ? SDL_PRESSED : SDL_RELEASED, button, x, y );
 	if( action == MOUSE_MOVE ) {
 		SDL_PrivateMouseMotion(0, relative, x, y);
 		//__android_log_print(ANDROID_LOG_INFO, "SDL_PrivateMouseMotion", "x %i / y %i", x, y);

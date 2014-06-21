@@ -45,6 +45,8 @@ import java.io.File;
 
 import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
+import org.ab.controls.vinput.Mapper;
+import org.ab.controls.vinput.VirtualEvent;
 
 import retrobox.amiga.uae4droid.R;
 import android.app.Activity;
@@ -77,9 +79,17 @@ class Globals {
 }
 
 public class DemoActivity extends Activity implements GameKeyListener {
+	private static final int MOUSE_DOWN = 0;
+	private static final int MOUSE_UP = 1;
+	private static final int MOUSE_ABSOLUTE = 0;
+	private static final int MOUSE_RELATIVE = 1;
+	private static DemoActivity instance;
+	private static String stateFileName;
+	
+	Mapper mapper;
 
-private static final String LOGTAG = DemoActivity.class.getSimpleName();
-protected VirtualKeypad vKeyPad = null;
+	private static final String LOGTAG = DemoActivity.class.getSimpleName();
+	protected VirtualKeypad vKeyPad = null;
 	
 	public class theKeyboardActionListener implements OnKeyboardActionListener{
 
@@ -163,9 +173,16 @@ protected VirtualKeypad vKeyPad = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DemoActivity.instance = this;
+        
+        
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         requestWindowFeature(Window.FEATURE_PROGRESS);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
+        mapper = new Mapper(getIntent());
+        stateFileName = getIntent().getStringExtra("state");
+        
         /*TextView tv = new TextView(this);
         tv.setText("Initializing");
         setContentView(tv);
@@ -268,10 +285,6 @@ protected VirtualKeypad vKeyPad = null;
 	
     public void initSDL()
     {
-    	//nativeAudioInit(this);
-    	//mAudioThread = new AudioThread(this);
-        /*mGLView = new DemoGLSurfaceView(this);
-        setContentView(mGLView);*/
     	if (mGLView == null)
     	setContentView(R.layout.main);
     	mGLView = ((MainSurfaceView) findViewById(R.id.mainview));
@@ -280,25 +293,24 @@ protected VirtualKeypad vKeyPad = null;
         mGLView.setFocusableInTouchMode(true);
         mGLView.setFocusable(true);
         mGLView.requestFocus();
-        //PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-       // wakeLock = pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, Globals.ApplicationName);
-       // wakeLock.acquire();
-        vKeyPad = new VirtualKeypad(mGLView, this, R.drawable.dpad5, R.drawable.button);
-		if (mGLView.getWidth() > 0)
-			vKeyPad.resize(mGLView.getWidth(), mGLView.getHeight());
-		
-        if (theKeyboard == null) {
-	        theKeyboard = (KeyboardView) findViewById(R.id.EditKeyboard01);
-	        layouts = new Keyboard [3];
-	        layouts[0] = new Keyboard(this, R.xml.joystick);
-	        layouts[1] = new Keyboard(this, R.xml.qwerty);
-	        layouts[2] = new Keyboard(this, R.xml.qwerty2);
-	        theKeyboard.setKeyboard(layouts[currentKeyboardLayout]);
-	        theKeyboard.setOnKeyboardActionListener(new theKeyboardActionListener());
-	        theKeyboard.setVisibility(View.INVISIBLE);
-	        theKeyboard.setPreviewEnabled(false);
+
+        if (!getIntent().hasExtra("gamepad")) {
+	        vKeyPad = new VirtualKeypad(mGLView, this, R.drawable.dpad5, R.drawable.button);
+			if (mGLView.getWidth() > 0)
+				vKeyPad.resize(mGLView.getWidth(), mGLView.getHeight());
+			
+	        if (theKeyboard == null) {
+		        theKeyboard = (KeyboardView) findViewById(R.id.EditKeyboard01);
+		        layouts = new Keyboard [3];
+		        layouts[0] = new Keyboard(this, R.xml.joystick);
+		        layouts[1] = new Keyboard(this, R.xml.qwerty);
+		        layouts[2] = new Keyboard(this, R.xml.qwerty2);
+		        theKeyboard.setKeyboard(layouts[currentKeyboardLayout]);
+		        theKeyboard.setOnKeyboardActionListener(new theKeyboardActionListener());
+		        theKeyboard.setVisibility(View.INVISIBLE);
+		        theKeyboard.setPreviewEnabled(false);
+	        }
         }
-        
         
     }
     
@@ -338,7 +350,7 @@ protected VirtualKeypad vKeyPad = null;
         finish();
     }
 
-    private MainSurfaceView mGLView = null;
+    private static MainSurfaceView mGLView = null;
    
     
     static final private int CONFIGURE_ID = Menu.FIRST +1;
@@ -396,6 +408,7 @@ protected VirtualKeypad vKeyPad = null;
     public native void setPrefs(String configfile);
     public native void saveState(String filename, int num);
     public native void loadState(String filename, int num);
+    public native String diskSwap();
     public native void nativeReset();
     public native void nativeQuit();
     public native void setRightMouse(int right);
@@ -501,17 +514,115 @@ private void manageKey(int keyStates, int key, int press) {
 	 }
 }
 
+public static void sendNativeKeyPress(int keyCode) {
+	sendNativeKey(keyCode, 1);
+	try {
+		Thread.sleep(50);
+	} catch (InterruptedException e) {}
+	sendNativeKey(keyCode, 0);
+}
+
+public static void sendNativeKey(int keyCode, int down) {
+	
+	// convert into joystick events for this emulator
+
+	int joystick = 0;
+	
+	switch (keyCode) {
+	case KeyEvent.KEYCODE_BUTTON_1: keyCode = current_keycodes[0]; joystick = 1; break;
+	case KeyEvent.KEYCODE_DPAD_UP: keyCode = current_keycodes[4]; joystick = 1; break;
+	case KeyEvent.KEYCODE_DPAD_DOWN: keyCode = current_keycodes[5]; joystick = 1; break;
+	case KeyEvent.KEYCODE_DPAD_LEFT: keyCode = current_keycodes[6]; joystick = 1; break;
+	case KeyEvent.KEYCODE_DPAD_RIGHT: keyCode = current_keycodes[7]; joystick = 1; break;
+	}
+	
+	Log.d("MAPPER", "Send native key " + keyCode + ", down:" + down);
+	if (joystick == 0) {
+		MainSurfaceView.nativeKey(keyCode, down, 0, 0);
+	} else {
+		MainSurfaceView.nativeKey(keyCode, down, DemoActivity.instance.joystick, joystick);
+	}
+}
+
+public static void sendNativeMouseButton(int button, int press) {
+	Log.d("MAPPER", "Send native mouse button " + button + ", down:" + press);
+	MainSurfaceView.nativeMouse(0, 0, press != 0? MOUSE_DOWN: MOUSE_UP, button, MOUSE_RELATIVE);
+}
+
+
+enum ShortCut {NONE, LOAD_STATE, SAVE_STATE, SWAP_DISK, EXIT};
+private static int keyShortCuts[] = {0, KeyEvent.KEYCODE_BUTTON_L2, KeyEvent.KEYCODE_BUTTON_R2, KeyEvent.KEYCODE_BUTTON_B, KeyEvent.KEYCODE_BUTTON_SELECT};
+
+
+public static boolean handleShortcut(int keyCode, boolean down) {
+	ShortCut shortcut = ShortCut.NONE;
+	for(int i=1; i<keyShortCuts.length; i++) {
+		if (keyShortCuts[i] == keyCode) {
+			shortcut = ShortCut.values()[i];
+			break;
+		}
+	}
+	if (shortcut!=ShortCut.NONE) {
+		switch(shortcut) {
+		case NONE: break;
+		case LOAD_STATE :
+			Log.d("SHORTCUT", "Send Load State " + stateFileName);
+			DemoActivity.instance.loadState(stateFileName, 0);
+			break;
+		case SAVE_STATE:
+			Log.d("SHORTCUT", "Send Save State " + stateFileName);
+			DemoActivity.instance.saveState(stateFileName, 0);
+			break;
+		case SWAP_DISK:
+			if (!down) {
+				String disk = DemoActivity.instance.diskSwap();
+				DemoActivity.instance.toastMessage("Disk inserted on fd0: " + disk);
+				Log.d("SHORTCUT", "Send Swap State " + down);
+			}
+			break;
+		case EXIT:
+			DemoActivity.instance.nativeQuit();
+			Log.d("SHORTCUT", "Send quit");
+		}
+		return true;
+	}
+	return false;
+}
+
+
+private void toastMessage(final String message) {
+	Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+}
+
 @Override
 public boolean onKeyDown(int keyCode, KeyEvent event) {
-	if (mGLView != null)
+	if (mGLView != null) {
+		if (mapper.handleShortcut(keyCode, true)) return true;
+		
+		VirtualEvent ev = mapper.getVirtualEvent(keyCode);
+		if (ev != null) {
+			ev.sendToNative(true);
+			return true;
+		}
+
 		return mGLView.keyDown(keyCode);
+	}
 	return super.onKeyDown(keyCode, event);
 }
 
 @Override
 public boolean onKeyUp(int keyCode, KeyEvent event) {
-	if (mGLView != null)
+	if (mGLView != null) {
+		if (mapper.handleShortcut(keyCode, false)) return true;
+
+		VirtualEvent ev = mapper.getVirtualEvent(keyCode);
+		if (ev != null) {
+			ev.sendToNative(false);
+			return true;
+		}
+
 		return mGLView.keyUp(keyCode);
+	}
 	return super.onKeyUp(keyCode, event);
 }
 
@@ -571,4 +682,6 @@ protected Dialog onCreateDialog(int id) {
 		}
 		return null;
 }
+
+
 }

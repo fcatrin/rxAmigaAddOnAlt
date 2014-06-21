@@ -381,6 +381,48 @@ JAVA_EXPORT_NAME(DemoActivity_saveState) ( JNIEnv*  env, jobject  thiz,  jstring
 
 }
 
+
+char *diskimages[] = {prefs_df[0], prefs_df[1], prefs_df[2], prefs_df[3]};
+
+char *basename(char *filename) {
+	int i = 0;
+	int pos = 0;
+	while (filename[i]) {
+		if (filename[i] == '/') pos = i+1;
+		i++;
+	}
+	return &filename[pos];
+}
+
+void disk_insert(int fd, char *image) {
+	strcpy(diskimages[fd], image);
+	strcpy(changed_df[fd], image);
+	real_changed_df[fd]=1;
+}
+
+void disk_swap() {
+	char tmp[300];
+	strcpy(tmp, diskimages[0]);
+
+	int i=1;
+	while(i<4 && diskimages[i]!=NULL && strlen(diskimages[i])>0) {
+		disk_insert(i-1, diskimages[i]);
+		i++;
+	}
+	disk_insert(i-1, tmp);
+}
+
+extern "C" jstring
+JAVA_EXPORT_NAME(DemoActivity_diskSwap) ( JNIEnv*  env, jobject  thiz) {
+	disk_swap();
+
+	char usermsg[300];
+	sprintf(usermsg, "%s", basename(changed_df[0]));
+
+	return env->NewStringUTF(usermsg);
+}
+
+
 extern "C" void
 JAVA_EXPORT_NAME(DemoActivity_loadState) ( JNIEnv*  env, jobject  thiz,  jstring filename, jint num) {
 
