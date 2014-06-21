@@ -335,18 +335,11 @@ protected VirtualKeypad vKeyPad = null;
         //hdDir = "/sdcard/Roms/amiga/HD/Superfrog_v1.2_0035/Superfrog";
         if (hdDir != null && hdDir.length() > 0 && !hdDir.endsWith("/"))
         	hdDir = hdDir + "/";
-        
-        if (romOk) {
-        	setPrefs(romFile.getAbsolutePath(), romKeyPath, hdDir, hdFile, df[0], df[1], df[2], df[3], autofs?100:fs, floppy_speed, cpu_model, chip_mem, slow_mem, fast_mem, chipset, cpu_speed, changed_sound?1:0, sound, changed_disks?1:0, force_reset&&!first_start?1:0, drivestatus?1:0, ntsc?1:0);
-        	setRightMouse(mouse_button);
-        	initSDL();
-        } else {
-        	Log.d(LOGTAG, "Invalid ROM on " + romFile.getAbsolutePath());
-        	/*
-        	tv.append("\nSelect the \"Manage\" menu item !");
-        	setContentView(tv);
-        	*/
-        }
+
+        String configFile = getIntent().getStringExtra("conf");
+    	setPrefs(configFile);
+    	setRightMouse(mouse_button);
+    	initSDL();
     }
     
     public static int default_keycodes [] = {  KeyEvent.KEYCODE_P, KeyEvent.KEYCODE_DPAD_CENTER, KeyEvent.KEYCODE_O,
@@ -534,7 +527,7 @@ protected VirtualKeypad vKeyPad = null;
     
     private static final int SHIFT_KEYB = 150;
     
-    public native void setPrefs(String rom, String romkey, String hdDir, String hdFile, String floppy1, String floppy2, String floppy3, String floppy4, int frameskip, int floppy_speed, int cpu_model, int chip_mem, int slow_mem, int fast_mem, int chipset, int cpu_speed, int change_sound, int sound, int change_disk, int reset, int drive_status, int ntsc);
+    public native void setPrefs(String configfile);
     public native void saveState(String filename, int num);
     public native void loadState(String filename, int num);
     public native void nativeReset();

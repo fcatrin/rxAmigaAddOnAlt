@@ -1,5 +1,6 @@
 int kickstart=1;
 int oldkickstart=-1;	/* reload KS at startup */
+char kickstarts_dir[1024];
 
 extern char launchDir[300];
 
@@ -290,41 +291,120 @@ JAVA_EXPORT_NAME(DemoActivity_setRightMouse) ( JNIEnv*  env, jobject  thiz, jint
 }
 
 extern "C" void
-JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring rom, jstring romkey, jstring hddir, jstring hdfile, jstring floppy1, jstring floppy2, jstring floppy3, jstring floppy4, jint frameskip, jint floppyspeed, jint cpu_model, jint chip_mem, jint slow_mem, jint fast_mem, jint chipset, jint cpu_speed, jint change_sound, jint sound, jint change_disk, jint reset, jint drive_status, jint ntsc ) {
+JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring config) {
+
+	prefs_gfx_framerate = 1;
+
+	char configFileName[1024] = "default.config";
+
+    if (config)
+    {
+        const char *sconfig = (env)->GetStringUTFChars(config, 0);
+        strcpy(configFileName, sconfig);
+        (env)->ReleaseStringUTFChars(config, sconfig);
+    }
+
+    FILE *f=fopen(configFileName,"rt");
+    if (!f){
+    	__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "No config file %s!",configFileName);
+    } else {
+    	__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "Config file %s",configFileName);
+		char line[1024];
+		while (fgets(line, sizeof(line), f)) {
+			sscanf(line, "df0=%s\n", prefs_df[0]);
+			sscanf(line, "df1=%s\n", prefs_df[1]);
+			sscanf(line, "kickstart=%d\n",&kickstart);
+			sscanf(line, "kickstarts_dir=%s\n",kickstarts_dir);
+			sscanf(line, "presetModeId=%d\n",&presetModeId); // resolution to render on
+			sscanf(line, "showstatus=%d\n",&mainMenu_showStatus); // 1 = show leds
+			sscanf(line, "showfps=%d\n",&mainMenu_showFPS); // 1 = show leds
+			// sscanf(line, "soundrate=%d\n",&sound_rate); // default is 44100. 22050 is more close to the Amiga500
+			sscanf(line, "floppyspeed=%d\n",&mainMenu_floppyspeed); // floppy speed in percent (100 = 100% Amiga)
+			sscanf(line, "drives=%d\n",&mainMenu_drives); // restrict number of drives
+			sscanf(line, "frameskip=%d\n",&mainMenu_drives); // restrict number of drives
+			//sscanf(line,"moveX=%d\n",&moveX);
+			//sscanf(line,"moveY=%d\n",&moveY);
+
+
+			// joystick & keyboaard overlay (1 = show, 0 = hide)
+			/*
+			sscanf(line, "onscreen=%d\n",&mainMenu_onScreen);
+			sscanf(line, "onScreen_textinput=%d\n",&mainMenu_onScreen_textinput);
+			sscanf(line, "onScreen_dpad=%d\n",&mainMenu_onScreen_dpad);
+			sscanf(line, "onScreen_button1=%d\n",&mainMenu_onScreen_button1);
+			sscanf(line, "onScreen_button2=%d\n",&mainMenu_onScreen_button2);
+			sscanf(line, "onScreen_button3=%d\n",&mainMenu_onScreen_button3);
+			sscanf(line, "onScreen_button4=%d\n",&mainMenu_onScreen_button4);
+			sscanf(line, "onScreen_button5=%d\n",&mainMenu_onScreen_button5);
+			sscanf(line, "onScreen_button6=%d\n",&mainMenu_onScreen_button6);
+			*/
+		}
+
+		__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "df0 %s", prefs_df[0]);
+		__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "df1 %s", prefs_df[1]);
+		__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "kickstart %i", kickstart);
+		__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "kickstarts_dir %s", kickstarts_dir);
+		snprintf(romfile, 256, "%s/%s",kickstarts_dir,kickstarts_rom_names[kickstart]);
+		__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "rom %s", romfile);
+
+    }
+
+
+    /*
+
     if (rom)
     {
         const char *srom = (env)->GetStringUTFChars(rom, 0);
-        strcpy(romfile, srom);
+        sprinf(romfile, "%s/%s", kickstarts_dir, srom);
         (env)->ReleaseStringUTFChars(rom, srom);
     }
-    
     if (romkey)
     {
         const char *sromkey = (env)->GetStringUTFChars(romkey, 0);
         strcpy(romkeyfile, sromkey);
         (env)->ReleaseStringUTFChars(romkey, sromkey);
     }
+     */
 
+    /*
     if (change_disk)
     {
         savestate_state = 0;
     }
+    */
     default_prefs_uae (&currprefs);
     default_prefs();
     
-    mainMenu_floppyspeed = floppyspeed;
-    mainMenu_CPU_model = cpu_model; // m68020
-    mainMenu_chipMemory = chip_mem; // 2MB
-    mainMenu_slowMemory = slow_mem;
-    mainMenu_fastMemory = fast_mem;
-    mainMenu_chipset = chipset; // aga
-    mainMenu_CPU_speed = cpu_speed; // 500/5T/a1200/12T/12T2
+	produce_sound = 2;
+	changed_produce_sound = produce_sound;
 
-    __android_log_print(ANDROID_LOG_INFO, "UAE", "floppyspeed= %d, cpu_model= %d, chip_mem= %d, slow_mem= %d, fast_mem= %d, chipset= %d, cpu_speed= %d", floppyspeed, cpu_model, chip_mem, slow_mem, fast_mem, chipset, cpu_speed);
+	changed_gfx_framerate = prefs_gfx_framerate;
+
+	mainMenu_CPU_model = 0;
+	mainMenu_chipMemory = 1;
+    mainMenu_slowMemory = 0;
+    mainMenu_fastMemory = 0;
+    mainMenu_chipset = 0; // aga
+    mainMenu_CPU_speed = 0; // 500/5T/a1200/12T/12T2
+
+    //mainMenu_floppyspeed = floppyspeed;
+    //mainMenu_CPU_model = cpu_model; // m68020
+    //mainMenu_chipMemory = chip_mem; // 2MB
+    //mainMenu_slowMemory = slow_mem;
+    //mainMenu_fastMemory = fast_mem;
+    //mainMenu_chipset = chipset; // aga
+    //mainMenu_CPU_speed = cpu_speed; // 500/5T/a1200/12T/12T2
+
+    //__android_log_print(ANDROID_LOG_INFO, "UAE", "floppyspeed= %d, cpu_model= %d, chip_mem= %d, slow_mem= %d, fast_mem= %d, chipset= %d, cpu_speed= %d", floppyspeed, cpu_model, chip_mem, slow_mem, fast_mem, chipset, cpu_speed);
 
     UpdateCPUModelSettings(&changed_prefs);
     UpdateMemorySettings(&changed_prefs);
     UpdateChipsetSettings(&changed_prefs);
+
+    /*
+
+    Ignore ALL Hard drive (for now)
+
     if (change_disk && uae4all_hard_dir[0] != '\0' && currprefs.mountinfo) {
         __android_log_print(ANDROID_LOG_INFO, "UAE", "kill_filesys_unit hd dir: %s", uae4all_hard_dir);
         kill_filesys_unit(currprefs.mountinfo, 0);
@@ -362,6 +442,11 @@ JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring r
             __android_log_print(ANDROID_LOG_ERROR, "UAE", "%s\n", s2);
         hd_file_unit_nr = mainMenu_filesysUnits++;
     }
+
+    */
+
+    /* ignore all floppy
+
     if (floppy1)
     {
         const char *sfloppy1 = (env)->GetStringUTFChars(floppy1, 0);
@@ -418,22 +503,28 @@ JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring r
     } else
         strcpy (prefs_df[3], "/sdcard/df3.adf");
 
-    mainMenu_showStatus = drive_status;
-    mainMenu_ntsc = ntsc;
+     */
+    //mainMenu_showStatus = drive_status;
+    //mainMenu_ntsc = ntsc;
 
+    /*
     if (change_sound)
         changed_produce_sound = sound;
     else {
         produce_sound = sound;
         changed_produce_sound = sound;
     }
+    */
 
+    /*
     if (frameskip >= 100)   
         prefs_gfx_framerate = -1;
     else
         prefs_gfx_framerate = frameskip;
     changed_gfx_framerate = prefs_gfx_framerate;
+
     __android_log_print(ANDROID_LOG_INFO, "UAE", "prefs_gfx_framerate: %d", prefs_gfx_framerate);
+    */
     m68k_speed = 0;
     check_prefs_changed_cpu();
     check_prefs_changed_audio();
@@ -445,10 +536,12 @@ JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring r
     //__android_log_print(ANDROID_LOG_INFO, "UAE", "prefs_df[1]: %s", prefs_df[1]);
     //__android_log_print(ANDROID_LOG_INFO, "UAE", "m68k_speed: %d / timeslice_mode: %d", m68k_speed, timeslice_mode);
 
+    /*
     if (reset) {
 
         uae_reset();
     }
+    */
 }
 
 extern "C" void
