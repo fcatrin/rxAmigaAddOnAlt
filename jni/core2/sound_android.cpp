@@ -26,7 +26,7 @@
 #include "thread.h"
 #include <SDL.h>
 #include <android/log.h>
-
+#include <menu_config.h>
 
 extern unsigned long next_sample_evtime;
 
@@ -182,7 +182,10 @@ static void sound_thread_mixer(void *ud, Uint8 *stream, int len)
 #endif
 	cnt++;
 	//__android_log_print(ANDROID_LOG_INFO, "UAE4ALL2","Sound callback cnt %d buf %d\n", cnt, cnt%SOUND_BUFFERS_COUNT);
-	memcpy(stream, sndbuffer[cnt%SOUND_BUFFERS_COUNT], MIN(SNDBUFFER_LEN, len));
+	if(mainMenu_soundStereo)
+		memcpy(stream, sndbuffer[cnt%SOUND_BUFFERS_COUNT], MIN(SNDBUFFER_LEN*2, len));
+	else
+		memcpy(stream, sndbuffer[cnt%SOUND_BUFFERS_COUNT], MIN(SNDBUFFER_LEN, len));
 }
 
 static int gp2x_start_sound(int rate, int bits, int stereo)
@@ -216,7 +219,10 @@ static int gp2x_start_sound(int rate, int bits, int stereo)
 	as.freq = rate;
 	as.format = (bits == 8 ? AUDIO_S8 : AUDIO_S16);
 	as.channels = (stereo ? 2 : 1);
-	as.samples = SNDBUFFER_LEN / as.channels / 2;
+	if(mainMenu_soundStereo)
+		as.samples = SNDBUFFER_LEN*2 / as.channels / 2;
+	else
+		as.samples = SNDBUFFER_LEN / as.channels / 2;
 	as.callback = sound_thread_mixer;
 	SDL_OpenAudio(&as, NULL);
 	audioOpened = 1;
@@ -263,8 +269,13 @@ if (android_env && !sinit) {
 
 if (android_env)
 {
-	(android_env)->SetShortArrayRegion(audioarray, 0, SNDBUFFER_LEN/2, (jshort*) sndbuffer[(wrcnt&3)]);
-	jint result = (android_env)->CallIntMethod(android_callback, android_sendaudio, audioarray, SNDBUFFER_LEN/2);
+	if(mainMenu_soundStereo){
+		(android_env)->SetShortArrayRegion(audioarray, 0, SNDBUFFER_LEN, (jshort*) sndbuffer[(wrcnt&3)]);
+		jint result = (android_env)->CallIntMethod(android_callback, android_sendaudio, audioarray, SNDBUFFER_LEN);
+	} else {
+		(android_env)->SetShortArrayRegion(audioarray, 0, SNDBUFFER_LEN/2, (jshort*) sndbuffer[(wrcnt&3)]);
+		jint result = (android_env)->CallIntMethod(android_callback, android_sendaudio, audioarray, SNDBUFFER_LEN/2);
+	}
 }
 
 wrcnt++;
@@ -300,7 +311,7 @@ static int open_sound (void)
 #endif
 
 	// Android does not like opening sound device several times
-    if (gp2x_start_sound(sound_rate, 16, 0) != 0)
+    if (gp2x_start_sound(sound_rate, 16, mainMenu_soundStereo) != 0)
 	    return 0;
 
     sound_default_evtime();

@@ -18,6 +18,7 @@ extern int mainMenu_floppyspeed;
 extern int mainMenu_CPU_model;
 extern int mainMenu_chipset;
 extern int mainMenu_sound;
+extern int mainMenu_soundStereo;
 extern int mainMenu_CPU_speed;
 extern int mainMenu_cpuSpeed;
 extern int mainMenu_joyConf;

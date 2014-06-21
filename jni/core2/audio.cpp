@@ -30,6 +30,7 @@
 #include "events.h"
 #include "audio.h"
 #include "debug_uae4all.h"
+#include "menu_config.h"
 
 #if defined(DREAMCAST) && defined(SOUND_PREFETCHS)
 #define AUDIO_PREFETCH(ADR) asm("pref @%0" : : "r" (ADR))
@@ -75,10 +76,15 @@ typedef uae_s8 sample8_t;
 
 #define CHECK_SOUND_BUFFERS() \
 { \
-    if ((unsigned)sndbufpt - (unsigned)render_sndbuff >= SNDBUFFER_LEN) { \
-	finish_sound_buffer (); \
-    } \
+    if(mainMenu_soundStereo) { \
+      if ((unsigned)sndbufpt - (unsigned)render_sndbuff >= SNDBUFFER_LEN*2) { \
+  	    finish_sound_buffer (); } \
+    } else { \
+      if ((unsigned)sndbufpt - (unsigned)render_sndbuff >= SNDBUFFER_LEN) { \
+  	    finish_sound_buffer (); } \
+  	} \
 } \
+
 
 
 #define SAMPLE_HANDLER_AHI \
@@ -107,8 +113,12 @@ typedef uae_s8 sample8_t;
 		d1 &= audio_channel_adk_mask[1]; \
 		d2 &= audio_channel_adk_mask[2]; \
 		d3 &= audio_channel_adk_mask[3]; \
-	    	PUT_SOUND_WORD (d0+d1+d2+d3) \
-    		CHECK_SOUND_BUFFERS(); \
+		if (mainMenu_soundStereo) { \
+		   	PUT_SOUND_WORD (((d0+d3)*0.75 + (d1+d2)*0.25)) \
+		   	PUT_SOUND_WORD (((d1+d2)*0.75 + (d0+d3)*0.25)) \
+		} else { \
+			PUT_SOUND_WORD (d0+d1+d2+d3) } \
+    	CHECK_SOUND_BUFFERS(); \
 	} \
 
 

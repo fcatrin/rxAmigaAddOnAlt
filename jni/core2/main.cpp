@@ -124,6 +124,7 @@ int mainMenu_floppyspeed = 100;
 int mainMenu_CPU_model = DEFAULT_CPU_MODEL;
 int mainMenu_chipset = DEFAULT_CHIPSET_SELECT;
 int mainMenu_sound = DEFAULT_SOUND;
+int mainMenu_soundStereo = 1;
 int mainMenu_CPU_speed = 0;
 
 int mainMenu_cpuSpeed = 600;
