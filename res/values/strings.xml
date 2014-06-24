@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Commodore Amiga support for RetroBox (UAE4DROID)</string>
+    <string name="app_name">RetroBox Commodore Amiga support (UAE4DROID)</string>
 <string name="paths_section">Paths</string>
 
 <string name="rom_location">ROM Location (*.rom)</string>
@@ -17,6 +17,7 @@
 <string name="configure">Manage</string>
 <string name="input">Switch Input</string>
 <string name="reset">Reset</string>
+<string name="swap">Swap Disks</string>
 <string name="quit">Quit</string>
 <string name="reset_ask">Do you want to reset ?</string>
 <string name="yes">Yes</string>

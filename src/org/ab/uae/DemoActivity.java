@@ -366,6 +366,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
     static final private int SAVE_ID = Menu.FIRST +6;
     static final private int MOUSE_ID = Menu.FIRST +7;
     static final private int QUIT_ID = Menu.FIRST +8;
+    static final private int SWAP_ID = Menu.FIRST +9;
     
     private AudioTrack audio;
     private boolean play;
@@ -419,36 +420,55 @@ public class DemoActivity extends Activity implements GameKeyListener {
     public native void setRightMouse(int right);
     //public native void nativeAudioInit(DemoActivity callback);
     
+    
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        menu.add(0, QUIT_ID, 0, R.string.quit);
         menu.add(0, LOAD_ID, 0, R.string.load_state);
         menu.add(0, SAVE_ID, 0, R.string.save_state);
+        menu.add(0, SWAP_ID, 0, R.string.swap);
+        menu.add(0, QUIT_ID, 0, R.string.quit);
         
         return true;
     }
     
     @Override
+	public void onBackPressed() {
+		uiQuit();
+	}
+
+	public void uiLoadState() {
+		loadState(stateFileName, 0);
+		toastMessage("State was restored");
+	}
+    
+    public void uiSaveState() {
+		saveState(stateFileName, 0);
+		toastMessage("State was saved");
+    }
+    
+    public void uiSwapDisks() {
+		String disk = DemoActivity.instance.diskSwap();
+		toastMessage("Disk inserted on fd0: " + disk);
+    }
+    
+    public void uiQuit() {
+		nativeQuit();
+    }
+
+    
+    @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
     	if (item != null) {
         switch (item.getItemId()) {
-        	case TOUCH_ID:
-        		manageTouch(item);
-        		break;
-        	case MOUSE_ID:
-        		mouse_button = 1 - mouse_button;
-        		if (mouse_button == 1)
-        			Toast.makeText(this, R.string.mouse_right, Toast.LENGTH_SHORT).show();
-        		else
-        			Toast.makeText(this, R.string.mouse_left, Toast.LENGTH_SHORT).show();
-        		setRightMouse(mouse_button);
-        		break;
-        	case QUIT_ID:
-        		nativeQuit();
-        		break;
+        case LOAD_ID : uiLoadState(); return true;
+        case SAVE_ID : uiSaveState(); return true;
+        case SWAP_ID : uiSwapDisks(); return true;
+        case QUIT_ID : nativeQuit(); return true;
         }
+
     	}
         return super.onMenuItemSelected(featureId, item);
     }
@@ -516,14 +536,14 @@ private void manageKey(int keyStates, int key, int press) {
 
 
 private void toastMessage(final String message) {
-	Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+	Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 }
 
 @Override
 public boolean onKeyDown(int keyCode, KeyEvent event) {
 	if (mGLView != null) {
 		if (mapper.handleKeyEvent(keyCode, true)) return true;
-		return mGLView.keyDown(keyCode);
+		if (mGLView.keyDown(keyCode)) return true;
 	}
 	return super.onKeyDown(keyCode, event);
 }
@@ -532,8 +552,7 @@ public boolean onKeyDown(int keyCode, KeyEvent event) {
 public boolean onKeyUp(int keyCode, KeyEvent event) {
 	if (mGLView != null) {
 		if (mapper.handleKeyEvent(keyCode, false)) return true;
-
-		return mGLView.keyUp(keyCode);
+		if (mGLView.keyUp(keyCode)) return true;
 	}
 	return super.onKeyUp(keyCode, event);
 }
@@ -628,29 +647,12 @@ class VirtualInputDispatcher implements JoystickEventDispatcher {
 	@Override
 	public boolean handleShortcut(ShortCut shortcut, boolean down) {
 		switch(shortcut) {
-		case LOAD_STATE :
-			Log.d("SHORTCUT", "Send Load State " + stateFileName);
-			loadState(stateFileName, 0);
-			toastMessage("State was restored");
-			return true;
-		case SAVE_STATE:
-			Log.d("SHORTCUT", "Send Save State " + stateFileName);
-			saveState(stateFileName, 0);
-			toastMessage("State was saved");
-			return true;
-		case SWAP_DISK:
-			if (!down) {
-				String disk = DemoActivity.instance.diskSwap();
-				toastMessage("Disk inserted on fd0: " + disk);
-				Log.d("SHORTCUT", "Send Swap State " + down);
-			}
-			return true;
-		case EXIT:
-			nativeQuit();
-			Log.d("SHORTCUT", "Send quit");
-			return true;
-		default:
-			return false;
+		case LOAD_STATE : if (!down) uiLoadState(); return true;
+		case SAVE_STATE : if (!down) uiSaveState(); return true;
+		case SWAP_DISK  : if (!down) uiSwapDisks(); return true;
+		case MENU       : if (!down) openOptionsMenu(); return true;
+		case EXIT       : uiQuit();return true;
+		default: return false;
 		}
 	}
 
