@@ -3,10 +3,9 @@ package org.ab.uae;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 
-import org.ab.controls.vinput.JoystickAnalog;
-import org.ab.controls.vinput.JoystickAnalog.Axis;
-import org.ab.controls.vinput.JoystickAnalogListener;
-
+import retrobox.vinput.JoystickAnalog;
+import retrobox.vinput.JoystickAnalog.Axis;
+import retrobox.vinput.JoystickAnalogListener;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -68,14 +67,14 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 
 			@Override
 			public void onDigitalX(Axis axis, boolean on) {
-				if (axis == Axis.MIN) DemoActivity.sendNativeKey(KeyEvent.KEYCODE_DPAD_LEFT, on?1:0);
-				if (axis == Axis.MAX) DemoActivity.sendNativeKey(KeyEvent.KEYCODE_DPAD_RIGHT, on?1:0);
+				if (axis == Axis.MIN) DemoActivity.vinputDispatcher.sendKey(KeyEvent.KEYCODE_DPAD_LEFT, on);
+				if (axis == Axis.MAX) DemoActivity.vinputDispatcher.sendKey(KeyEvent.KEYCODE_DPAD_RIGHT, on);
 			}
 
 			@Override
 			public void onDigitalY(Axis axis, boolean on) {
-				if (axis == Axis.MIN) DemoActivity.sendNativeKey(KeyEvent.KEYCODE_DPAD_UP, on?1:0);
-				if (axis == Axis.MAX) DemoActivity.sendNativeKey(KeyEvent.KEYCODE_DPAD_DOWN, on?1:0);
+				if (axis == Axis.MIN) DemoActivity.vinputDispatcher.sendKey(KeyEvent.KEYCODE_DPAD_UP, on);
+				if (axis == Axis.MAX) DemoActivity.vinputDispatcher.sendKey(KeyEvent.KEYCODE_DPAD_DOWN, on);
 			}
 			
 		});
