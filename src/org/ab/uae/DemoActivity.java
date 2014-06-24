@@ -423,14 +423,9 @@ public class DemoActivity extends Activity implements GameKeyListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
-        menu.add(0, CONFIGURE_ID, 0, R.string.configure);
-        menu.add(0, RESET_ID, 0, R.string.reset);
         menu.add(0, QUIT_ID, 0, R.string.quit);
         menu.add(0, LOAD_ID, 0, R.string.load_state);
         menu.add(0, SAVE_ID, 0, R.string.save_state);
-        menu.add(0, INPUT_ID, 0, R.string.keyb_mode);
-        menu.add(0, TOUCH_ID, 0, R.string.show_touch);
-        menu.add(0, MOUSE_ID, 0, R.string.change_mouse);
         
         return true;
     }
