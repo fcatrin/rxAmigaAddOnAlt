@@ -462,13 +462,12 @@ public class DemoActivity extends Activity implements GameKeyListener {
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
     	if (item != null) {
-        switch (item.getItemId()) {
-        case LOAD_ID : uiLoadState(); return true;
-        case SAVE_ID : uiSaveState(); return true;
-        case SWAP_ID : uiSwapDisks(); return true;
-        case QUIT_ID : nativeQuit(); return true;
-        }
-
+	        switch (item.getItemId()) {
+	        case LOAD_ID : uiLoadState(); return true;
+	        case SAVE_ID : uiSaveState(); return true;
+	        case SWAP_ID : uiSwapDisks(); return true;
+	        case QUIT_ID : nativeQuit(); return true;
+	        }
     	}
         return super.onMenuItemSelected(featureId, item);
     }

@@ -151,9 +151,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
      }
     
 	public boolean keyDown(int keyCode) {
-		if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_MENU ||
-			keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP)
-			return false;
+		if (DemoActivity.mapper.isSystemKey(keyCode)) return false;
 		
 		int joystick_nr = 1;
 		
@@ -188,9 +186,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
      }
 	
 	public boolean keyUp(int keyCode) {
-		if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_MENU || 
-			keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP)
-			return false;
+		if (DemoActivity.mapper.isSystemKey(keyCode)) return false;
 		
 		int joystick_nr = 1;
 		
