@@ -47,10 +47,10 @@ import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
 
 import retrobox.amiga.uae4droid.R;
-import retrobox.vinput.JoystickEventDispatcher;
 import retrobox.vinput.Mapper;
 import retrobox.vinput.Mapper.ShortCut;
 import retrobox.vinput.VirtualEvent.MouseButton;
+import retrobox.vinput.VirtualEventDispatcher;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -614,7 +614,7 @@ protected Dialog onCreateDialog(int id) {
 }
 
 
-class VirtualInputDispatcher implements JoystickEventDispatcher {
+class VirtualInputDispatcher implements VirtualEventDispatcher {
 
 	@Override
 	public void sendMouseButton(MouseButton button, boolean down) {

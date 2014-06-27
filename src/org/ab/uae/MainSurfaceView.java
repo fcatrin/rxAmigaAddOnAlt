@@ -3,9 +3,9 @@ package org.ab.uae;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 
-import retrobox.vinput.JoystickAnalog;
-import retrobox.vinput.JoystickAnalog.Axis;
-import retrobox.vinput.JoystickAnalogListener;
+import retrobox.vinput.AnalogGamepad;
+import retrobox.vinput.AnalogGamepad.Axis;
+import retrobox.vinput.AnalogGamepadListener;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -32,7 +32,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 	DemoRenderer mRenderer;
 	SurfaceHolder mSurfaceHolder;
 	
-	JoystickAnalog joystickAnalog;
+	AnalogGamepad analogGamepad;
 	
     public MainSurfaceView(Context context, AttributeSet set) {
         super(context, set);
@@ -42,7 +42,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
         
-        joystickAnalog = new JoystickAnalog((int)refMouseWidth, (int)refMouseWidth, new JoystickAnalogListener() {
+        analogGamepad = new AnalogGamepad((int)refMouseWidth, (int)refMouseWidth, new AnalogGamepadListener() {
 			
 			@Override
 			public void onMouseMoveRelative(float mousex, float mousey) {}
@@ -62,7 +62,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 			
 			@Override
 			public void onAxisChange(float axisx, float axisy) {
-				joystickAnalog.analogToDigital(axisx, axisy);
+				analogGamepad.analogToDigital(axisx, axisy);
 			}
 
 			@Override
@@ -115,7 +115,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
     
     @Override
 	public boolean onGenericMotionEvent(MotionEvent event) {
-		if (joystickAnalog != null && joystickAnalog.onGenericMotionEvent(event)) return true;
+		if (analogGamepad != null && analogGamepad.onGenericMotionEvent(event)) return true;
 		return super.onGenericMotionEvent(event);
 	}
 
@@ -401,20 +401,20 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-        joystickAnalog.stopGamepadMouseMoveThread();
+        analogGamepad.stopGamepadMouseMoveThread();
 
 	}
 	
 	public void onPause() {
 		if (mRenderer != null)
    		 mRenderer.nativePause();
-		joystickAnalog.stopGamepadMouseMoveThread();
+		analogGamepad.stopGamepadMouseMoveThread();
 	}
 
 	public void onResume() {
 		if (mRenderer != null)
    		 mRenderer.nativeResume();
-        joystickAnalog.startGamepadMouseMoveThread();
+        analogGamepad.startGamepadMouseMoveThread();
 	}
 
 
