@@ -48,7 +48,9 @@ import org.ab.controls.VirtualKeypad;
 
 import retrobox.amiga.uae4droid.R;
 import retrobox.vinput.Mapper;
+import retrobox.vinput.QuitHandler;
 import retrobox.vinput.Mapper.ShortCut;
+import retrobox.vinput.QuitHandler.QuitHandlerCallback;
 import retrobox.vinput.VirtualEvent.MouseButton;
 import retrobox.vinput.VirtualEventDispatcher;
 import android.app.Activity;
@@ -367,6 +369,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
     static final private int MOUSE_ID = Menu.FIRST +7;
     static final private int QUIT_ID = Menu.FIRST +8;
     static final private int SWAP_ID = Menu.FIRST +9;
+    static final private int CANCEL_ID = Menu.FIRST +10;
     
     private AudioTrack audio;
     private boolean play;
@@ -426,6 +429,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
+        menu.add(0, CANCEL_ID, 0, "Cancel");
         menu.add(0, LOAD_ID, 0, R.string.load_state);
         menu.add(0, SAVE_ID, 0, R.string.save_state);
         menu.add(0, SWAP_ID, 0, R.string.swap);
@@ -436,7 +440,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
     
     @Override
 	public void onBackPressed() {
-		uiQuit();
+		uiQuitConfirm();
 	}
 
 	public void uiLoadState() {
@@ -457,6 +461,15 @@ public class DemoActivity extends Activity implements GameKeyListener {
     public void uiQuit() {
 		nativeQuit();
     }
+    
+    protected void uiQuitConfirm() {
+    	QuitHandler.askForQuit(this, new QuitHandlerCallback() {
+			@Override
+			public void onQuit() {
+				uiQuit();
+			}
+		});
+    }
 
     
     @Override
@@ -466,7 +479,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	        case LOAD_ID : uiLoadState(); return true;
 	        case SAVE_ID : uiSaveState(); return true;
 	        case SWAP_ID : uiSwapDisks(); return true;
-	        case QUIT_ID : nativeQuit(); return true;
+	        case QUIT_ID : uiQuit(); return true;
 	        }
     	}
         return super.onMenuItemSelected(featureId, item);
@@ -650,7 +663,7 @@ class VirtualInputDispatcher implements VirtualEventDispatcher {
 		case SAVE_STATE : if (!down) uiSaveState(); return true;
 		case SWAP_DISK  : if (!down) uiSwapDisks(); return true;
 		case MENU       : if (!down) openOptionsMenu(); return true;
-		case EXIT       : uiQuit();return true;
+		case EXIT       : uiQuitConfirm();return true;
 		default: return false;
 		}
 	}
