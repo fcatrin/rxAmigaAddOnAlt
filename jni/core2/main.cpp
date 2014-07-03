@@ -294,6 +294,9 @@ JAVA_EXPORT_NAME(DemoActivity_setRightMouse) ( JNIEnv*  env, jobject  thiz, jint
 extern "C" void
 JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring config) {
 
+    default_prefs_uae (&currprefs);
+    default_prefs();
+
 	prefs_gfx_framerate = 1;
 
 	char configFileName[1024] = "default.config";
@@ -321,7 +324,7 @@ JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring c
 			sscanf(line, "showfps=%d\n",&mainMenu_showFPS); // 1 = show leds
 			sscanf(line, "floppyspeed=%d\n",&mainMenu_floppyspeed); // floppy speed in percent (100 = 100% Amiga)
 			sscanf(line, "drives=%d\n",&mainMenu_drives); // restrict number of drives
-			sscanf(line, "frameskip=%d\n",&mainMenu_drives); // restrict number of drives
+			sscanf(line, "frameskip=%d\n",&prefs_gfx_framerate); // restrict number of drives
 		}
 
 		__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "df0 %s", prefs_df[0]);
@@ -333,9 +336,6 @@ JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring c
 
     }
 
-    default_prefs_uae (&currprefs);
-    default_prefs();
-    
 	produce_sound = 2;
 	changed_produce_sound = produce_sound;
 
