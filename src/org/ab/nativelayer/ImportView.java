@@ -193,7 +193,7 @@ public class ImportView extends ListActivity implements OnItemLongClickListener 
 	                    imageView.setImageResource(R.drawable.icon32);
 	                }
             	} else {
-            		int r = R.drawable.icon;
+            		int r = R.drawable.retrobox;
             		
             		if (importView != null)
             			r = importView.getIcon(position);
