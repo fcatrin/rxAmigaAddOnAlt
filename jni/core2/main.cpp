@@ -341,11 +341,11 @@ JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring c
 
 	changed_gfx_framerate = prefs_gfx_framerate;
 
-	mainMenu_CPU_model = 0;
+	mainMenu_CPU_model = DEFAULT_CPU_MODEL;
 	mainMenu_chipMemory = 1;
     mainMenu_slowMemory = 0;
     mainMenu_fastMemory = 0;
-    mainMenu_chipset = 0; // aga
+    mainMenu_chipset = DEFAULT_CHIPSET_SELECT; // aga
     mainMenu_CPU_speed = 0; // 500/5T/a1200/12T/12T2
 
     UpdateCPUModelSettings(&changed_prefs);
