@@ -48,11 +48,18 @@ import org.ab.controls.VirtualKeypad;
 
 import retrobox.amiga.uae4droid.R;
 import retrobox.vinput.Mapper;
-import retrobox.vinput.QuitHandler;
 import retrobox.vinput.Mapper.ShortCut;
+import retrobox.vinput.QuitHandler;
 import retrobox.vinput.QuitHandler.QuitHandlerCallback;
 import retrobox.vinput.VirtualEvent.MouseButton;
 import retrobox.vinput.VirtualEventDispatcher;
+import retrobox.vinput.overlay.ExtraButtons;
+import retrobox.vinput.overlay.ExtraButtonsController;
+import retrobox.vinput.overlay.ExtraButtonsView;
+import retrobox.vinput.overlay.GamepadController;
+import retrobox.vinput.overlay.GamepadView;
+import retrobox.vinput.overlay.Overlay;
+import retrobox.vinput.overlay.OverlayNew;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -73,7 +80,11 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -92,6 +103,13 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	
 	public static Mapper mapper;
 	public static VirtualInputDispatcher vinputDispatcher;
+	
+	static GamepadController gamepadController;
+	static GamepadView gamepadView;
+	static ExtraButtonsController extraButtonsController;
+	static ExtraButtonsView extraButtonsView;
+	
+	public static final OverlayNew overlay = new OverlayNew();
 
 	private static final String LOGTAG = DemoActivity.class.getSimpleName();
 	protected VirtualKeypad vKeyPad = null;
@@ -188,6 +206,13 @@ public class DemoActivity extends Activity implements GameKeyListener {
         vinputDispatcher = new VirtualInputDispatcher();
         mapper = new Mapper(getIntent(), vinputDispatcher);
         
+		gamepadController = new GamepadController();
+		gamepadView = new GamepadView(this, overlay);
+		
+		extraButtonsController = new ExtraButtonsController();
+		extraButtonsView = new ExtraButtonsView(this);
+
+        
         stateFileName = getIntent().getStringExtra("state");
         
         /*TextView tv = new TextView(this);
@@ -203,6 +228,26 @@ public class DemoActivity extends Activity implements GameKeyListener {
         	manageTouch(null);
     }
     
+    
+    
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+    	if (gamepadView.isVisible() && gamepadController.onTouchEvent(ev)) {
+    		if (OverlayNew.requiresRedraw) {
+        		OverlayNew.requiresRedraw = false;
+    			gamepadView.invalidate();
+    		}
+    		return true;
+    	}
+    	if (extraButtonsView.isVisible() && extraButtonsController.onTouchEvent(ev)) {
+    		return true;
+    	}
+
+		return super.dispatchTouchEvent(ev);
+	}
+
+
+
 	protected static Thread nativeThread;
     public int joystick = 1;
     public boolean touch;
@@ -300,7 +345,8 @@ public class DemoActivity extends Activity implements GameKeyListener {
         mGLView.setFocusableInTouchMode(true);
         mGLView.setFocusable(true);
         mGLView.requestFocus();
-
+        setupGamepadOverlay();
+/*
         if (!getIntent().hasExtra("gamepad")) {
 	        vKeyPad = new VirtualKeypad(mGLView, this, R.drawable.dpad5, R.drawable.button);
 			if (mGLView.getWidth() > 0)
@@ -318,8 +364,40 @@ public class DemoActivity extends Activity implements GameKeyListener {
 		        theKeyboard.setPreviewEnabled(false);
 	        }
         }
-        
+*/
     }
+    
+	private boolean needsOverlay() {
+		return !getIntent().hasExtra("gamepad");
+	}
+	
+	private void setupGamepadOverlay() {
+		ViewTreeObserver observer = mGLView.getViewTreeObserver();
+		observer.addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+			@Override
+			public void onGlobalLayout() {
+		    	int w = mGLView.getWidth();
+		    	int h = mGLView.getHeight();
+				if (needsOverlay()) {
+			    	String overlayConfig = getIntent().getStringExtra("OVERLAY");
+			    	if (overlayConfig!=null) overlay.init(overlayConfig, w, h);
+				}
+		
+		    	Log.d("REMAP", "addExtraButtons : " + getIntent().getStringExtra("buttons"));
+		        ExtraButtons.initExtraButtons(DemoActivity.this, getIntent().getStringExtra("buttons"), w, h, true);
+			}
+		});
+
+		ViewGroup root = (ViewGroup)findViewById(R.id.root);
+		
+		if (needsOverlay()) {
+			 gamepadView.addToLayout(root);
+			 gamepadView.showPanel();
+		}
+		 
+		extraButtonsView.addToLayout(root);
+		extraButtonsView.hidePanel();
+	}
     
     public void render() {
     	if (mGLView != null)
@@ -370,6 +448,8 @@ public class DemoActivity extends Activity implements GameKeyListener {
     static final private int QUIT_ID = Menu.FIRST +8;
     static final private int SWAP_ID = Menu.FIRST +9;
     static final private int CANCEL_ID = Menu.FIRST +10;
+    static final private int BUTTONS_ID = Menu.FIRST +11;
+    static final private int OVERLAY_ID = Menu.FIRST +12;
     
     private AudioTrack audio;
     private boolean play;
@@ -432,6 +512,12 @@ public class DemoActivity extends Activity implements GameKeyListener {
         menu.add(0, CANCEL_ID, 0, "Cancel");
         menu.add(0, LOAD_ID, 0, R.string.load_state);
         menu.add(0, SAVE_ID, 0, R.string.save_state);
+        if (Overlay.hasExtraButtons()) {
+        	menu.add(0, BUTTONS_ID, 0, "Extra Buttons");
+        }
+        if (needsOverlay()) {
+        	menu.add(0, OVERLAY_ID, 0, "Overlay ON/OFF");
+        }
         menu.add(0, SWAP_ID, 0, R.string.swap);
         menu.add(0, QUIT_ID, 0, R.string.quit);
         
@@ -471,6 +557,13 @@ public class DemoActivity extends Activity implements GameKeyListener {
 		});
     }
 
+    private void uiToggleExtraButtons() {
+    	extraButtonsView.toggleView();
+	}
+    
+    private void uiToggleOverlay() {
+    	gamepadView.toggleView();
+    }
     
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -478,6 +571,8 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	        switch (item.getItemId()) {
 	        case LOAD_ID : uiLoadState(); return true;
 	        case SAVE_ID : uiSaveState(); return true;
+	        case BUTTONS_ID : uiToggleExtraButtons(); return true;
+	        case OVERLAY_ID : uiToggleOverlay(); return true;
 	        case SWAP_ID : uiSwapDisks(); return true;
 	        case QUIT_ID : uiQuit(); return true;
 	        }

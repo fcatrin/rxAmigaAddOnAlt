@@ -78,7 +78,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 			}
 			
 		});
-        
+        analogGamepad.startGamepadMouseMoveThread();
     }
 
     @Override
