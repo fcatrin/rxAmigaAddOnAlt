@@ -58,7 +58,8 @@ import retrobox.vinput.overlay.ExtraButtonsController;
 import retrobox.vinput.overlay.ExtraButtonsView;
 import retrobox.vinput.overlay.GamepadController;
 import retrobox.vinput.overlay.GamepadView;
-import retrobox.vinput.overlay.OverlayNew;
+import retrobox.vinput.overlay.Overlay;
+import retrobox.vinput.overlay.OverlayExtra;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -108,7 +109,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	static ExtraButtonsController extraButtonsController;
 	static ExtraButtonsView extraButtonsView;
 	
-	public static final OverlayNew overlay = new OverlayNew();
+	public static final Overlay overlay = new Overlay();
 
 	private static final String LOGTAG = DemoActivity.class.getSimpleName();
 	protected VirtualKeypad vKeyPad = null;
@@ -232,13 +233,17 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
     	if (gamepadView.isVisible() && gamepadController.onTouchEvent(ev)) {
-    		if (OverlayNew.requiresRedraw) {
-        		OverlayNew.requiresRedraw = false;
+    		if (Overlay.requiresRedraw) {
+        		Overlay.requiresRedraw = false;
     			gamepadView.invalidate();
     		}
     		return true;
     	}
     	if (extraButtonsView.isVisible() && extraButtonsController.onTouchEvent(ev)) {
+    		if (OverlayExtra.requiresRedraw) {
+    			OverlayExtra.requiresRedraw = false;
+    			extraButtonsView.invalidate();
+    		}
     		return true;
     	}
 
@@ -511,7 +516,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
         menu.add(0, CANCEL_ID, 0, "Cancel");
         menu.add(0, LOAD_ID, 0, R.string.load_state);
         menu.add(0, SAVE_ID, 0, R.string.save_state);
-        if (OverlayNew.hasExtraButtons()) {
+        if (OverlayExtra.hasExtraButtons()) {
         	menu.add(0, BUTTONS_ID, 0, "Extra Buttons");
         }
         if (needsOverlay()) {
