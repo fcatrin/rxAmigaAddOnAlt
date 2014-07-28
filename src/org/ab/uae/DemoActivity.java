@@ -58,7 +58,6 @@ import retrobox.vinput.overlay.ExtraButtonsController;
 import retrobox.vinput.overlay.ExtraButtonsView;
 import retrobox.vinput.overlay.GamepadController;
 import retrobox.vinput.overlay.GamepadView;
-import retrobox.vinput.overlay.Overlay;
 import retrobox.vinput.overlay.OverlayNew;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -512,7 +511,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
         menu.add(0, CANCEL_ID, 0, "Cancel");
         menu.add(0, LOAD_ID, 0, R.string.load_state);
         menu.add(0, SAVE_ID, 0, R.string.save_state);
-        if (Overlay.hasExtraButtons()) {
+        if (OverlayNew.hasExtraButtons()) {
         	menu.add(0, BUTTONS_ID, 0, "Extra Buttons");
         }
         if (needsOverlay()) {
