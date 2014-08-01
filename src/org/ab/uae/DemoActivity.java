@@ -205,6 +205,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
         
         vinputDispatcher = new VirtualInputDispatcher();
         mapper = new Mapper(getIntent(), vinputDispatcher);
+        Mapper.initGestureDetector(this);
         
 		gamepadController = new GamepadController();
 		gamepadView = new GamepadView(this, overlay);
@@ -247,6 +248,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
     		return true;
     	}
 
+    	mapper.onTouchEvent(ev);
 		return super.dispatchTouchEvent(ev);
 	}
 
