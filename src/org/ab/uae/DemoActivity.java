@@ -207,6 +207,12 @@ public class DemoActivity extends Activity implements GameKeyListener {
         mapper = new Mapper(getIntent(), vinputDispatcher);
         Mapper.initGestureDetector(this);
         
+		for(int i=0; i<2; i++) {
+        	String prefix = "j" + (i+1);
+        	String deviceDescriptor = getIntent().getStringExtra(prefix + "DESCRIPTOR");
+        	Mapper.registerGamepad(i, deviceDescriptor);
+        }
+        
 		gamepadController = new GamepadController();
 		gamepadView = new GamepadView(this, overlay);
 		
@@ -655,7 +661,7 @@ private void toastMessage(final String message) {
 @Override
 public boolean onKeyDown(int keyCode, KeyEvent event) {
 	if (mGLView != null) {
-		if (mapper.handleKeyEvent(keyCode, true)) return true;
+		if (mapper.handleKeyEvent(event, keyCode, true)) return true;
 		if (mGLView.keyDown(keyCode)) return true;
 	}
 	return super.onKeyDown(keyCode, event);
@@ -664,7 +670,7 @@ public boolean onKeyDown(int keyCode, KeyEvent event) {
 @Override
 public boolean onKeyUp(int keyCode, KeyEvent event) {
 	if (mGLView != null) {
-		if (mapper.handleKeyEvent(keyCode, false)) return true;
+		if (mapper.handleKeyEvent(event, keyCode, false)) return true;
 		if (mGLView.keyUp(keyCode)) return true;
 	}
 	return super.onKeyUp(keyCode, event);
