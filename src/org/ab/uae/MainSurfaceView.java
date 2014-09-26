@@ -298,7 +298,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 			scaleY = scaleX;
 		} else {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-		 String scale = prefs.getString("scale", "stretched");
+		String scale = prefs.getString("scale", "stretched");
 		 pixels = 0;
 		 pixelsH = 0;
 		 if ("scaled".equals(scale)) {
