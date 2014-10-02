@@ -47,6 +47,7 @@ import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
 
 import retrobox.amiga.uae4droid.R;
+import retrobox.vinput.GenericGamepad.Analog;
 import retrobox.vinput.Mapper;
 import retrobox.vinput.Mapper.ShortCut;
 import retrobox.vinput.QuitHandler;
@@ -426,7 +427,8 @@ public class DemoActivity extends Activity implements GameKeyListener {
 		    	int h = mGLView.getHeight();
 				if (needsOverlay()) {
 			    	String overlayConfig = getIntent().getStringExtra("OVERLAY");
-			    	if (overlayConfig!=null) overlay.init(overlayConfig, w, h);
+					float alpha = getIntent().getFloatExtra("OVERLAY_ALPHA", 0.8f);
+			    	if (overlayConfig!=null) overlay.init(overlayConfig, w, h, alpha);
 				}
 		
 		    	Log.d("REMAP", "addExtraButtons : " + getIntent().getStringExtra("buttons"));
@@ -808,6 +810,9 @@ class VirtualInputDispatcher implements VirtualEventDispatcher {
 		default: return false;
 		}
 	}
+
+	@Override
+	public void sendAnalog(Analog index, double x, double y) {}
 
 }
 
