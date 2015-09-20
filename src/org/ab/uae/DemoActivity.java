@@ -415,7 +415,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
     }
     
 	private boolean needsOverlay() {
-		return !getIntent().hasExtra("gamepad");
+		return getIntent().hasExtra("OVERLAY");
 	}
 	
 	private void setupGamepadOverlay() {
@@ -574,7 +574,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
     
     @Override
 	public void onBackPressed() {
-		uiQuitConfirm();
+		openOptionsMenu();
 	}
 
 	public void uiLoadState() {
