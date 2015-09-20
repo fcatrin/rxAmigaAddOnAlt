@@ -97,62 +97,60 @@ typedef uae_s8 sample8_t;
 	} \
 
 /*
- * [FILTER] coeffA[0]=1.0
-[FILTER] coeffA[1]=-5.5852727833322895
-[FILTER] coeffA[2]=13.6380218626893
-[FILTER] coeffA[3]=-19.19233826302361
-[FILTER] coeffA[4]=17.175210978670215
-[FILTER] coeffA[5]=-10.051032939324259
-[FILTER] coeffA[6]=3.7456251526219306
-[FILTER] coeffA[7]=-0.8085257588247114
-[FILTER] coeffA[8]=0.07831175054738673
-[FILTER] coeffB[0]=0.017977357434837894
-[FILTER] coeffB[1]=0.0
-[FILTER] coeffB[2]=-0.07190942973935158
-[FILTER] coeffB[3]=0.0
-[FILTER] coeffB[4]=0.10786414460902737
-[FILTER] coeffB[5]=0.0
-[FILTER] coeffB[6]=-0.07190942973935158
-[FILTER] coeffB[7]=0.0
-[FILTER] coeffB[8]=0.017977357434837894
+[FILTER] coeffA
+[] 1.0,
+[] -4.812323669916626,
+[] 9.94836054591285,
+[] -11.859789225440009,
+[] 9.236216304650544,
+[] -4.8799969957262395,
+[] 1.6539799023776862,
+[] -0.3177854885864981,
+[] 0.03133862673200603,
+[FILTER] coeffB
+[] 0.04494074714266251,
+[] 0.0,
+[] -0.17976298857065004,
+[] 0.0,
+[] 0.2696444828559751,
+[] 0.0,
+[] -0.17976298857065004,
+[] 0.0,
+[] 0.04494074714266251,
  */
 
 double filterCoeffA[] = {
-		1.0,
-		-5.5852727833322895,
-		13.6380218626893,
-		-19.19233826302361,
-		17.175210978670215,
-		-10.051032939324259,
-		3.7456251526219306,
-		-0.8085257588247114,
-		0.07831175054738673
+		 1.0,
+		 -4.812323669916626,
+		 9.94836054591285,
+		 -11.859789225440009,
+		 9.236216304650544,
+		 -4.8799969957262395,
+		 1.6539799023776862,
+		 -0.3177854885864981,
+		 0.03133862673200603,
 };
 
 double filterCoeffB[] = {
-		0.017977357434837894,
-		0.0,
-		-0.07190942973935158,
-		0.0,
-		0.10786414460902737,
-		0.0,
-		-0.07190942973935158,
-		0.0,
-		0.017977357434837894
+		 0.04494074714266251,
+		 0.0,
+		 -0.17976298857065004,
+		 0.0,
+		 0.2696444828559751,
+		 0.0,
+		 -0.17976298857065004,
+		 0.0,
+		 0.04494074714266251,
 };
 
 bool filterEnabled = true;
+bool filterInitialized = false;
+
 #define FILTER_SIZE 8
 int filterPos1[] = {0, 0, 0, 0};
 int filterPos2[] = {0, 0, 0, 0};
 double filterBuffer1[4][FILTER_SIZE];
 double filterBuffer2[4][FILTER_SIZE];
-
-int debugSamples = -1;
-int nskip = 10000;
-bool filterInitialized = false;
-int minSample = 0;
-int maxSample = 0;
 
 uae_u32 filterSample(int channel, int sample) {
 	if (!filterEnabled) return sample;
@@ -163,30 +161,8 @@ uae_u32 filterSample(int channel, int sample) {
 	}
 	int j;
 
-	bool debug = false;
-	if (channel == 0) {
-		if (nskip>0 && sample!=0) {
-			nskip--;
-		} else if (nskip==0 && debugSamples>0){
-			debug = true;
-			debugSamples--;
-		}
-	}
-
-	if (sample<minSample) {
-		minSample = sample;
-		__android_log_print(ANDROID_LOG_INFO, "libSDL", "minSample %d\n", sample);
-	}
-	if (sample>maxSample) {
-		maxSample = sample;
-		__android_log_print(ANDROID_LOG_INFO, "libSDL", "maxSample %d\n", sample);
-	}
-
-	if (debug) __android_log_print(ANDROID_LOG_INFO, "libSDL", "sample %d\n", sample);
-
 	double inputValue = sample / 128.0;
 	double acc = filterCoeffB[0] * inputValue;
-	if (debug) __android_log_print(ANDROID_LOG_INFO, "libSDL", "acc %f\n", acc);
 
 	int p1 = filterPos1[channel];
 	int p2 = filterPos2[channel];
@@ -194,24 +170,16 @@ uae_u32 filterSample(int channel, int sample) {
 	for (j = 1; j <= FILTER_SIZE; j++) {
 		int p = (p1 + FILTER_SIZE - j) % FILTER_SIZE;
 		acc += filterCoeffB[j] * filterBuffer1[channel][p];
-		if (debug) __android_log_print(ANDROID_LOG_INFO, "libSDL", "acc[%d]=%f    %f*%f\n", j, acc, filterCoeffB[j], filterBuffer1[channel][p]);
 	}
 	for (j = 1; j <= FILTER_SIZE; j++) {
 		int p = (p2 + FILTER_SIZE - j) % FILTER_SIZE;
 		acc -= filterCoeffA[j] * filterBuffer2[channel][p];
-		if (debug) __android_log_print(ANDROID_LOG_INFO, "libSDL", "acc[%d]=%f    %f*%f\n", j, acc, filterCoeffA[j], filterBuffer2[channel][p]);
 	}
 	filterBuffer1[channel][p1] = inputValue;
 	filterPos1[channel] = (p1 + 1) % FILTER_SIZE;
 
 	filterBuffer2[channel][p2] = acc;
 	filterPos2[channel] = (p2 + 1) % FILTER_SIZE;
-
-	if (debug) {
-		for(j=0; j<FILTER_SIZE; j++) {
-			 __android_log_print(ANDROID_LOG_INFO, "libSDL", "inp=%f, p1=%d, acc=%f p2=%d, filterBuffer1[%d]=%f   filterBuffer2[%d]=%f\n", inputValue, p1, acc, p2, j, filterBuffer1[channel][j], j, filterBuffer2[channel][j]);
-		}
-	}
 
 	return (int)(acc * 128.0);
 }
