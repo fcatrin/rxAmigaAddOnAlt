@@ -336,8 +336,6 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 			 Paint.FILTER_BITMAP_FLAG); 
 	 
 	 
-	 boolean aliased = false;
-	
 	public void surfaceCreated(SurfaceHolder holder) {
 		if (buffer == null) {
 			Log.i("UAE", "surfaceCreated");
@@ -380,8 +378,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
             	buffer.position(0);
             	 mainScreen.copyPixelsFromBuffer(buffer);
             	 if (c != null && matrixScreen != null) {
- 	            	if (aliased)
-            		 c.setDrawFilter(setfil);
+ 	            	if (DemoActivity.aliased) c.setDrawFilter(setfil);
  	            	c.drawBitmap(mainScreen, matrixScreen, null);
  	            	if (mParent.vKeyPad != null && mParent.touch && DemoActivity.currentKeyboardLayout == 0)
  	            		mParent.vKeyPad.draw(c);

@@ -106,6 +106,8 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	private static DemoActivity instance;
 	private static String stateFileName;
 	
+	public static boolean aliased = true;
+	
 	public static Mapper mapper;
 	public static VirtualInputDispatcher vinputDispatcher;
 	
@@ -233,6 +235,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 
         
         stateFileName = getIntent().getStringExtra("state");
+        aliased = getIntent().getBooleanExtra("linearFilter", true);
         
         /*TextView tv = new TextView(this);
         tv.setText("Initializing");
