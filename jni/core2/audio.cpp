@@ -119,7 +119,7 @@ typedef uae_s8 sample8_t;
  0.11805666238684007,
  */
 
-double filterCoeffA[] = {
+float filterCoeffA[] = {
 		 1.0,
 		 3.8883195854094934,
 		 7.226481183614927,
@@ -131,7 +131,7 @@ double filterCoeffA[] = {
 		 0.013937391467489488,
 };
 
-double filterCoeffB[] = {
+float filterCoeffB[] = {
 		 0.11805666238684007,
 		 0.9444532990947205,
 		 3.3055865468315218,
@@ -147,39 +147,36 @@ bool filterEnabled = true;
 bool filterInitialized = false;
 
 #define FILTER_SIZE 8
-int filterPos1[] = {0, 0, 0, 0};
-int filterPos2[] = {0, 0, 0, 0};
-double filterBuffer1[4][FILTER_SIZE];
-double filterBuffer2[4][FILTER_SIZE];
+int filterPos[] = {0, 0, 0, 0};
+float filterBuffer1[4][FILTER_SIZE];
+float filterBuffer2[4][FILTER_SIZE];
 
-uae_u32 filterSample(int channel, int sample) {
+inline uae_u32 filterSample(int channel, int sample) {
 	if (!filterEnabled) return sample;
 	if (!filterInitialized) {
-		memset(filterBuffer1, 0, sizeof(double)*FILTER_SIZE*4);
-		memset(filterBuffer2, 0, sizeof(double)*FILTER_SIZE*4);
+		memset(filterBuffer1, 0, sizeof(float)*FILTER_SIZE*4);
+		memset(filterBuffer2, 0, sizeof(float)*FILTER_SIZE*4);
 		filterInitialized = true;
 	}
 	int j;
 
-	double inputValue = sample / 128.0;
-	double acc = filterCoeffB[0] * inputValue;
+	float inputValue = sample / 128.0;
+	float acc = filterCoeffB[0] * inputValue;
 
-	int p1 = filterPos1[channel];
-	int p2 = filterPos2[channel];
+	int pos = filterPos[channel];
 
 	for (j = 1; j <= FILTER_SIZE; j++) {
-		int p = (p1 + FILTER_SIZE - j) % FILTER_SIZE;
+		int p = (pos + FILTER_SIZE - j) % FILTER_SIZE;
 		acc += filterCoeffB[j] * filterBuffer1[channel][p];
 	}
 	for (j = 1; j <= FILTER_SIZE; j++) {
-		int p = (p2 + FILTER_SIZE - j) % FILTER_SIZE;
+		int p = (pos + FILTER_SIZE - j) % FILTER_SIZE;
 		acc -= filterCoeffA[j] * filterBuffer2[channel][p];
 	}
-	filterBuffer1[channel][p1] = inputValue;
-	filterPos1[channel] = (p1 + 1) % FILTER_SIZE;
+	filterBuffer1[channel][pos] = inputValue;
+	filterBuffer2[channel][pos] = acc;
 
-	filterBuffer2[channel][p2] = acc;
-	filterPos2[channel] = (p2 + 1) % FILTER_SIZE;
+	filterPos[channel] = (pos + 1) % FILTER_SIZE;
 
 	return (int)(acc * 128.0);
 }
