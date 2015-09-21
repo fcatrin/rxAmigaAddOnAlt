@@ -27,7 +27,7 @@ extern void finish_sound_buffer (void);
 #ifdef DINGOO
 #define DEFAULT_SOUND_FREQ 16000
 #else
-#define DEFAULT_SOUND_FREQ 44100
+#define DEFAULT_SOUND_FREQ 22050
 #endif
 #endif
 
