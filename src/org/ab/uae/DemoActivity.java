@@ -778,7 +778,7 @@ class VirtualInputDispatcher implements VirtualEventDispatcher {
 	@Override
 	public void sendMouseButton(MouseButton button, boolean down) {
 		Log.d("MAPPER", "Send native mouse button " + button + ", down:" + down);
-		MainSurfaceView.nativeMouse(0, 0, down? MOUSE_DOWN: MOUSE_UP, button.ordinal(), MOUSE_RELATIVE);
+		MainSurfaceView.nativeMouse(0, 0, down? MOUSE_DOWN: MOUSE_UP, button.ordinal()+1, MOUSE_RELATIVE);
 	}
 	
 	@Override
