@@ -121,6 +121,10 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	private static final String LOGTAG = DemoActivity.class.getSimpleName();
 	protected VirtualKeypad vKeyPad = null;
 	
+	private static final long MIN_TOUCH_CLICK_TIME_MS = 50;
+	private long touchClickTime;
+	private boolean touchClickStarted = false;
+	
 	public class theKeyboardActionListener implements OnKeyboardActionListener{
 
         public void onKey(int primaryCode, int[] keyCodes) {
@@ -293,10 +297,31 @@ public class DemoActivity extends Activity implements GameKeyListener {
     	}
 
     	mapper.onTouchEvent(ev);
+    	
+    	if (ev.getActionMasked() == MotionEvent.ACTION_DOWN) {
+    		touchClickTime = System.currentTimeMillis();
+    		touchClickStarted = true;
+    	} else if (touchClickStarted && ev.getActionMasked() == MotionEvent.ACTION_UP) {
+    		if (System.currentTimeMillis() - touchClickTime > MIN_TOUCH_CLICK_TIME_MS) {
+    			performTouchMouseClick();
+    		}
+    		touchClickStarted = false;
+    	}
+    	
 		return super.dispatchTouchEvent(ev);
 	}
 
 
+
+	private void performTouchMouseClick() {
+		vinputDispatcher.sendMouseButton(MouseButton.LEFT, true);
+		mGLView.postDelayed(new Runnable(){
+			@Override
+			public void run() {
+				vinputDispatcher.sendMouseButton(MouseButton.LEFT, false);
+			}
+		}, 50);
+	}
 
 	protected static Thread nativeThread;
     public int joystick = 1;
