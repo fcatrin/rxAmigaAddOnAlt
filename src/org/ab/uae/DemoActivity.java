@@ -532,8 +532,15 @@ public class DemoActivity extends Activity implements GameKeyListener {
     
     public void initAudio(int freq, int bits) {
     	if (audio == null) {
-    		audio = new AudioTrack(AudioManager.STREAM_MUSIC, freq, AudioFormat.CHANNEL_CONFIGURATION_STEREO, bits == 8?AudioFormat.ENCODING_PCM_8BIT:AudioFormat.ENCODING_PCM_16BIT, freq==44100?32*1024:16*1024, AudioTrack.MODE_STREAM);
-    		Log.i("UAE", "AudioTrack initialized: " + freq);
+    		int encoding = bits == 8?AudioFormat.ENCODING_PCM_8BIT:AudioFormat.ENCODING_PCM_16BIT;
+    		int bufferSize = freq==44100?32*1024:16*1024;
+    		int minBufferSize = AudioTrack.getMinBufferSize( freq, 2, encoding );
+    		if (bufferSize < minBufferSize) {
+    			bufferSize = minBufferSize;
+    		}
+    		
+    		audio = new AudioTrack(AudioManager.STREAM_MUSIC, freq, AudioFormat.CHANNEL_CONFIGURATION_STEREO, encoding, bufferSize, AudioTrack.MODE_STREAM);
+    		Log.i("UAE", "AudioTrack initialized: " + freq + ", buffersize:" + bufferSize);
     		audio.play();
     	}
     }
