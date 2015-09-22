@@ -378,7 +378,8 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
             	buffer.position(0);
             	 mainScreen.copyPixelsFromBuffer(buffer);
             	 if (c != null && matrixScreen != null) {
- 	            	if (DemoActivity.aliased) c.setDrawFilter(setfil);
+            		 // disabled. It is too slow on some devices
+ 	            	// if (DemoActivity.aliased) c.setDrawFilter(setfil);
  	            	c.drawBitmap(mainScreen, matrixScreen, null);
  	            	if (mParent.vKeyPad != null && mParent.touch && DemoActivity.currentKeyboardLayout == 0)
  	            		mParent.vKeyPad.draw(c);
