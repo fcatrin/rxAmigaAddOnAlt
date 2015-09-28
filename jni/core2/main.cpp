@@ -333,6 +333,7 @@ JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring c
 		__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "kickstarts_dir %s", kickstarts_dir);
 		snprintf(romfile, 256, "%s/%s",kickstarts_dir,kickstarts_rom_names[kickstart]);
 		__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "rom %s", romfile);
+		__android_log_print(ANDROID_LOG_INFO, "UAE4DROID", "presetModeId %d", presetModeId);
 
     }
 
@@ -347,6 +348,8 @@ JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring c
     mainMenu_fastMemory = 0;
     mainMenu_chipset = DEFAULT_CHIPSET_SELECT; // aga
     mainMenu_CPU_speed = 0; // 500/5T/a1200/12T/12T2
+
+    SetPresetMode(presetModeId);
 
     UpdateCPUModelSettings(&changed_prefs);
     UpdateMemorySettings(&changed_prefs);
@@ -634,3 +637,337 @@ void discard_prefs_uae (struct uae_prefs *p)
     free_mountinfo (p->mountinfo);
 }
 #endif
+
+void SetPresetModeDisabled(int mode)
+{
+	int screenWidth = 0; // ignore property until resolved
+
+	presetModeId = mode;
+
+	__android_log_print(ANDROID_LOG_INFO, "SetPresetMode", "mode %d", mode);
+
+	switch(mode)
+	{
+		case 0:
+			mainMenu_displayedLines = 200;
+			screenWidth = 768;
+			strcpy(presetMode, "320x200 upscaled");
+			break;
+
+		case 1:
+			mainMenu_displayedLines = 216;
+			screenWidth = 716;
+			strcpy(presetMode, "320x216 upscaled");
+			break;
+
+		case 2:
+			mainMenu_displayedLines = 240;
+			screenWidth = 640;
+			strcpy(presetMode, "320x240 upscaled");
+			break;
+
+		case 3:
+			mainMenu_displayedLines = 256;
+			screenWidth = 600;
+			strcpy(presetMode, "320x256 upscaled");
+			break;
+
+		case 4:
+			mainMenu_displayedLines = 262;
+			screenWidth = 588;
+			strcpy(presetMode, "320x262 upscaled");
+			break;
+
+		case 5:
+			mainMenu_displayedLines = 270;
+			screenWidth = 570;
+			strcpy(presetMode, "320x270 upscaled");
+			break;
+
+		case 6:
+			mainMenu_displayedLines = 200;
+			screenWidth = 640;
+			strcpy(presetMode, "320x200 NTSC");
+			break;
+
+		case 7:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "320x200 fullscreen");
+			break;
+
+		case 10:
+			mainMenu_displayedLines = 200;
+			screenWidth = 768;
+			strcpy(presetMode, "640x200 upscaled");
+			break;
+
+		case 11:
+			mainMenu_displayedLines = 216;
+			screenWidth = 716;
+			strcpy(presetMode, "640x216 upscaled");
+			break;
+
+		case 12:
+			mainMenu_displayedLines = 240;
+			screenWidth = 640;
+			strcpy(presetMode, "640x240 upscaled");
+			break;
+
+		case 13:
+			mainMenu_displayedLines = 256;
+			screenWidth = 600;
+			strcpy(presetMode, "640x256 upscaled");
+			break;
+
+		case 14:
+			mainMenu_displayedLines = 262;
+			screenWidth = 588;
+			strcpy(presetMode, "640x262 upscaled");
+			break;
+
+		case 15:
+			mainMenu_displayedLines = 270;
+			screenWidth = 570;
+			strcpy(presetMode, "640x270 upscaled");
+			break;
+
+		case 16:
+			mainMenu_displayedLines = 200;
+			screenWidth = 640;
+			strcpy(presetMode, "640x200 NTSC");
+			break;
+
+		case 17:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "640x200 fullscreen");
+			break;
+
+		case 20:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "352x200 upscaled");
+			break;
+
+		case 21:
+			mainMenu_displayedLines = 216;
+			screenWidth = 784;
+			strcpy(presetMode, "352x216 upscaled");
+			break;
+
+		case 22:
+			mainMenu_displayedLines = 240;
+			screenWidth = 704;
+			strcpy(presetMode, "352x240 upscaled");
+			break;
+
+		case 23:
+			mainMenu_displayedLines = 256;
+			screenWidth = 660;
+			strcpy(presetMode, "352x256 upscaled");
+			break;
+
+		case 24:
+			mainMenu_displayedLines = 262;
+			screenWidth = 640;
+			strcpy(presetMode, "352x262 upscaled");
+			break;
+
+		case 25:
+			mainMenu_displayedLines = 270;
+			screenWidth = 624;
+			strcpy(presetMode, "352x270 upscaled");
+			break;
+
+		case 26:
+			mainMenu_displayedLines = 200;
+			screenWidth = 704;
+			strcpy(presetMode, "352x200 NTSC");
+			break;
+
+		case 27:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "352x200 fullscreen");
+			break;
+
+		case 30:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "704x200 upscaled");
+			break;
+
+		case 31:
+			mainMenu_displayedLines = 216;
+			screenWidth = 784;
+			strcpy(presetMode, "704x216 upscaled");
+			break;
+
+		case 32:
+			mainMenu_displayedLines = 240;
+			screenWidth = 704;
+			strcpy(presetMode, "704x240 upscaled");
+			break;
+
+		case 33:
+			mainMenu_displayedLines = 256;
+			screenWidth = 660;
+			strcpy(presetMode, "704x256 upscaled");
+			break;
+
+		case 34:
+			mainMenu_displayedLines = 262;
+			screenWidth = 640;
+			strcpy(presetMode, "704x262 upscaled");
+			break;
+
+		case 35:
+			mainMenu_displayedLines = 270;
+			screenWidth = 624;
+			strcpy(presetMode, "704x270 upscaled");
+			break;
+
+		case 36:
+			mainMenu_displayedLines = 200;
+			screenWidth = 704;
+			strcpy(presetMode, "704x200 NTSC");
+			break;
+
+		case 37:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "704x200 fullscreen");
+			break;
+
+		case 40:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "384x200 upscaled");
+			break;
+
+		case 41:
+			mainMenu_displayedLines = 216;
+			screenWidth = 800;
+			strcpy(presetMode, "384x216 upscaled");
+			break;
+
+		case 42:
+			mainMenu_displayedLines = 240;
+			screenWidth = 768;
+			strcpy(presetMode, "384x240 upscaled");
+			break;
+
+		case 43:
+			mainMenu_displayedLines = 256;
+			screenWidth = 720;
+			strcpy(presetMode, "384x256 upscaled");
+			break;
+
+		case 44:
+			mainMenu_displayedLines = 262;
+			screenWidth = 704;
+			strcpy(presetMode, "384x262 upscaled");
+			break;
+
+		case 45:
+			mainMenu_displayedLines = 270;
+			screenWidth = 684;
+			strcpy(presetMode, "384x270 upscaled");
+			break;
+
+		case 46:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "384x200 NTSC");
+			break;
+
+		case 47:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "384x200 fullscreen");
+			break;
+
+		case 50:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "768x200 upscaled");
+			break;
+
+		case 51:
+			mainMenu_displayedLines = 216;
+			screenWidth = 800;
+			strcpy(presetMode, "768x216 upscaled");
+			break;
+
+		case 52:
+			mainMenu_displayedLines = 240;
+			screenWidth = 768;
+			strcpy(presetMode, "768x240 upscaled");
+			break;
+
+		case 53:
+			mainMenu_displayedLines = 256;
+			screenWidth = 720;
+			strcpy(presetMode, "768x256 upscaled");
+			break;
+
+		case 54:
+			mainMenu_displayedLines = 262;
+			screenWidth = 704;
+			strcpy(presetMode, "768x262 upscaled");
+			break;
+
+		case 55:
+			mainMenu_displayedLines = 270;
+			screenWidth = 684;
+			strcpy(presetMode, "768x270 upscaled");
+			break;
+
+		case 56:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "768x200 NTSC");
+			break;
+
+		case 57:
+			mainMenu_displayedLines = 200;
+			screenWidth = 800;
+			strcpy(presetMode, "768x200 fullscreen");
+			break;
+
+  	default:
+			mainMenu_displayedLines = 240;
+			screenWidth = 640;
+			strcpy(presetMode, "320x240 upscaled");
+			presetModeId = 2;
+			break;
+	}
+
+	switch(presetModeId / 10)
+	{
+		case 0:
+			mainMenu_displayHires = 0;
+			break;
+
+		case 1:
+			mainMenu_displayHires = 1;
+			break;
+
+		case 2:
+			mainMenu_displayHires = 0;
+			break;
+
+		case 3:
+			mainMenu_displayHires = 1;
+			break;
+
+		case 4:
+			mainMenu_displayHires = 0;
+			break;
+
+		case 5:
+			mainMenu_displayHires = 1;
+			break;
+	}
+}

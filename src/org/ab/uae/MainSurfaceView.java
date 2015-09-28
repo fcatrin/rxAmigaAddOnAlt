@@ -7,6 +7,7 @@ import retrobox.vinput.AnalogGamepad;
 import retrobox.vinput.AnalogGamepad.Axis;
 import retrobox.vinput.AnalogGamepadListener;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -34,10 +35,21 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 	
 	AnalogGamepad analogGamepad;
 	
+	private static final int heights[] = {200, 216, 240, 256, 262, 270, 200, 200};
+	private static final int widths[] = {320, 352, 384};
+	
     public MainSurfaceView(Context context, AttributeSet set) {
         super(context, set);
         mParent = (DemoActivity)context;
-        mRenderer = new DemoRenderer(mParent);
+        
+        Intent intent = mParent.getIntent();
+        int presetModeId = intent.getIntExtra("presetModeId", 2);
+        
+        int surfaceWidth = widths[(presetModeId / 20) * 2];
+        int surfaceHeight = heights[presetModeId % 10];
+        boolean hires = ((presetModeId / 20) % 2) == 1;
+       
+        mRenderer = new DemoRenderer(mParent, surfaceWidth * (hires?2:1), surfaceHeight);
         
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);

@@ -20,8 +20,11 @@ public class DemoRenderer implements Runnable {
 	protected int pixels;
 	protected static Thread nativeThread;
 	
-	public DemoRenderer(DemoActivity surfaceView) {
+	public DemoRenderer(DemoActivity surfaceView, int bufferWidth, int bufferHeight) {
 		this.surfaceView = surfaceView;
+		//this.bufferWidth = bufferWidth;
+		//this.bufferHeight = bufferHeight;
+		//Log.i("Renderer", "java init " + bufferWidth + "x" + bufferHeight);
 	}
 	
 	public void run() {
