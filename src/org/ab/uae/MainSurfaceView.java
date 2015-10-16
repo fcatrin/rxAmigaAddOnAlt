@@ -145,7 +145,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
         //Log.i("UAE", "" + event.getX() + "/" + event.getY());
         if (  action >= 0 ) {
            nativeMouse( (int) (FACTOR*event.getX()), (int) (FACTOR*event.getY()), action, MOUSE_LEFT, 1);
-           actionKey(action == 0, KeyEvent.KEYCODE_DPAD_CENTER);
+           actionKey(null, action == 0, KeyEvent.KEYCODE_DPAD_CENTER);
         }
         return true;
 	}
@@ -155,15 +155,15 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
     		 mRenderer.nativeDone();
      };
      
-     public void actionKey(boolean down, int keyCode) {
+     public void actionKey(KeyEvent event, boolean down, int keyCode) {
     	 if (down)
-    		 keyDown(keyCode);
+    		 keyDown(event, keyCode);
     	 else
-    		 keyUp(keyCode);
+    		 keyUp(event, keyCode);
      }
     
-	public boolean keyDown(int keyCode) {
-		if (DemoActivity.mapper.isSystemKey(keyCode)) return false;
+	public boolean keyDown(KeyEvent event, int keyCode) {
+		if (DemoActivity.mapper.isSystemKey(event, keyCode)) return false;
 		
 		int joystick_nr = 1;
 		
@@ -197,8 +197,8 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
          return true;
      }
 	
-	public boolean keyUp(int keyCode) {
-		if (DemoActivity.mapper.isSystemKey(keyCode)) return false;
+	public boolean keyUp(KeyEvent event, int keyCode) {
+		if (DemoActivity.mapper.isSystemKey(event, keyCode)) return false;
 		
 		int joystick_nr = 1;
 		

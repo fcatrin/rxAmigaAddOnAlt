@@ -133,13 +133,13 @@ public class DemoActivity extends Activity implements GameKeyListener {
 
         public void onPress(int primaryCode) {
         	if (mGLView != null) {
-        		mGLView.actionKey(true, primaryCode);
+        		mGLView.actionKey(null, true, primaryCode);
         	}
         }
 
         public void onRelease(int primaryCode) {
         	if (mGLView != null) {
-        		mGLView.actionKey(false, primaryCode);
+        		mGLView.actionKey(null, false, primaryCode);
         	}
         		
         }
@@ -717,10 +717,10 @@ public void onGameKeyChanged(int keyStates) {
 private void manageKey(int keyStates, int key, int press) {
 	 if ((keyStates & key) == key && (currentKeyStates & key) == 0) {
 		// Log.i("FC64", "down: " + press );
-		 mGLView.keyDown(press);
+		 mGLView.keyDown(null, press);
 	 } else if ((keyStates & key) == 0 && (currentKeyStates & key) == key) {
 		// Log.i("FC64", "up: " + press );
-		 mGLView.keyUp(press);
+		 mGLView.keyUp(null, press);
 	 }
 }
 
@@ -733,7 +733,7 @@ private void toastMessage(final String message) {
 public boolean onKeyDown(int keyCode, KeyEvent event) {
 	if (mGLView != null) {
 		if (mapper.handleKeyEvent(event, keyCode, true)) return true;
-		if (mGLView.keyDown(keyCode)) return true;
+		if (mGLView.keyDown(event, keyCode)) return true;
 	}
 	return super.onKeyDown(keyCode, event);
 }
@@ -742,7 +742,7 @@ public boolean onKeyDown(int keyCode, KeyEvent event) {
 public boolean onKeyUp(int keyCode, KeyEvent event) {
 	if (mGLView != null) {
 		if (mapper.handleKeyEvent(event, keyCode, false)) return true;
-		if (mGLView.keyUp(keyCode)) return true;
+		if (mGLView.keyUp(event, keyCode)) return true;
 	}
 	return super.onKeyUp(keyCode, event);
 }
