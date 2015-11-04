@@ -47,6 +47,7 @@ import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
 
 import retrobox.amiga.uae4droid.R;
+import retrobox.utils.ImmersiveModeSetter;
 import retrobox.vinput.GenericGamepad.Analog;
 import retrobox.vinput.Mapper;
 import retrobox.vinput.Mapper.ShortCut;
@@ -256,29 +257,18 @@ public class DemoActivity extends Activity implements GameKeyListener {
     
 	public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) new Handler().postDelayed(new Runnable(){
-			@Override
-			public void run() {
-				setImmersiveMode();
-			}
-		}, 5000);
+        if (hasFocus) ImmersiveModeSetter.postImmersiveMode(new Handler(), getWindow(), isStableLayout());
+
 	}
 
-	@TargetApi(Build.VERSION_CODES.KITKAT)
 	private void setImmersiveMode() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			getWindow().getDecorView().setSystemUiVisibility(
-		            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-		            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-		            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-		            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-		            | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
-		            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-		} else {
-			
-		}
+		ImmersiveModeSetter.get().setImmersiveMode(getWindow(), isStableLayout());
 	}
     
+	private boolean isStableLayout() {
+		return Mapper.hasGamepads();
+	}
+
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
     	if (gamepadView.isVisible() && gamepadController.onTouchEvent(ev)) {
@@ -495,6 +485,8 @@ public class DemoActivity extends Activity implements GameKeyListener {
       /*  if( wakeLock != null )
             wakeLock.acquire();*/
         super.onResume();
+		ImmersiveModeSetter.get().setImmersiveMode(getWindow(), isStableLayout());
+
         if( mGLView != null )
             mGLView.onResume();
     }
