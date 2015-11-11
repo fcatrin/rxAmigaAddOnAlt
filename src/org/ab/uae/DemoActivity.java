@@ -42,12 +42,17 @@
 package org.ab.uae;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
 
 import retrobox.amiga.uae4droid.R;
 import retrobox.utils.ImmersiveModeSetter;
+import retrobox.utils.ListOption;
+import retrobox.utils.RetroBoxDialog;
+import retrobox.utils.RetroBoxUtils;
 import retrobox.vinput.GenericGamepad.Analog;
 import retrobox.vinput.Mapper;
 import retrobox.vinput.Mapper.ShortCut;
@@ -62,6 +67,9 @@ import retrobox.vinput.overlay.GamepadController;
 import retrobox.vinput.overlay.GamepadView;
 import retrobox.vinput.overlay.Overlay;
 import retrobox.vinput.overlay.OverlayExtra;
+import xtvapps.core.AndroidFonts;
+import xtvapps.core.Callback;
+import xtvapps.core.content.KeyValue;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -404,6 +412,9 @@ public class DemoActivity extends Activity implements GameKeyListener {
     {
     	if (mGLView == null)
     	setContentView(R.layout.main);
+    	
+    	AndroidFonts.setViewFont(findViewById(R.id.txtDialogListTitle), RetroBoxUtils.FONT_DEFAULT_M);
+    	
     	mGLView = ((MainSurfaceView) findViewById(R.id.mainview));
     	
     	 // Receive keyboard events
@@ -578,30 +589,50 @@ public class DemoActivity extends Activity implements GameKeyListener {
     public native void setRightMouse(int right);
     //public native void nativeAudioInit(DemoActivity callback);
     
-    
-    
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-
-        menu.add(0, CANCEL_ID, 0, "Cancel");
-        menu.add(0, LOAD_ID, 0, R.string.load_state);
-        menu.add(0, SAVE_ID, 0, R.string.save_state);
-        if (OverlayExtra.hasExtraButtons()) {
-        	menu.add(0, BUTTONS_ID, 0, "Extra Buttons");
-        }
-        if (needsOverlay()) {
-        	menu.add(0, OVERLAY_ID, 0, "Overlay ON/OFF");
-        }
-        menu.add(0, SWAP_ID, 0, R.string.swap);
-        menu.add(0, QUIT_ID, 0, R.string.quit);
-        
-        return true;
-    }
-    
     @Override
 	public void onBackPressed() {
-		openOptionsMenu();
+    	if (RetroBoxDialog.cancelDialog(this)) return;
+    	
+		openRetroBoxMenu();
+	}
+
+	private void openRetroBoxMenu() {
+		onPause();
+		
+		List<ListOption> options = new ArrayList<ListOption>();
+		options.add(new ListOption("", "Cancel"));
+		options.add(new ListOption("load", "Load State"));
+		options.add(new ListOption("save", "Save State"));
+        if (OverlayExtra.hasExtraButtons()) {
+        	options.add(new ListOption("extra", "Extra Buttons"));
+        }
+		options.add(new ListOption("swap", "Swap Disks"));
+		options.add(new ListOption("quit", "Quit"));
+		
+		RetroBoxDialog.showListDialog(this, "RetroBoxTV", options, new Callback<KeyValue>() {
+			@Override
+			public void onResult(KeyValue result) {
+				String key = result.getKey();
+				if (key.equals("load")) {
+					uiLoadState();
+				} else if (key.equals("save")) {
+					uiSaveState();
+				} else if (key.equals("extra")) {
+					uiToggleExtraButtons();
+				} else if (key.equals("swap")) {
+					uiSwapDisks();
+				} else if (key.equals("quit")) {
+					uiQuit();
+				}
+				onResume();
+			}
+
+			@Override
+			public void onError() {
+				onResume();
+			}
+		});
+		
 	}
 
 	public void uiLoadState() {
@@ -640,21 +671,6 @@ public class DemoActivity extends Activity implements GameKeyListener {
     	gamepadView.toggleView();
     }
     
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-    	if (item != null) {
-	        switch (item.getItemId()) {
-	        case LOAD_ID : uiLoadState(); return true;
-	        case SAVE_ID : uiSaveState(); return true;
-	        case BUTTONS_ID : uiToggleExtraButtons(); return true;
-	        case OVERLAY_ID : uiToggleOverlay(); return true;
-	        case SWAP_ID : uiSwapDisks(); return true;
-	        case QUIT_ID : uiQuit(); return true;
-	        }
-    	}
-        return super.onMenuItemSelected(featureId, item);
-    }
-    
     private void manageTouch(MenuItem item) {
     	if (touch) {
 			touch = false;
@@ -674,17 +690,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 		}
     }
     
-    @Override
-	public boolean onMenuOpened(int featureId, Menu menu) {
-		onPause();
-		return super.onMenuOpened(featureId, menu);
-	}
 
-	@Override
-	public void onOptionsMenuClosed(Menu menu) {
-		onResume();
-		super.onOptionsMenuClosed(menu);
-	}
     
 private int currentKeyStates = 0;
 
@@ -723,6 +729,10 @@ private void toastMessage(final String message) {
 
 @Override
 public boolean onKeyDown(int keyCode, KeyEvent event) {
+	if (RetroBoxDialog.isDialogVisible(this)) {
+		return RetroBoxDialog.onKeyDown(this, keyCode, event);
+	}
+	
 	if (mGLView != null) {
 		if (mapper.handleKeyEvent(event, keyCode, true)) return true;
 		if (mGLView.keyDown(event, keyCode)) return true;
@@ -732,6 +742,10 @@ public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 @Override
 public boolean onKeyUp(int keyCode, KeyEvent event) {
+	if (RetroBoxDialog.isDialogVisible(this)) {
+		return RetroBoxDialog.onKeyUp(this, keyCode, event);
+	}
+
 	if (mGLView != null) {
 		if (mapper.handleKeyEvent(event, keyCode, false)) return true;
 		if (mGLView.keyUp(event, keyCode)) return true;
@@ -832,7 +846,7 @@ class VirtualInputDispatcher implements VirtualEventDispatcher {
 		case LOAD_STATE : if (!down) uiLoadState(); return true;
 		case SAVE_STATE : if (!down) uiSaveState(); return true;
 		case SWAP_DISK  : if (!down) uiSwapDisks(); return true;
-		case MENU       : if (!down) openOptionsMenu(); return true;
+		case MENU       : if (!down) openRetroBoxMenu(); return true;
 		case EXIT       : uiQuitConfirm();return true;
 		default: return false;
 		}
