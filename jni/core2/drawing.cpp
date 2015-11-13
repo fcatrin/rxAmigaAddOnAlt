@@ -2297,6 +2297,14 @@ static _INLINE_ void write_tdletter (int x, int y, char ch)
     }
 }
 
+#define TRACK_LED_OFF_TIME_SEC 5
+#define TRACK_LED_OFF_IGNORE   60
+static int gui_last_track[] = {-1, -1, -1, -1};
+static int gui_last_track_off[] = {-1, -1, -1, -1};
+static int gui_last_track_counter[] = {0, 0, 0, 0};
+static timeval gui_last_track_update[4];
+static timeval gui_last_track_update_now;
+
 static _INLINE_ void draw_status_line (int line, int lineStart)
 {
     int x, y, i, j, led, on;
@@ -2346,6 +2354,31 @@ static _INLINE_ void draw_status_line (int line, int lineStart)
 			on = gui_data.drive_motor[led-1];
 			on_rgb = 0x0f0;
 			off_rgb = 0x040;
+
+			int last_track = gui_last_track[led-1];
+			if (on && track == last_track) {
+				if (gui_last_track_off[led-1] < 0) {
+					gettimeofday(&gui_last_track_update[led-1], NULL);
+					gui_last_track_off[led-1] = 0;
+				} else if (gui_last_track_off[led-1] == 0 && gui_last_track_counter[led-1]++ < TRACK_LED_OFF_IGNORE) {
+					gui_last_track_counter[led-1] = 0;
+
+					gettimeofday(&gui_last_track_update_now, NULL);
+					time_t last_update = gui_last_track_update[led-1].tv_sec;
+					time_t now = gui_last_track_update_now.tv_sec;
+					if (now - last_update > TRACK_LED_OFF_TIME_SEC) {
+						gui_last_track_off[led-1] = 1;
+						on = false;
+					}
+				} else {
+					on = false;
+				}
+
+			} else {
+				gui_last_track_off[led-1] = -1;
+				gui_last_track[led-1] = track;
+			}
+
 		} else if (led < 0) {
 			/* Power */
 			track = -1;
