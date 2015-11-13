@@ -124,6 +124,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	static GamepadView gamepadView;
 	static ExtraButtonsController extraButtonsController;
 	static ExtraButtonsView extraButtonsView;
+	static boolean canSwap = false;
 	
 	public static final Overlay overlay = new Overlay();
 
@@ -249,6 +250,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
         
         stateFileName = getIntent().getStringExtra("state");
         aliased = getIntent().getBooleanExtra("linearFilter", true);
+        canSwap = getIntent().getBooleanExtra("canSwap", false);
         
         /*TextView tv = new TextView(this);
         tv.setText("Initializing");
@@ -606,7 +608,9 @@ public class DemoActivity extends Activity implements GameKeyListener {
         if (OverlayExtra.hasExtraButtons()) {
         	options.add(new ListOption("extra", "Extra Buttons"));
         }
-		options.add(new ListOption("swap", "Swap Disks"));
+        if (canSwap) {
+        	options.add(new ListOption("swap", "Swap Disks"));
+        }
 		options.add(new ListOption("quit", "Quit"));
 		
 		RetroBoxDialog.showListDialog(this, "RetroBoxTV", options, new Callback<KeyValue>() {
