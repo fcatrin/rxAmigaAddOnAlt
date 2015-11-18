@@ -114,6 +114,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	private static final int MOUSE_RELATIVE = 1;
 	private static DemoActivity instance;
 	private static String stateFileName;
+	private static int stateSlot = 0;
 	
 	public static boolean aliased = true;
 	
@@ -248,7 +249,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 		extraButtonsView = new ExtraButtonsView(this);
 
         
-        stateFileName = getIntent().getStringExtra("state");
+        stateFileName = getIntent().getStringExtra("stateDir") + "/state";
         aliased = getIntent().getBooleanExtra("linearFilter", true);
         canSwap = getIntent().getBooleanExtra("canSwap", false);
         
@@ -640,12 +641,12 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	}
 
 	public void uiLoadState() {
-		loadState(stateFileName, 0);
+		loadState(stateFileName, stateSlot);
 		toastMessage("State was restored");
 	}
     
     public void uiSaveState() {
-		saveState(stateFileName, 0);
+		saveState(stateFileName, stateSlot);
 		toastMessage("State was saved");
     }
     

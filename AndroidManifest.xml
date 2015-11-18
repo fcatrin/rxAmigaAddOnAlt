@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="retrobox.amiga.uae4droid"
-      android:installLocation="auto" android:versionCode="11313" android:versionName="1.13-13"
+      android:installLocation="auto" android:versionCode="11314" android:versionName="1.13-14"
       android:sharedUserId="psychoworld.retrobox">
       
     <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="19"/>
