@@ -48,7 +48,7 @@ import java.util.List;
 import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
 
-import retrobox.amiga.uae4droid.R;
+import retrobox.v2.amiga.uae4droid.R;
 import retrobox.utils.ImmersiveModeSetter;
 import retrobox.utils.ListOption;
 import retrobox.utils.RetroBoxDialog;

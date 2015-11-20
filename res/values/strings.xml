@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RetroBoxTV Amiga support (UAE4Droid)</string>
+    <string name="app_name">RetroBoxTV Amiga support (UAE4Droid v2)</string>
 <string name="paths_section">Paths</string>
 
 <string name="rom_location">ROM Location (*.rom)</string>
