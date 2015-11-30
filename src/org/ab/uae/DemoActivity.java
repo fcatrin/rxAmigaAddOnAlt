@@ -49,6 +49,7 @@ import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
 
 import retrobox.v2.amiga.uae4droid.R;
+import retrobox.utils.GamepadInfoDialog;
 import retrobox.utils.ImmersiveModeSetter;
 import retrobox.utils.ListOption;
 import retrobox.utils.RetroBoxDialog;
@@ -69,6 +70,7 @@ import retrobox.vinput.overlay.Overlay;
 import retrobox.vinput.overlay.OverlayExtra;
 import xtvapps.core.AndroidFonts;
 import xtvapps.core.Callback;
+import xtvapps.core.SimpleCallback;
 import xtvapps.core.content.KeyValue;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -126,6 +128,8 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	static ExtraButtonsController extraButtonsController;
 	static ExtraButtonsView extraButtonsView;
 	static boolean canSwap = false;
+	
+	private GamepadInfoDialog gamepadInfoDialog;
 	
 	public static final Overlay overlay = new Overlay();
 
@@ -418,6 +422,12 @@ public class DemoActivity extends Activity implements GameKeyListener {
     	
     	AndroidFonts.setViewFont(findViewById(R.id.txtDialogListTitle), RetroBoxUtils.FONT_DEFAULT_M);
     	
+        AndroidFonts.setViewFont(findViewById(R.id.txtGamepadInfoTop), RetroBoxUtils.FONT_DEFAULT_M);
+        AndroidFonts.setViewFont(findViewById(R.id.txtGamepadInfoBottom), RetroBoxUtils.FONT_DEFAULT_M);
+
+        gamepadInfoDialog = new GamepadInfoDialog(this);
+        gamepadInfoDialog.loadFromIntent(getIntent());
+    	
     	mGLView = ((MainSurfaceView) findViewById(R.id.mainview));
     	
     	 // Receive keyboard events
@@ -612,6 +622,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
         if (canSwap) {
         	options.add(new ListOption("swap", "Swap Disks"));
         }
+        options.add(new ListOption("help", "Help"));
 		options.add(new ListOption("quit", "Quit"));
 		
 		RetroBoxDialog.showListDialog(this, "RetroBoxTV", options, new Callback<KeyValue>() {
@@ -628,6 +639,9 @@ public class DemoActivity extends Activity implements GameKeyListener {
 					uiSwapDisks();
 				} else if (key.equals("quit")) {
 					uiQuit();
+				} else if (key.equals("help")) {
+					uiHelp();
+					return;
 				}
 				onResume();
 			}
@@ -639,6 +653,15 @@ public class DemoActivity extends Activity implements GameKeyListener {
 		});
 		
 	}
+	
+    protected void uiHelp() {
+		RetroBoxDialog.showGamepadDialogIngame(this, gamepadInfoDialog, new SimpleCallback() {
+			@Override
+			public void onResult() {
+				onResume();
+			}
+		});
+    }
 
 	public void uiLoadState() {
 		loadState(stateFileName, stateSlot);
