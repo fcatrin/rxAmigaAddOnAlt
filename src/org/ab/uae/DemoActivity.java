@@ -48,12 +48,13 @@ import java.util.List;
 import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
 
-import retrobox.v2.amiga.uae4droid.R;
 import retrobox.utils.GamepadInfoDialog;
 import retrobox.utils.ImmersiveModeSetter;
 import retrobox.utils.ListOption;
 import retrobox.utils.RetroBoxDialog;
 import retrobox.utils.RetroBoxUtils;
+import retrobox.v2.amiga.uae4droid.R;
+import retrobox.vinput.GenericGamepad;
 import retrobox.vinput.GenericGamepad.Analog;
 import retrobox.vinput.Mapper;
 import retrobox.vinput.Mapper.ShortCut;
@@ -72,7 +73,6 @@ import xtvapps.core.AndroidFonts;
 import xtvapps.core.Callback;
 import xtvapps.core.SimpleCallback;
 import xtvapps.core.content.KeyValue;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -87,7 +87,6 @@ import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -848,7 +847,7 @@ class VirtualInputDispatcher implements VirtualEventDispatcher {
 	}
 	
 	@Override
-	public void sendKey(int keyCode, boolean down) {
+	public void sendKey(GenericGamepad gamepad, int keyCode, boolean down) {
 		int joystick = 0;
 		
 		switch (keyCode) {
@@ -881,7 +880,11 @@ class VirtualInputDispatcher implements VirtualEventDispatcher {
 	}
 
 	@Override
-	public void sendAnalog(Analog index, double x, double y) {}
+	public void sendAnalog(GenericGamepad gamepad, Analog index, double x,
+			double y, double hatx, double haty) {
+	}
+
+
 
 }
 

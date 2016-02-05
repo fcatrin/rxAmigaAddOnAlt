@@ -6,6 +6,7 @@ import java.nio.ShortBuffer;
 import retrobox.vinput.AnalogGamepad;
 import retrobox.vinput.AnalogGamepad.Axis;
 import retrobox.vinput.AnalogGamepadListener;
+import retrobox.vinput.GenericGamepad;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -73,20 +74,29 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 			}
 			
 			@Override
-			public void onAxisChange(float axisx, float axisy) {
-				analogGamepad.analogToDigital(axisx, axisy);
+			public void onAxisChange(GenericGamepad gamepad, float axisx, float axisy, float hatX, float hatY) {
+				if (Math.abs(axisx) < 0.005) axisx = hatX;
+				if (Math.abs(axisy) < 0.005) axisy = hatY;
+
+				analogGamepad.analogToDigital(gamepad, axisx, axisy);
 			}
 
 			@Override
-			public void onDigitalX(Axis axis, boolean on) {
-				if (axis == Axis.MIN) DemoActivity.vinputDispatcher.sendKey(KeyEvent.KEYCODE_DPAD_LEFT, on);
-				if (axis == Axis.MAX) DemoActivity.vinputDispatcher.sendKey(KeyEvent.KEYCODE_DPAD_RIGHT, on);
+			public void onDigitalX(GenericGamepad gamepad, Axis axis, boolean on) {
+				if (axis == Axis.MIN) DemoActivity.vinputDispatcher.sendKey(gamepad, KeyEvent.KEYCODE_DPAD_LEFT, on);
+				if (axis == Axis.MAX) DemoActivity.vinputDispatcher.sendKey(gamepad, KeyEvent.KEYCODE_DPAD_RIGHT, on);
 			}
 
 			@Override
-			public void onDigitalY(Axis axis, boolean on) {
-				if (axis == Axis.MIN) DemoActivity.vinputDispatcher.sendKey(KeyEvent.KEYCODE_DPAD_UP, on);
-				if (axis == Axis.MAX) DemoActivity.vinputDispatcher.sendKey(KeyEvent.KEYCODE_DPAD_DOWN, on);
+			public void onDigitalY(GenericGamepad gamepad,Axis axis, boolean on) {
+				if (axis == Axis.MIN) DemoActivity.vinputDispatcher.sendKey(gamepad, KeyEvent.KEYCODE_DPAD_UP, on);
+				if (axis == Axis.MAX) DemoActivity.vinputDispatcher.sendKey(gamepad, KeyEvent.KEYCODE_DPAD_DOWN, on);
+			}
+
+			@Override
+			public void onTriggers(String deviceDescriptor, int deviceId, boolean left, boolean right) {
+				DemoActivity.mapper.handleTriggerEvent(deviceDescriptor, deviceId, left, right);
+				
 			}
 			
 		});
