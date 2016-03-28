@@ -72,6 +72,7 @@ import retrobox.vinput.overlay.OverlayExtra;
 import xtvapps.core.AndroidFonts;
 import xtvapps.core.Callback;
 import xtvapps.core.SimpleCallback;
+import xtvapps.core.Utils;
 import xtvapps.core.content.KeyValue;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -115,7 +116,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	private static final int MOUSE_RELATIVE = 1;
 	private static DemoActivity instance;
 	private static String stateFileName;
-	private static int stateSlot = 0;
+	private static int saveSlot = 0;
 	
 	public static boolean aliased = true;
 	
@@ -605,16 +606,45 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	public void onBackPressed() {
     	if (RetroBoxDialog.cancelDialog(this)) return;
     	
-		openRetroBoxMenu();
+		openRetroBoxMenu(true);
 	}
 
-	private void openRetroBoxMenu() {
-		onPause();
+	private void uiChangeSlot() {
+		List<ListOption> options = new ArrayList<ListOption>();
+		options.add(new ListOption("", "Cancel"));
+		for (int i = 0; i < 5; i++) {
+			options.add(new ListOption((i+1) + "", "Use save slot " + i,
+					(i == saveSlot) ? "Active" : ""));
+		}
+
+		RetroBoxDialog.showListDialog(this, "RetroBoxTV", options,
+				new Callback<KeyValue>() {
+					@Override
+					public void onResult(KeyValue result) {
+						int slot = Utils.str2i(result.getKey())-1;
+						if (slot >= 0 && slot != saveSlot) {
+							saveSlot = slot;
+							toastMessage("Save State slot changed to " + slot);
+						}
+						openRetroBoxMenu(false);
+					}
+
+					@Override
+					public void onError() {
+						openRetroBoxMenu(false);
+					}
+
+				});
+	}
+    
+	private void openRetroBoxMenu(boolean pause) {
+		if (pause) onPause();
 		
 		List<ListOption> options = new ArrayList<ListOption>();
 		options.add(new ListOption("", "Cancel"));
 		options.add(new ListOption("load", "Load State"));
 		options.add(new ListOption("save", "Save State"));
+		options.add(new ListOption("slot", "Change Save State slot", "Slot " + saveSlot));		
         if (OverlayExtra.hasExtraButtons()) {
         	options.add(new ListOption("extra", "Extra Buttons"));
         }
@@ -638,6 +668,9 @@ public class DemoActivity extends Activity implements GameKeyListener {
 					uiSwapDisks();
 				} else if (key.equals("quit")) {
 					uiQuit();
+				} else if (key.equals("slot")) {
+					uiChangeSlot();
+					return;
 				} else if (key.equals("help")) {
 					uiHelp();
 					return;
@@ -663,12 +696,12 @@ public class DemoActivity extends Activity implements GameKeyListener {
     }
 
 	public void uiLoadState() {
-		loadState(stateFileName, stateSlot);
+		loadState(stateFileName, saveSlot);
 		toastMessage("State was restored");
 	}
     
     public void uiSaveState() {
-		saveState(stateFileName, stateSlot);
+		saveState(stateFileName, saveSlot);
 		toastMessage("State was saved");
     }
     
@@ -873,7 +906,7 @@ class VirtualInputDispatcher implements VirtualEventDispatcher {
 		case LOAD_STATE : if (!down) uiLoadState(); return true;
 		case SAVE_STATE : if (!down) uiSaveState(); return true;
 		case SWAP_DISK  : if (!down) uiSwapDisks(); return true;
-		case MENU       : if (!down) openRetroBoxMenu(); return true;
+		case MENU       : if (!down) openRetroBoxMenu(true); return true;
 		case EXIT       : uiQuitConfirm();return true;
 		default: return false;
 		}
