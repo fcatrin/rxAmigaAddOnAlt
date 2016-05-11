@@ -48,11 +48,13 @@ import java.util.List;
 import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
 
+import retrobox.content.SaveStateInfo;
 import retrobox.utils.GamepadInfoDialog;
 import retrobox.utils.ImmersiveModeSetter;
 import retrobox.utils.ListOption;
 import retrobox.utils.RetroBoxDialog;
 import retrobox.utils.RetroBoxUtils;
+import retrobox.utils.SaveStateSelectorAdapter;
 import retrobox.v2.amiga.uae4droid.R;
 import retrobox.vinput.GenericGamepad;
 import retrobox.vinput.GenericGamepad.Analog;
@@ -72,7 +74,6 @@ import retrobox.vinput.overlay.OverlayExtra;
 import xtvapps.core.AndroidFonts;
 import xtvapps.core.Callback;
 import xtvapps.core.SimpleCallback;
-import xtvapps.core.Utils;
 import xtvapps.core.content.KeyValue;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -264,6 +265,9 @@ public class DemoActivity extends Activity implements GameKeyListener {
         System.loadLibrary("uae2");
         checkConf();
         checkFiles(false);
+        
+        setScreenshotDir(getIntent().getStringExtra("screenshotDir"));
+        setScreenshotName(getIntent().getStringExtra("screenshotName"));
         
      // touch controls by default if no physical keyboard
         if (getResources().getConfiguration().keyboard == Configuration.KEYBOARD_NOKEYS)
@@ -600,6 +604,10 @@ public class DemoActivity extends Activity implements GameKeyListener {
     public native void nativeReset();
     public native void nativeQuit();
     public native void setRightMouse(int right);
+    
+    public native void setScreenshotDir(String dir);
+    public native void setScreenshotName(String name);
+    
     //public native void nativeAudioInit(DemoActivity callback);
     
     @Override
@@ -609,34 +617,47 @@ public class DemoActivity extends Activity implements GameKeyListener {
 		openRetroBoxMenu(true);
 	}
 
-	private void uiChangeSlot() {
-		List<ListOption> options = new ArrayList<ListOption>();
-		options.add(new ListOption("", "Cancel"));
-		for (int i = 0; i < 5; i++) {
-			options.add(new ListOption((i+1) + "", "Use save slot " + i,
-					(i == saveSlot) ? "Active" : ""));
+	private void uiSelectSaveState(final boolean isLoadingState) {
+		List<SaveStateInfo> list = new ArrayList<SaveStateInfo>();
+		for(int i=0; i<6; i++) {
+			String fileName = stateFileName +  (i==0?"":("-" + i)) + ".asf";
+			String fileNameShot = fileName + ".png" ;
+			Log.d(LOGTAG, "Reading filestate from " + fileName);
+			list.add(new SaveStateInfo(new File(fileName), new File(fileNameShot)));
 		}
-
-		RetroBoxDialog.showListDialog(this, "RetroBoxTV", options,
-				new Callback<KeyValue>() {
-					@Override
-					public void onResult(KeyValue result) {
-						int slot = Utils.str2i(result.getKey())-1;
-						if (slot >= 0 && slot != saveSlot) {
-							saveSlot = slot;
-							toastMessage("Save State slot changed to " + slot);
-						}
-						openRetroBoxMenu(false);
+		
+		final SaveStateSelectorAdapter adapter = new SaveStateSelectorAdapter(list, saveSlot);
+		
+		Callback<Integer> callback = new Callback<Integer>() {
+			boolean invalidSlot = false;
+			
+			@Override
+			public void onResult(Integer index) {
+				System.out.println("setting save slot to " + index + " loading " + isLoadingState);
+				invalidSlot = isLoadingState && 
+						!((SaveStateInfo)adapter.getItem(index)).exists();
+				
+				if (!invalidSlot) {
+					saveSlot = index;
+					if (isLoadingState) {
+						uiLoadState();
+					} else {
+						uiSaveState();
 					}
+					RetroBoxDialog.cancelDialog(DemoActivity.this);
+				}
+			}
 
-					@Override
-					public void onError() {
-						openRetroBoxMenu(false);
-					}
-
-				});
+			@Override
+			public void onFinally() {
+				onResume();
+			}
+		};
+		
+		String title = "Select slot to " + (isLoadingState ? "load from" : "save on");
+		RetroBoxDialog.showSaveStatesDialog(this, title, adapter, callback);
 	}
-    
+	
 	private void openRetroBoxMenu(boolean pause) {
 		if (pause) onPause();
 		
@@ -644,7 +665,6 @@ public class DemoActivity extends Activity implements GameKeyListener {
 		options.add(new ListOption("", "Cancel"));
 		options.add(new ListOption("load", "Load State"));
 		options.add(new ListOption("save", "Save State"));
-		options.add(new ListOption("slot", "Change Save State slot", "Slot " + saveSlot));		
         if (OverlayExtra.hasExtraButtons()) {
         	options.add(new ListOption("extra", "Extra Buttons"));
         }
@@ -659,18 +679,17 @@ public class DemoActivity extends Activity implements GameKeyListener {
 			public void onResult(KeyValue result) {
 				String key = result.getKey();
 				if (key.equals("load")) {
-					uiLoadState();
+					uiSelectSaveState(true);
+					return;
 				} else if (key.equals("save")) {
-					uiSaveState();
+					uiSelectSaveState(false);
+					return;
 				} else if (key.equals("extra")) {
 					uiToggleExtraButtons();
 				} else if (key.equals("swap")) {
 					uiSwapDisks();
 				} else if (key.equals("quit")) {
 					uiQuit();
-				} else if (key.equals("slot")) {
-					uiChangeSlot();
-					return;
 				} else if (key.equals("help")) {
 					uiHelp();
 					return;
@@ -683,7 +702,21 @@ public class DemoActivity extends Activity implements GameKeyListener {
 				onResume();
 			}
 		});
-		
+	}
+	
+	protected void uiScreenshot() {
+		uiScreenshot(true);
+		new Handler().postDelayed(new Runnable(){
+			@Override
+			public void run() {
+				uiScreenshot(false);
+				toastMessage("Screenshot taken");
+			}
+		}, 500);
+	}
+	
+	protected void uiScreenshot(boolean down) {
+		MainSurfaceView.nativeKey(KeyEvent.KEYCODE_SYSRQ, down?1:0, 0, 0);
 	}
 	
     protected void uiHelp() {
@@ -697,12 +730,12 @@ public class DemoActivity extends Activity implements GameKeyListener {
 
 	public void uiLoadState() {
 		loadState(stateFileName, saveSlot);
-		toastMessage("State was restored");
+		toastMessage("State was restored from slot #" + (saveSlot+1));
 	}
     
     public void uiSaveState() {
 		saveState(stateFileName, saveSlot);
-		toastMessage("State was saved");
+		toastMessage("State was saved to slot #" + (saveSlot + 1));
     }
     
     public void uiSwapDisks() {
@@ -906,6 +939,7 @@ class VirtualInputDispatcher implements VirtualEventDispatcher {
 		case LOAD_STATE : if (!down) uiLoadState(); return true;
 		case SAVE_STATE : if (!down) uiSaveState(); return true;
 		case SWAP_DISK  : if (!down) uiSwapDisks(); return true;
+		case SCREENSHOT : uiScreenshot(); return true;
 		case MENU       : if (!down) openRetroBoxMenu(true); return true;
 		case EXIT       : uiQuitConfirm();return true;
 		default: return false;

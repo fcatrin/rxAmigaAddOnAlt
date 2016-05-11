@@ -48,6 +48,8 @@ extern "C" int main( int argc, char *argv[] );
 #include "gp2xutil.h"
 #include "savestate.h"
 #include "menu_config.h"
+#include "retrobox.h"
+
 #ifdef __WINS__
 #include "target.h"
 #endif
@@ -360,22 +362,39 @@ JAVA_EXPORT_NAME(DemoActivity_setPrefs) ( JNIEnv*  env, jobject  thiz, jstring c
 }
 
 extern "C" void
-JAVA_EXPORT_NAME(DemoActivity_saveState) ( JNIEnv*  env, jobject  thiz,  jstring filename, jint num) {
+JAVA_EXPORT_NAME(DemoActivity_setScreenshotDir) ( JNIEnv*  env, jobject  thiz,  jstring jdir) {
+	const char *dir = (env)->GetStringUTFChars(jdir , NULL ) ;
+	strcpy(screenshot_dir, dir);
+	__android_log_print(ANDROID_LOG_INFO, "libSDL", "set screenshot dir to %s", dir );
+	(env)->ReleaseStringUTFChars(jdir, dir);
+}
+
+extern "C" void
+JAVA_EXPORT_NAME(DemoActivity_setScreenshotName) ( JNIEnv*  env, jobject  thiz,  jstring jname) {
+	const char *name = (env)->GetStringUTFChars(jname , NULL ) ;
+	strcpy(screenshot_name, name);
+	__android_log_print(ANDROID_LOG_INFO, "libSDL", "set screenshot name to %s", name );
+	(env)->ReleaseStringUTFChars(jname, name);
+}
+
+static void prepare_savestate_name(const char *srom, int slot) {
+	strcpy(savestate_filename, srom);
+
+	if (slot == 0) {
+		strcat(savestate_filename, ".asf");
+	} else {
+		char buffer[256] = "";
+		sprintf(buffer, "-%d.asf", slot);
+		strcat(savestate_filename, buffer);
+	}
+}
+
+extern "C" void
+JAVA_EXPORT_NAME(DemoActivity_saveState) ( JNIEnv*  env, jobject  thiz,  jstring filename, jint slot) {
 
     const char *srom = (env)->GetStringUTFChars(filename, 0);
-    strcpy(savestate_filename, srom);
     
-    switch(num)
-    {
-        case 1:
-            strcat(savestate_filename,"-1.asf");
-        case 2:
-            strcat(savestate_filename,"-2.asf");
-        case 3:
-            strcat(savestate_filename,"-3.asf");
-        default: 
-            strcat(savestate_filename,".asf");
-    }
+    prepare_savestate_name(srom, slot);
 
     (env)->ReleaseStringUTFChars(filename, srom);
         
@@ -427,7 +446,7 @@ JAVA_EXPORT_NAME(DemoActivity_diskSwap) ( JNIEnv*  env, jobject  thiz) {
 
 
 extern "C" void
-JAVA_EXPORT_NAME(DemoActivity_loadState) ( JNIEnv*  env, jobject  thiz,  jstring filename, jint num) {
+JAVA_EXPORT_NAME(DemoActivity_loadState) ( JNIEnv*  env, jobject  thiz,  jstring filename, jint slot) {
 
     // shagrath : don't ask
     int hackEnableSound = 0;
@@ -441,19 +460,8 @@ JAVA_EXPORT_NAME(DemoActivity_loadState) ( JNIEnv*  env, jobject  thiz,  jstring
     //
 
     const char *srom = (env)->GetStringUTFChars(filename, 0);
-    strcpy(savestate_filename, srom);
-    
-    switch(num)
-    {
-        case 1:
-            strcat(savestate_filename,"-1.asf");
-        case 2:
-            strcat(savestate_filename,"-2.asf");
-        case 3:
-            strcat(savestate_filename,"-3.asf");
-        default: 
-            strcat(savestate_filename,".asf");
-    }
+
+    prepare_savestate_name(srom, slot);
 
     (env)->ReleaseStringUTFChars(filename, srom);
         

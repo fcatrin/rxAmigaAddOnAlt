@@ -17,6 +17,9 @@
 #error UAE4ALL_ALIGN NO DEFINIDO
 #endif
 
+#define STATE_DOSCREENSHOT 1
+extern int screenshot_state;
+
 /* calculate shift depending on resolution (replaced "decided_hires ? 4 : 8") (TW) */
 #define RES_SHIFT(res) ((res) == RES_LORES ? 8 : (res) == RES_HIRES ? 4 : 2)
 

@@ -21,5 +21,6 @@
     <include layout="@layout/modal_dialog_gamepad" />
 	<include layout="@layout/modal_dialog_list" />
     <include layout="@layout/modal_dialog_actions" />
+    <include layout="@layout/modal_dialog_savestates" />
     
 </FrameLayout>
