@@ -17,5 +17,5 @@ SDL_TRACKBALL_KEYUP_DELAY := 4
 
 
 LOCAL_PATH:= $(call my-dir)
-include $(LOCAL_PATH)/core2/Android.mk $(LOCAL_PATH)/sdl/Android.mk $(LOCAL_PATH)/sdl_mixer/Android.mk $(LOCAL_PATH)/tremor/Android.mk
+include $(LOCAL_PATH)/core2/Android.mk $(LOCAL_PATH)/sdl/Android.mk $(LOCAL_PATH)/sdl_mixer/Android.mk $(LOCAL_PATH)/tremor/Android.mk $(LOCAL_PATH)/png/Android.mk
 

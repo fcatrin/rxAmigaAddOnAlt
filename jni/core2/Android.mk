@@ -10,6 +10,7 @@ src
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include $(LOCAL_PATH)/vkbd $(LOCAL_PATH)/gp2x $(LOCAL_PATH)/gp2x/menu $(LOCAL_PATH)/../sdl/include
 
 LOCAL_CFLAGS := $(foreach D, $(CG_SUBDIRS), -I$(CG_SRCDIR)/$(D)) \
+				-I$(LOCAL_PATH)/../png/include \
 				-I$(LOCAL_PATH)/../sdl/include \
 				-I$(LOCAL_PATH)/../sdl_mixer \
 
@@ -18,7 +19,7 @@ LOCAL_CFLAGS     += -Wno-psabi
 LOCAL_CFLAGS	 += -DSDL_JAVA_PACKAGE_PATH=$(SDL_JAVA_PACKAGE_PATH) -DANDROID -DOS_ANDROID
 LOCAL_CFLAGS	 += -fomit-frame-pointer -Wno-unused -Wno-format -DUSE_SDL -DGCCCONSTFUNC="__attribute__((const))" -DUSE_UNDERSCORE -fno-exceptions -DUNALIGNED_PROFITABLE -DOPTIMIZED_FLAGS -DSHM_SUPPORT_LINKS=0 -DOS_WITHOUT_MEMORY_MANAGEMENT
 
-LOCAL_SRC_FILES  := audio.cpp autoconf.cpp blitfunc.cpp blittable.cpp blitter.cpp cfgfile.cpp cia.cpp savedisk.cpp savestate.cpp compiler.cpp custom.cpp disk.cpp drawing.cpp ersatz.cpp expansion.cpp filesys.cpp fsdb.cpp fsdb_unix.cpp fsusage.cpp gfxutil.cpp hardfile.cpp keybuf.cpp main.cpp memory.cpp missing.cpp native2amiga.cpp gui.cpp od-joy.cpp scsi-none.cpp sdlgfx.cpp writelog.cpp zfile.cpp vkbd/vkbd.cpp sound_android.cpp
+LOCAL_SRC_FILES  := audio.cpp autoconf.cpp blitfunc.cpp blittable.cpp blitter.cpp cfgfile.cpp cia.cpp savedisk.cpp savestate.cpp compiler.cpp custom.cpp disk.cpp drawing.cpp ersatz.cpp expansion.cpp filesys.cpp fsdb.cpp fsdb_unix.cpp fsusage.cpp gfxutil.cpp hardfile.cpp keybuf.cpp main.cpp memory.cpp missing.cpp native2amiga.cpp gui.cpp od-joy.cpp scsi-none.cpp sdlgfx.cpp writelog.cpp zfile.cpp vkbd/vkbd.cpp sound_android.cpp screenshot.cpp
 
 LOCAL_ARM_MODE := arm
 
@@ -42,7 +43,7 @@ LOCAL_CFLAGS += -DUSE_FAME_CORE -DUSE_FAME_CORE_C -DFAME_IRQ_CLOCKING -DFAME_CHE
 
 LOCAL_SRC_FILES  += m68k/fame/famec.cpp m68k/fame/m68k_intrf.cpp m68k/m68k_cmn_intrf.cpp
 
-LOCAL_STATIC_LIBRARIES :=  sdl  
+LOCAL_STATIC_LIBRARIES :=  sdl png
 
 LOCAL_LDLIBS	+= -llog -lz
 
