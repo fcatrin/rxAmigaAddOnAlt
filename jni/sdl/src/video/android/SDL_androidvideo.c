@@ -847,6 +847,8 @@ void ANDROID_InitOSKeymap(_THIS)
   keymap[KEYCODE_SHIFT_LEFT] = SDLK_LSHIFT;
   keymap[KEYCODE_SHIFT_RIGHT] = SDLK_RSHIFT;
 
+  keymap[KEYCODE_SYSRQ] = SDLK_PRINT;
+
   /*
 
   keymap[KEYCODE_SYM] = SDLK_SYM;
