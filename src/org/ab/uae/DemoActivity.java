@@ -715,7 +715,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 			@Override
 			public void run() {
 				uiScreenshot(false);
-				toastMessage(getString(R.string.emu_screenshot));
+				toastMessage(getString(R.string.emu_screenshot_taken));
 			}
 		}, 500);
 	}
