@@ -240,6 +240,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
         vinputDispatcher = new VirtualInputDispatcher();
         mapper = new Mapper(getIntent(), vinputDispatcher);
         Mapper.initGestureDetector(this);
+        Mapper.joinPorts = getIntent().getBooleanExtra("joinPorts", false);
         
 		for(int i=0; i<2; i++) {
         	String prefix = "j" + (i+1);
