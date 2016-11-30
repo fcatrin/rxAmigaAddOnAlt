@@ -35,6 +35,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 	SurfaceHolder mSurfaceHolder;
 	
 	AnalogGamepad analogGamepad;
+	private boolean invertRGB;
 	
 	private static final int heights[] = {200, 216, 240, 256, 262, 270, 200, 200};
 	private static final int widths[] = {320, 352, 384};
@@ -45,12 +46,13 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
         
         Intent intent = mParent.getIntent();
         int presetModeId = intent.getIntExtra("presetModeId", 2);
+        invertRGB = intent.getBooleanExtra("invertRGB", false);
         
         int surfaceWidth = widths[(presetModeId / 20) * 2];
         int surfaceHeight = heights[presetModeId % 10];
         boolean hires = ((presetModeId / 20) % 2) == 1;
        
-        mRenderer = new DemoRenderer(mParent, surfaceWidth * (hires?2:1), surfaceHeight);
+        mRenderer = new DemoRenderer(mParent, surfaceWidth * (hires?2:1), surfaceHeight, invertRGB);
         
         mSurfaceHolder = getHolder();
         mSurfaceHolder.addCallback(this);
@@ -283,7 +285,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 	public void run() {
 		Log.i("Renderer", "nativeInit");
 		if (mRenderer != null)
-   		 mRenderer.nativeInit(mParent, buffer, 1);
+   		 mRenderer.nativeInit(mParent, buffer, 1, invertRGB);
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int w,

@@ -18,10 +18,12 @@ public class DemoRenderer implements Runnable {
 	protected int width;
 	protected int height;
 	protected int pixels;
+	private boolean invertRGB;
 	protected static Thread nativeThread;
 	
-	public DemoRenderer(DemoActivity surfaceView, int bufferWidth, int bufferHeight) {
+	public DemoRenderer(DemoActivity surfaceView, int bufferWidth, int bufferHeight, boolean invertRGB) {
 		this.surfaceView = surfaceView;
+		this.invertRGB = invertRGB;
 		//this.bufferWidth = bufferWidth;
 		//this.bufferHeight = bufferHeight;
 		//Log.i("Renderer", "java init " + bufferWidth + "x" + bufferHeight);
@@ -29,10 +31,8 @@ public class DemoRenderer implements Runnable {
 	
 	public void run() {
 		Log.i("Renderer", "nativeInit");
-		nativeInit(surfaceView, buffer, 1);
+		nativeInit(surfaceView, buffer, 1, invertRGB);
 	}
-	
-    
     
 	public void shiftImage(int leftDPIs) {
 		if (leftDPIs > 0) {
@@ -63,7 +63,7 @@ public class DemoRenderer implements Runnable {
     public native void nativePause( );
     public native void nativeResume( );
 
-    public native void nativeInit(DemoActivity demo, ShortBuffer buffer, int directmode);
+    public native void nativeInit(DemoActivity demo, ShortBuffer buffer, int directmode, boolean invertRGB);
     public native void nativeResize(int w, int h);
     //private native void nativeRender();
     public native void nativeDone();

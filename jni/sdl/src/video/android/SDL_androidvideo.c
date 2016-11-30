@@ -91,6 +91,9 @@ int android_numJoysticks;
 
 static int sWindowWidth  = 320;
 static int sWindowHeight = 480;
+
+int ANDROID_invert_rgb = 0;
+
 /*static SDL_mutex * WaitForNativeRender = NULL;
 static SDL_cond * WaitForNativeRender1 = NULL;
 static enum { Render_State_Started, Render_State_Processing, Render_State_Finished } 
@@ -284,6 +287,12 @@ SDL_Surface *ANDROID_SetVideoMode(_THIS, SDL_Surface *current,
 	current->h = height;
 	current->pitch = memX * (bpp / 8);
 	current->pixels = memBuffer;
+
+	if (ANDROID_invert_rgb) {
+		Uint32 tmpMask = current->format->Rmask;
+		current->format->Rmask = current->format->Bmask;
+		current->format->Bmask = tmpMask;
+	}
 
 	__android_log_print(ANDROID_LOG_INFO, "libSDL", "width: %d", width);
 	__android_log_print(ANDROID_LOG_INFO, "libSDL", "height: %d", height);
@@ -495,7 +504,7 @@ static int SDLCALL MainThreadWrapper(void * dummy)
 #define JAVA_EXPORT_NAME(name) JAVA_EXPORT_NAME1(name,SDL_JAVA_PACKAGE_PATH)
 
 extern void
-JAVA_EXPORT_NAME(DemoRenderer_nativeInit) ( JNIEnv*  env, jobject  thiz, jobject callback, jobject shortBuffer, jint direct)
+JAVA_EXPORT_NAME(DemoRenderer_nativeInit) ( JNIEnv*  env, jobject  thiz, jobject callback, jobject shortBuffer, jint direct, jboolean invertRGB)
 {
 	__android_log_print(ANDROID_LOG_INFO, "libSDL", "startRegister");
 	android_env = env;
@@ -504,6 +513,8 @@ JAVA_EXPORT_NAME(DemoRenderer_nativeInit) ( JNIEnv*  env, jobject  thiz, jobject
 	android_render = (*android_env)->GetMethodID(env, android_caller, "render", "()V");
 	textureBuffer = (jshort*) (*env)->GetDirectBufferAddress(env, shortBuffer);
 	directmode = direct;
+
+	ANDROID_invert_rgb = invertRGB;
 
 	//(*env)->GetJavaVM(env, &jvm);
 
