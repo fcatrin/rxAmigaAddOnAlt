@@ -834,6 +834,10 @@ public boolean onKeyDown(int keyCode, KeyEvent event) {
 		return RetroBoxDialog.onKeyDown(this, keyCode, event);
 	}
 	
+	if (keyCode == KeyEvent.KEYCODE_DEL || keyCode == KeyEvent.KEYCODE_ESCAPE || keyCode == KeyEvent.KEYCODE_BACK) { // BACK or ESC
+		return super.onKeyDown(KeyEvent.KEYCODE_BACK, event); 
+	}
+
 	if (mGLView != null) {
 		if (mapper.handleKeyEvent(event, keyCode, true)) return true;
 		if (mGLView.keyDown(event, keyCode)) return true;
@@ -845,6 +849,10 @@ public boolean onKeyDown(int keyCode, KeyEvent event) {
 public boolean onKeyUp(int keyCode, KeyEvent event) {
 	if (RetroBoxDialog.isDialogVisible(this)) {
 		return RetroBoxDialog.onKeyUp(this, keyCode, event);
+	}
+	
+	if (keyCode == KeyEvent.KEYCODE_DEL || keyCode == KeyEvent.KEYCODE_ESCAPE || keyCode == KeyEvent.KEYCODE_BACK) { // BACK or ESC
+		return super.onKeyUp(KeyEvent.KEYCODE_BACK, event); 
 	}
 
 	if (mGLView != null) {
