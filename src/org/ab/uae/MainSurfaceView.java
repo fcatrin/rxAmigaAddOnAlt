@@ -76,7 +76,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 			}
 			
 			@Override
-			public void onAxisChange(GenericGamepad gamepad, float axisx, float axisy, float hatX, float hatY) {
+			public void onAxisChange(GenericGamepad gamepad, float axisx, float axisy, float hatX, float hatY, float raxisx, float raxisy) {
 				if (Math.abs(axisx) < 0.005) axisx = hatX;
 				if (Math.abs(axisy) < 0.005) axisy = hatY;
 
