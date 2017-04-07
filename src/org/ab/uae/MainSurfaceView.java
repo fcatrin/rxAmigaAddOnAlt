@@ -100,6 +100,12 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 				DemoActivity.mapper.handleTriggerEvent(deviceDescriptor, deviceId, left, right);
 				
 			}
+
+			@Override
+			public void onTriggersAnalog(GenericGamepad gamepad, int deviceId, float left, float right) {
+				// TODO Auto-generated method stub
+				
+			}
 			
 		});
         analogGamepad.startGamepadMouseMoveThread();
