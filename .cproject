@@ -22,19 +22,22 @@
 							<tool id="org.eclipse.cdt.build.core.settings.holder.libs.1028399772" name="holder for library settings" superClass="org.eclipse.cdt.build.core.settings.holder.libs"/>
 							<tool id="org.eclipse.cdt.build.core.settings.holder.1231469381" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.2115744712" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/shagrath/soft/android-ndk/platforms/android-5/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/home/fcatrin/devel/android-ndk-r10e/platforms/android-21/arch-x86/usr/include"/>
+									<listOptionValue builtIn="false" value="/home/fcatrin/git/rxAmigaAddOnAlt/jni/sdl/include"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.846823960" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
 							<tool id="org.eclipse.cdt.build.core.settings.holder.118583094" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1790636311" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/shagrath/soft/android-ndk/platforms/android-5/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/home/fcatrin/devel/android-ndk-r10e/platforms/android-21/arch-x86/usr/include"/>
+									<listOptionValue builtIn="false" value="/home/fcatrin/git/rxAmigaAddOnAlt/jni/sdl/include"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.327386443" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
 							<tool id="org.eclipse.cdt.build.core.settings.holder.271299085" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1330494244" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/shagrath/soft/android-ndk/platforms/android-5/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/home/fcatrin/devel/android-ndk-r10e/platforms/android-21/arch-x86/usr/include"/>
+									<listOptionValue builtIn="false" value="/home/fcatrin/git/rxAmigaAddOnAlt/jni/sdl/include"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.800766220" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
@@ -67,18 +70,21 @@
 							<tool id="org.eclipse.cdt.build.core.settings.holder.1136319322" name="Assembly" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.157670308" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/home/shagrath/soft/android-ndk/platforms/android-5/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/home/fcatrin/git/rxAmigaAddOnAlt/jni/sdl/include"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.357171681" languageId="org.eclipse.cdt.core.assembly" languageName="Assembly" sourceContentType="org.eclipse.cdt.core.asmSource" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
 							<tool id="org.eclipse.cdt.build.core.settings.holder.265348152" name="GNU C++" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.134523220" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/home/shagrath/soft/android-ndk/platforms/android-5/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/home/fcatrin/git/rxAmigaAddOnAlt/jni/sdl/include"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.245491456" languageId="org.eclipse.cdt.core.g++" languageName="GNU C++" sourceContentType="org.eclipse.cdt.core.cxxSource,org.eclipse.cdt.core.cxxHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
 							<tool id="org.eclipse.cdt.build.core.settings.holder.906065800" name="GNU C" superClass="org.eclipse.cdt.build.core.settings.holder">
 								<option id="org.eclipse.cdt.build.core.settings.holder.incpaths.1402624017" name="Include Paths" superClass="org.eclipse.cdt.build.core.settings.holder.incpaths" valueType="includePath">
 									<listOptionValue builtIn="false" value="/home/shagrath/soft/android-ndk/platforms/android-5/arch-arm/usr/include"/>
+									<listOptionValue builtIn="false" value="/home/fcatrin/git/rxAmigaAddOnAlt/jni/sdl/include"/>
 								</option>
 								<inputType id="org.eclipse.cdt.build.core.settings.holder.inType.1882903614" languageId="org.eclipse.cdt.core.gcc" languageName="GNU C" sourceContentType="org.eclipse.cdt.core.cSource,org.eclipse.cdt.core.cHeader" superClass="org.eclipse.cdt.build.core.settings.holder.inType"/>
 							</tool>
@@ -102,6 +108,8 @@
 		</configuration>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile"/>
 		<profile id="org.eclipse.cdt.make.core.GCCStandardMakePerProjectProfile">
@@ -207,6 +215,8 @@
 				</scannerInfoProvider>
 			</profile>
 		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="0.2114646805.866660386">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 	</storageModule>
-	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 </cproject>

@@ -28,6 +28,7 @@
 #include "SDL_rwops.h"
 #include "SDL_timer.h"
 #include "SDL_audio.h"
+#include "SDL_error.h"
 #include "../SDL_audiomem.h"
 #include "../SDL_audio_c.h"
 #include "../SDL_audiodev_c.h"
@@ -37,6 +38,8 @@
 #include <jni.h>
 #include <android/log.h>
 
+#include "../core2/retrobox.h"
+
 #define ANDROIDAUD_DRIVER_NAME         "android"
 
 /* Audio driver functions */
@@ -45,6 +48,11 @@ static void ANDROIDAUD_WaitAudio(_THIS);
 static void ANDROIDAUD_PlayAudio(_THIS);
 static Uint8 *ANDROIDAUD_GetAudioBuf(_THIS);
 static void ANDROIDAUD_CloseAudio(_THIS);
+
+float audio_stereo_separation = 0.75;
+unsigned int audio_stereo_main = 0;
+unsigned int audio_stereo_secondary = 0;
+int   audio_filter_enabled = 1;
 
 /* Audio driver bootstrap functions */
 static int ANDROIDAUD_Available(void)
@@ -343,3 +351,20 @@ extern jint JAVA_EXPORT_NAME(AudioThread_nativeAudioBufferUnlock) ( JNIEnv * env
 	return 0;
 }
 
+extern void JAVA_EXPORT_NAME(DemoActivity_nativeSetStereoSeparation) (JNIEnv * jniEnv, jobject thiz, jfloat separation) {
+	audio_stereo_separation = separation;
+	audio_stereo_main      =      separation  * AUDIO_STEREO_SEPARATION_BASE;
+	audio_stereo_secondary = (1 - separation) * AUDIO_STEREO_SEPARATION_BASE;
+}
+
+extern float JAVA_EXPORT_NAME(DemoActivity_nativeGetStereoSeparation) (JNIEnv * jniEnv, jobject thiz) {
+	return audio_stereo_separation;
+}
+
+extern void JAVA_EXPORT_NAME(DemoActivity_nativeSetFilterEnabled) (JNIEnv * jniEnv, jobject thiz, jboolean enabled) {
+	audio_filter_enabled = enabled;
+}
+
+extern jboolean JAVA_EXPORT_NAME(DemoActivity_nativeIsFilterEnabled) (JNIEnv * jniEnv, jobject thiz) {
+	return audio_filter_enabled;
+}

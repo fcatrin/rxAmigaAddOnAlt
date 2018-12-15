@@ -31,6 +31,7 @@
 #include "audio.h"
 #include "debug_uae4all.h"
 #include "menu_config.h"
+#include "retrobox.h"
 
 #if defined(DREAMCAST) && defined(SOUND_PREFETCHS)
 #define AUDIO_PREFETCH(ADR) asm("pref @%0" : : "r" (ADR))
@@ -146,7 +147,6 @@ float filterCoeffB[] = {
 		 0.06827320195368214,
 };
 
-bool filterEnabled = true;
 bool filterInitialized = false;
 
 #define FILTER_SIZE 8
@@ -155,7 +155,7 @@ float filterBuffer1[4][FILTER_SIZE];
 float filterBuffer2[4][FILTER_SIZE];
 
 inline uae_u32 filterSample(int channel, int sample) {
-	if (!filterEnabled) return sample;
+	if (!audio_filter_enabled) return sample;
 	if (!filterInitialized) {
 		memset(filterBuffer1, 0, sizeof(float)*FILTER_SIZE*4);
 		memset(filterBuffer2, 0, sizeof(float)*FILTER_SIZE*4);
@@ -200,9 +200,11 @@ inline uae_u32 filterSample(int channel, int sample) {
 		d1 &= audio_channel_adk_mask[1]; \
 		d2 &= audio_channel_adk_mask[2]; \
 		d3 &= audio_channel_adk_mask[3]; \
+		register uae_u32 a0 = ((d0+d3) * audio_stereo_main + (d1+d2) * audio_stereo_secondary) / AUDIO_STEREO_SEPARATION_BASE; \
+		register uae_u32 a1 = ((d1+d2) * audio_stereo_main + (d0+d3) * audio_stereo_secondary) / AUDIO_STEREO_SEPARATION_BASE; \
 		if (mainMenu_soundStereo) { \
-		   	PUT_SOUND_WORD (((d0+d3)*0.75 + (d1+d2)*0.25)) \
-		   	PUT_SOUND_WORD (((d1+d2)*0.75 + (d0+d3)*0.25)) \
+		   	PUT_SOUND_WORD (a0) \
+		   	PUT_SOUND_WORD (a1) \
 		} else { \
 			PUT_SOUND_WORD (d0+d1+d2+d3) } \
     	CHECK_SOUND_BUFFERS(); \
