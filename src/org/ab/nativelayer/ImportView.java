@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import retrobox.v2.amiga.uae4droid.R;
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import xtvapps.prg.amiga.uae4droid.R;
 
 public class ImportView extends ListActivity implements OnItemLongClickListener {
 	

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">RetroX Amiga Add-on (alt)</string>
+<string name="app_name">RES Amiga Add-on (UAE4Droid)</string>
+<string name="emu_opt_title">PRG Options</string>
+    
 <string name="paths_section">Paths</string>
 
 <string name="rom_location">ROM Location (*.rom)</string>
