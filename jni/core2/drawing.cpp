@@ -2232,7 +2232,7 @@ static _INLINE_ void init_drawing_frame (void)
 /*
  * Some code to put status information on the screen.
  */
-#define TD_PADX 10
+#define TD_PADX 8
 #define TD_PADY 2
 #define TD_WIDTH 32
 #define TD_LED_WIDTH 24
@@ -2320,7 +2320,7 @@ static _INLINE_ void draw_status_line (int line, int lineStart)
     	gfxvid_width = GFXVIDINFO_WIDTH;
     	
     if (td_pos & TD_RIGHT)
-        x = gfxvid_width - TD_PADX - 5*TD_WIDTH;
+    	x = gfxvid_width - TD_PADX - TD_LED_WIDTH;
     else
         x = TD_PADX;
 
@@ -2328,9 +2328,9 @@ static _INLINE_ void draw_status_line (int line, int lineStart)
     xlinebuffer = row_map[line];
 
 #ifdef WITH_TESTMODE
-	x+=100 - (TD_WIDTH*(mainMenu_drives-1)) - 2*TD_WIDTH;
+	// x+=100 - (TD_WIDTH*(mainMenu_drives-1)) - 2*TD_WIDTH;
 #else
-	x+=100 - (TD_WIDTH*(mainMenu_drives-1));
+	// x+=100 - (TD_WIDTH*(mainMenu_drives-1));
 #endif
 
   // uae4all_memclr (xlinebuffer + (x - 4) * GFXVIDINFO_PIXBYTES, (gfxvid_width - x + 4) * GFXVIDINFO_PIXBYTES);
@@ -2423,13 +2423,12 @@ static _INLINE_ void draw_status_line (int line, int lineStart)
 					write_tdnumber (x + offs + TD_NUM_WIDTH, y - TD_PADY, track % 10);
 				}
 			}
-			x += TD_WIDTH;
+			x -= TD_WIDTH;
 		}
     }
 
 	if (mainMenu_showFPS) {
-		x = gfxvid_width - TD_PADX - 5*TD_WIDTH;
-		x+=100 - (TD_WIDTH*(mainMenu_drives-1)) - TD_WIDTH;
+		x = TD_PADX;
 		if (y >= TD_PADY && y - TD_PADY < TD_NUM_HEIGHT) {
 			int offs = (TD_WIDTH - 2 * TD_NUM_WIDTH) / 2;
 			if(fps_counter >= 100)
