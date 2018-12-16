@@ -75,7 +75,7 @@ import xtvapps.core.Callback;
 import xtvapps.core.SimpleCallback;
 import xtvapps.core.Utils;
 import xtvapps.core.content.KeyValue;
-import xtvapps.prg.amiga.uae4droid.R;
+import xtvapps.res.amiga.uae4droid.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;

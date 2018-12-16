@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import org.ab.nativelayer.ImportFileView;
 import android.app.Application;
-import xtvapps.prg.amiga.uae4droid.R;
+import xtvapps.res.amiga.uae4droid.R;
 
 public class FloppyImportView extends ImportFileView {
 
