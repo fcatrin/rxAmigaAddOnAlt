@@ -7,6 +7,7 @@ import retrobox.vinput.AnalogGamepad;
 import retrobox.vinput.AnalogGamepad.Axis;
 import retrobox.vinput.AnalogGamepadListener;
 import retrobox.vinput.GenericGamepad;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -398,12 +400,17 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
         }
         
 	}
+	@SuppressLint("NewApi")
 	public void requestRender() {
 		
         //checkFPS();
 		Canvas c = null;
         try {
-            c = mSurfaceHolder.lockCanvas(null);
+        	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        		c = mSurfaceHolder.lockHardwareCanvas();
+        	} else {
+        		c = mSurfaceHolder.lockCanvas(null);
+        	}
             synchronized (mSurfaceHolder) {
             	buffer.position(0);
             	 mainScreen.copyPixelsFromBuffer(buffer);

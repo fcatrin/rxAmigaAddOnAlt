@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="retrobox.v2.amiga.uae4droid"
       android:installLocation="auto" 
-      android:versionCode="11330" 
-      android:versionName="1.13-30"
+      android:versionCode="11331" 
+      android:versionName="1.13-31"
       android:sharedUserId="psychoworld.retrobox.v2">
       
-    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="19"/>
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="26"/>
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     
