@@ -3,8 +3,8 @@
       package="xtvapps.prg.amiga.uae4droid"
       android:installLocation="auto" 
       android:sharedUserId="xtvapps.prg.user"
-      android:versionCode="11332" 
-      android:versionName="1.13-32"
+      android:versionCode="11333" 
+      android:versionName="1.13-33"
       >
       
     <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="26"/>

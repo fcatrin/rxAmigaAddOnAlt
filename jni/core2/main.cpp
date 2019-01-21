@@ -91,7 +91,7 @@ char warning_buffer[256];
 
 /* Slightly stupid place for this... */
 /* ncurses.c might use quite a few of those. */
-char *colormodes[] = { "256 colors", "32768 colors", "65536 colors",
+const char *colormodes[] = { "256 colors", "32768 colors", "65536 colors",
     "256 colors dithered", "16 colors dithered", "16 million colors",
     "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
     "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
@@ -192,7 +192,7 @@ int gp2xButtonRemappingOn=0;
 int hasGp2xButtonRemapping=0;
 int gp2xMouseEmuOn=0;
 int switch_autofire=0;
-char *statusmessages[] = { "AUTOFIRE ON\0", "AUTOFIRE OFF\0","SCREENSHOT SAVED\0","SCRIPT SAVED\0","SCRIPT AND SCREENSHOT SAVED\0"};
+const char *statusmessages[] = { "AUTOFIRE ON\0", "AUTOFIRE OFF\0","SCREENSHOT SAVED\0","SCRIPT SAVED\0","SCRIPT AND SCREENSHOT SAVED\0"};
 int showmsg=0;
 
 int mainMenu_chipMemory = DEFAULT_CHIPMEM_SELECT;
