@@ -406,7 +406,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
         //checkFPS();
 		Canvas c = null;
         try {
-        	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         		c = mSurfaceHolder.lockHardwareCanvas();
         	} else {
         		c = mSurfaceHolder.lockCanvas(null);

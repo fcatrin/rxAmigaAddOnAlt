@@ -38,7 +38,7 @@
 #include <jni.h>
 #include <android/log.h>
 
-#include "../core2/retrobox.h"
+#include "../core2/include/retrobox.h"
 
 #define ANDROIDAUD_DRIVER_NAME         "android"
 
