@@ -460,7 +460,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
     }
     
 	private boolean needsOverlay() {
-		return getIntent().hasExtra("OVERLAY");
+		return Mapper.mustDisplayOverlayControllers();
 	}
 	
 	private void setupGamepadOverlay() {
