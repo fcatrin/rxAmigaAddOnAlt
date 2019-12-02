@@ -49,6 +49,7 @@ import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
 
 import retrobox.content.SaveStateInfo;
+import retrobox.keyboard.KeyboardMappingUtils;
 import retrobox.utils.GamepadInfoDialog;
 import retrobox.utils.ImmersiveModeSetter;
 import retrobox.utils.ListOption;
@@ -962,6 +963,21 @@ private void toastMessage(final String message) {
 }
 
 @Override
+public boolean dispatchKeyEvent(KeyEvent event) {
+
+	if (!RetroBoxDialog.isDialogVisible(this) && mGLView != null
+//		&& !customKeyboard.isVisible()
+		&& !KeyboardMappingUtils.isKeyMapperVisible()) {
+
+		int keyCode     = event.getKeyCode();
+		boolean isDown  = event.getAction() == KeyEvent.ACTION_DOWN;
+		if (mapper.handleKeyEvent(event, keyCode, isDown)) return true;
+	}
+
+	return super.dispatchKeyEvent(event);
+}
+
+@Override
 public boolean onKeyDown(int keyCode, KeyEvent event) {
 	if (RetroBoxDialog.isDialogVisible(this)) {
 		return RetroBoxDialog.onKeyDown(this, keyCode, event);
@@ -972,7 +988,6 @@ public boolean onKeyDown(int keyCode, KeyEvent event) {
 	}
 
 	if (mGLView != null) {
-		if (mapper.handleKeyEvent(event, keyCode, true)) return true;
 		if (mGLView.keyDown(event, keyCode)) return true;
 	}
 	return super.onKeyDown(keyCode, event);
@@ -989,7 +1004,6 @@ public boolean onKeyUp(int keyCode, KeyEvent event) {
 	}
 
 	if (mGLView != null) {
-		if (mapper.handleKeyEvent(event, keyCode, false)) return true;
 		if (mGLView.keyUp(event, keyCode)) return true;
 	}
 	return super.onKeyUp(keyCode, event);
