@@ -6,7 +6,7 @@ import java.nio.ShortBuffer;
 import retrobox.vinput.AnalogGamepad;
 import retrobox.vinput.AnalogGamepad.Axis;
 import retrobox.vinput.AnalogGamepadListener;
-import retrobox.vinput.GenericGamepad;
+import retrobox.vinput.GamepadDevice;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -78,7 +78,7 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 			}
 			
 			@Override
-			public void onAxisChange(GenericGamepad gamepad, float axisx, float axisy, float hatX, float hatY, float raxisx, float raxisy) {
+			public void onAxisChange(GamepadDevice gamepad, float axisx, float axisy, float hatX, float hatY, float raxisx, float raxisy) {
 				if (Math.abs(axisx) < 0.005) axisx = hatX;
 				if (Math.abs(axisy) < 0.005) axisy = hatY;
 
@@ -86,28 +86,24 @@ public class MainSurfaceView  extends SurfaceView implements SurfaceHolder.Callb
 			}
 
 			@Override
-			public void onDigitalX(GenericGamepad gamepad, Axis axis, boolean on) {
+			public void onDigitalX(GamepadDevice gamepad, Axis axis, boolean on) {
 				if (axis == Axis.MIN) DemoActivity.vinputDispatcher.sendKey(gamepad, KeyEvent.KEYCODE_DPAD_LEFT, on);
 				if (axis == Axis.MAX) DemoActivity.vinputDispatcher.sendKey(gamepad, KeyEvent.KEYCODE_DPAD_RIGHT, on);
 			}
 
 			@Override
-			public void onDigitalY(GenericGamepad gamepad,Axis axis, boolean on) {
+			public void onDigitalY(GamepadDevice gamepad,Axis axis, boolean on) {
 				if (axis == Axis.MIN) DemoActivity.vinputDispatcher.sendKey(gamepad, KeyEvent.KEYCODE_DPAD_UP, on);
 				if (axis == Axis.MAX) DemoActivity.vinputDispatcher.sendKey(gamepad, KeyEvent.KEYCODE_DPAD_DOWN, on);
 			}
 
 			@Override
-			public void onTriggers(String deviceDescriptor, int deviceId, boolean left, boolean right) {
-				DemoActivity.mapper.handleTriggerEvent(deviceDescriptor, deviceId, left, right);
-				
+			public void onTriggers(String deviceName, int deviceId, boolean left, boolean right) {
+				DemoActivity.mapper.handleTriggerEventByDeviceName(deviceName, deviceId, left, right);
 			}
 
 			@Override
-			public void onTriggersAnalog(GenericGamepad gamepad, int deviceId, float left, float right) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void onTriggersAnalog(GamepadDevice gamepad, int deviceId, float left, float right) {}
 			
 		});
         analogGamepad.startGamepadMouseMoveThread();

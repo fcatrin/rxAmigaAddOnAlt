@@ -49,14 +49,15 @@ import org.ab.controls.GameKeyListener;
 import org.ab.controls.VirtualKeypad;
 
 import retrobox.content.SaveStateInfo;
+import retrobox.keyboard.KeyboardMappingUtils;
 import retrobox.utils.GamepadInfoDialog;
 import retrobox.utils.ImmersiveModeSetter;
 import retrobox.utils.ListOption;
 import retrobox.utils.RetroBoxDialog;
 import retrobox.utils.RetroBoxUtils;
 import retrobox.utils.SaveStateSelectorAdapter;
-import retrobox.vinput.GenericGamepad;
-import retrobox.vinput.GenericGamepad.Analog;
+import retrobox.vinput.GamepadDevice;
+import retrobox.vinput.GamepadMapping.Analog;
 import retrobox.vinput.Mapper;
 import retrobox.vinput.Mapper.ShortCut;
 import retrobox.vinput.QuitHandler;
@@ -66,10 +67,10 @@ import retrobox.vinput.VirtualEventDispatcher;
 import retrobox.vinput.overlay.ExtraButtons;
 import retrobox.vinput.overlay.ExtraButtonsController;
 import retrobox.vinput.overlay.ExtraButtonsView;
-import retrobox.vinput.overlay.GamepadController;
-import retrobox.vinput.overlay.GamepadView;
 import retrobox.vinput.overlay.Overlay;
 import retrobox.vinput.overlay.OverlayExtra;
+import retrobox.vinput.overlay.OverlayGamepadController;
+import retrobox.vinput.overlay.OverlayGamepadView;
 import xtvapps.core.AndroidFonts;
 import xtvapps.core.Callback;
 import xtvapps.core.SimpleCallback;
@@ -128,8 +129,8 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	public static Mapper mapper;
 	public static VirtualInputDispatcher vinputDispatcher;
 	
-	static GamepadController gamepadController;
-	static GamepadView gamepadView;
+	static OverlayGamepadController overlayGamepadController;
+	static OverlayGamepadView overlayGamepadView;
 	static ExtraButtonsController extraButtonsController;
 	static ExtraButtonsView extraButtonsView;
 	static boolean canSwap = false;
@@ -244,16 +245,9 @@ public class DemoActivity extends Activity implements GameKeyListener {
         vinputDispatcher = new VirtualInputDispatcher();
         mapper = new Mapper(getIntent(), vinputDispatcher);
         Mapper.initGestureDetector(this);
-        Mapper.joinPorts = getIntent().getBooleanExtra("joinPorts", false);
         
-		for(int i=0; i<2; i++) {
-        	String prefix = "j" + (i+1);
-        	String deviceDescriptor = getIntent().getStringExtra(prefix + "DESCRIPTOR");
-        	Mapper.registerGamepad(i, deviceDescriptor);
-        }
-        
-		gamepadController = new GamepadController();
-		gamepadView = new GamepadView(this, overlay);
+		overlayGamepadController = new OverlayGamepadController();
+		overlayGamepadView = new OverlayGamepadView(this, overlay);
 		
 		extraButtonsController = new ExtraButtonsController();
 		extraButtonsView = new ExtraButtonsView(this);
@@ -295,10 +289,10 @@ public class DemoActivity extends Activity implements GameKeyListener {
 
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-    	if (gamepadView.isVisible() && gamepadController.onTouchEvent(ev)) {
+    	if (overlayGamepadView.isVisible() && overlayGamepadController.onTouchEvent(ev)) {
     		if (Overlay.requiresRedraw) {
         		Overlay.requiresRedraw = false;
-    			gamepadView.invalidate();
+    			overlayGamepadView.invalidate();
     		}
     		return true;
     	}
@@ -466,7 +460,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
     }
     
 	private boolean needsOverlay() {
-		return getIntent().hasExtra("OVERLAY");
+		return Mapper.mustDisplayOverlayControllers();
 	}
 	
 	private void setupGamepadOverlay() {
@@ -490,8 +484,8 @@ public class DemoActivity extends Activity implements GameKeyListener {
 		ViewGroup root = (ViewGroup)findViewById(R.id.root);
 		
 		if (needsOverlay()) {
-			 gamepadView.addToLayout(root);
-			 gamepadView.showPanel();
+			 overlayGamepadView.addToLayout(root);
+			 overlayGamepadView.showPanel();
 		}
 		 
 		extraButtonsView.addToLayout(root);
@@ -741,7 +735,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	}
 	
     protected void uiHelp() {
-		RetroBoxDialog.showGamepadDialogIngame(this, gamepadInfoDialog, new SimpleCallback() {
+		RetroBoxDialog.showGamepadDialogIngame(this, gamepadInfoDialog, Mapper.hasGamepads(), new SimpleCallback() {
 			@Override
 			public void onResult() {
 				onResume();
@@ -909,7 +903,7 @@ public class DemoActivity extends Activity implements GameKeyListener {
 	}
     
     private void uiToggleOverlay() {
-    	gamepadView.toggleView();
+    	overlayGamepadView.toggleView();
     }
     
     private void manageTouch(MenuItem item) {
@@ -969,6 +963,21 @@ private void toastMessage(final String message) {
 }
 
 @Override
+public boolean dispatchKeyEvent(KeyEvent event) {
+
+	if (!RetroBoxDialog.isDialogVisible(this) && mGLView != null
+//		&& !customKeyboard.isVisible()
+		&& !KeyboardMappingUtils.isKeyMapperVisible()) {
+
+		int keyCode     = event.getKeyCode();
+		boolean isDown  = event.getAction() == KeyEvent.ACTION_DOWN;
+		if (mapper.handleKeyEvent(this, event, keyCode, isDown)) return true;
+	}
+
+	return super.dispatchKeyEvent(event);
+}
+
+@Override
 public boolean onKeyDown(int keyCode, KeyEvent event) {
 	if (RetroBoxDialog.isDialogVisible(this)) {
 		return RetroBoxDialog.onKeyDown(this, keyCode, event);
@@ -979,7 +988,6 @@ public boolean onKeyDown(int keyCode, KeyEvent event) {
 	}
 
 	if (mGLView != null) {
-		if (mapper.handleKeyEvent(event, keyCode, true)) return true;
 		if (mGLView.keyDown(event, keyCode)) return true;
 	}
 	return super.onKeyDown(keyCode, event);
@@ -996,7 +1004,6 @@ public boolean onKeyUp(int keyCode, KeyEvent event) {
 	}
 
 	if (mGLView != null) {
-		if (mapper.handleKeyEvent(event, keyCode, false)) return true;
 		if (mGLView.keyUp(event, keyCode)) return true;
 	}
 	return super.onKeyUp(keyCode, event);
@@ -1069,7 +1076,7 @@ class VirtualInputDispatcher implements VirtualEventDispatcher {
 	}
 	
 	@Override
-	public void sendKey(GenericGamepad gamepad, int keyCode, boolean down) {
+	public void sendKey(GamepadDevice gamepad, int keyCode, boolean down) {
 		int joystick = 0;
 		
 		switch (keyCode) {
@@ -1103,11 +1110,9 @@ class VirtualInputDispatcher implements VirtualEventDispatcher {
 	}
 
 	@Override
-	public void sendAnalog(GenericGamepad gamepad, Analog index, double x,
+	public void sendAnalog(GamepadDevice gamepad, Analog index, double x,
 			double y, double hatx, double haty) {
 	}
-
-
 
 }
 
