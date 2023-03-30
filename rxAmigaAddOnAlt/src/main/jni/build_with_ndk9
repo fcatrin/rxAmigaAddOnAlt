@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Get NDK r9 from:
+# https://dl.google.com/android/ndk/android-ndk-r9-linux-x86_64.tar.bz2
+
+export NDK=~/devel/android-ndk-r9
+export ANDROID_NDK=$NDK
+export ANDROID_NDK_HOME=$NDK
+export PATH=$NDK:$PATH
+
+if [ "x$1" = "xclean" ]; then
+  rm -rf ../obj
+  rm -rf ../libs
+  rm -rf ../jniLibs
+  exit
+fi
+
+ndk-build
+
+# required for gradle build
+cd ..
+rm jniLibs
+ln -sf libs jniLibs
+
+
