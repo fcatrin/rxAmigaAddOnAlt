@@ -1,0 +1,4 @@
+include ':xtvApps'
+include ':xtvVirtualFile'
+include ':retroXUtils'
+include ':rxAmigaAddOnAlt'

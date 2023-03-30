@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="VideoView_error_button">OK</string>
+    <string name="VideoView_error_text_invalid_progressive_playback">El video no es compatible con este dispositivo</string>
+    <string name="VideoView_error_text_unknown">No se puede reproducir el video</string>
+    <string name="VideoView_error_title">No se puede reproducir el video</string>
+    <string name="mc_fforward">Adelante</string>
+    <string name="mc_next">Siguiente</string>
+    <string name="mc_playpause">Iniciar/Pausa</string>
+    <string name="mc_previous">Anterior</string>
+    <string name="mc_rewind">Atrás</string>
+    <string name="msg_default_cancel">Cancelar</string>
+    <string name="msg_default_ok">Aceptar</string>
+    <string name="no_share_msg">No se encontraron aplicaciones para compartir.  Por favor instale Twitter, Facebook u otra aplicación para compartir contenido</string>
+    <string name="no_share_title">No se puede compartir</string>
+    <string name="title_share_default">Compartir en…</string>
+</resources>

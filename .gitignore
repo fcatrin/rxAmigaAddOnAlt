@@ -1,5 +1,2 @@
-/libs
-/obj
-/bin
-/gen
-/tmp
+.gradle
+.idea

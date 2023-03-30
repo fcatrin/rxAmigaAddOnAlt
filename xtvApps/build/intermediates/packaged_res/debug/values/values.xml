@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="boolean" name="centered"/>
+    <attr format="boolean" name="dotted"/>
+    <attr format="color" name="selectedColor"/>
+    <attr format="dimension" name="strokeWidth"/>
+    <attr format="color" name="unselectedColor"/>
+    <bool name="default_circle_indicator_centered">true</bool>
+    <bool name="default_circle_indicator_snap">false</bool>
+    <bool name="default_line_indicator_centered">true</bool>
+    <bool name="default_line_indicator_dotted">true</bool>
+    <bool name="default_title_indicator_selected_bold">true</bool>
+    <bool name="default_underline_indicator_fades">true</bool>
+    <color name="default_circle_indicator_fill_color">#FFFFFFFF</color>
+    <color name="default_circle_indicator_page_color">#00000000</color>
+    <color name="default_circle_indicator_stroke_color">#FFDDDDDD</color>
+    <color name="default_line_indicator_selected_color">#FF465AAA</color>
+    <color name="default_line_indicator_unselected_color">#FFCCCCCC</color>
+    <color name="default_title_indicator_footer_color">#FF33B5E5</color>
+    <color name="default_title_indicator_selected_color">#FFFFFFFF</color>
+    <color name="default_title_indicator_text_color">#BBFFFFFF</color>
+    <color name="default_underline_indicator_selected_color">#FF33B5E5</color>
+    <color name="media_extra_info">#F0F0F0F0</color>
+    <color name="media_info">#F0C0C0C0</color>
+    <color name="media_time">#F0F0F0F0</color>
+    <color name="media_title">#F0FB9309</color>
+    <color name="transparentblack">#00000000</color>
+    <dimen name="default_circle_indicator_radius">3dp</dimen>
+    <dimen name="default_circle_indicator_stroke_width">1dp</dimen>
+    <dimen name="default_line_indicator_gap_width">4dp</dimen>
+    <dimen name="default_line_indicator_line_width">16dp</dimen>
+    <dimen name="default_line_indicator_stroke_width">4dp</dimen>
+    <dimen name="default_title_indicator_clip_padding">4dp</dimen>
+    <dimen name="default_title_indicator_footer_indicator_height">4dp</dimen>
+    <dimen name="default_title_indicator_footer_indicator_underline_padding">20dp</dimen>
+    <dimen name="default_title_indicator_footer_line_height">2dp</dimen>
+    <dimen name="default_title_indicator_footer_padding">7dp</dimen>
+    <dimen name="default_title_indicator_text_size">15dp</dimen>
+    <dimen name="default_title_indicator_title_padding">5dp</dimen>
+    <dimen name="default_title_indicator_top_padding">7dp</dimen>
+    <dimen name="line_indicator_min_width">10dp</dimen>
+    <dimen name="progress_gap">10dp</dimen>
+    <dimen name="progress_info">22dp</dimen>
+    <dimen name="progress_padding">12dp</dimen>
+    <integer name="default_circle_indicator_orientation">0</integer>
+    <integer name="default_title_indicator_footer_indicator_style">2</integer>
+    <integer name="default_title_indicator_line_position">0</integer>
+    <integer name="default_underline_indicator_fade_delay">300</integer>
+    <integer name="default_underline_indicator_fade_length">400</integer>
+    <string name="VideoView_error_button">OK</string>
+    <string name="VideoView_error_text_invalid_progressive_playback">Sorry, this video is not valid for streaming to this device.</string>
+    <string name="VideoView_error_text_unknown">Sorry, this video cannot be played.</string>
+    <string name="VideoView_error_title">Cannot play video</string>
+    <string name="mc_fforward">Forward</string>
+    <string name="mc_next">Next</string>
+    <string name="mc_playpause">Play/Pause</string>
+    <string name="mc_previous">Previous</string>
+    <string name="mc_rewind">Rewind</string>
+    <string name="msg_default_cancel">Cancel</string>
+    <string name="msg_default_ok">OK</string>
+    <string name="no_share_msg">No applications found for sharing.  Please install Twitter, Facebook or another sharing application</string>
+    <string name="no_share_title">No share providers</string>
+    <string name="title_share_default">Share on…</string>
+    <string name="xtv_not_enough_space_download">
+There is not enough storage space available to download this file\n
+Available: {available}\n
+Required: {required}
+   </string>
+    <string name="xtv_not_enough_space_uncompress">
+There is not enough storage space available to uncompress this file\n
+Available: {available}\n
+Required: {required}
+   </string>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        
+    </style>
+    <style name="DialogProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/progress_padding</item>
+        <item name="android:layout_marginRight">@dimen/progress_padding</item>
+    </style>
+    <style name="DialogProgressTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/progress_info</item>
+    </style>
+    <style name="ProgressDialog" parent="android:Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="SmallButton" parent="android:style/Widget.Button">
+        <item name="android:padding">6dp</item>
+    </style>
+    <style name="media_extra_info">
+        <item name="android:textColor">@color/media_extra_info</item>
+        <item name="android:textSize">24px</item>
+    </style>
+    <style name="media_info">
+        <item name="android:textColor">@color/media_info</item>
+        <item name="android:textSize">24px</item>
+        <item name="android:paddingLeft">6px</item>
+    </style>
+    <style name="media_time">
+        <item name="android:textColor">@color/media_time</item>
+        <item name="android:textSize">24px</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+    <style name="media_title">
+        <item name="android:textColor">@color/media_title</item>
+        <item name="android:textSize">32px</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left</item>
+    </style>
+    <declare-styleable name="LinePageIndicator">
+        
+        <attr name="centered"/>
+        
+        <attr name="unselectedColor"/>
+        
+        <attr name="selectedColor"/>
+        
+        <attr format="dimension" name="lineWidth"/>
+        
+        <attr name="strokeWidth"/>
+        
+        <attr format="dimension" name="gapWidth"/>
+        
+        <attr name="android:background"/>
+        <attr name="dotted"/>
+    </declare-styleable>
+    <declare-styleable name="NumberPickerPreference">
+        <attr format="integer" name="minValue"/>
+        <attr format="integer" name="maxValue"/>
+    </declare-styleable>
+    <declare-styleable name="TitlePageIndicator">
+        
+        <attr format="dimension" name="clipPadding"/>
+        
+        <attr format="color" name="footerColor"/>
+        
+        <attr format="dimension" name="footerLineHeight"/>
+        
+        <attr name="footerIndicatorStyle">
+            <enum name="none" value="0"/>
+            <enum name="triangle" value="1"/>
+            <enum name="underline" value="2"/>
+        </attr>
+        
+        <attr format="dimension" name="footerIndicatorHeight"/>
+        
+        <attr format="dimension" name="footerIndicatorUnderlinePadding"/>
+        
+        <attr format="dimension" name="footerPadding"/>
+        
+        <attr name="linePosition">
+            <enum name="bottom" value="0"/>
+            <enum name="top" value="1"/>
+        </attr>
+        
+        <attr name="selectedColor"/>
+        
+        <attr format="boolean" name="selectedBold"/>
+        
+        <attr name="android:textColor"/>
+        
+        <attr name="android:textSize"/>
+        
+        <attr format="dimension" name="titlePadding"/>
+        
+        <attr format="dimension" name="topPadding"/>
+        
+        <attr name="android:background"/>
+    </declare-styleable>
+    <declare-styleable name="UnderlinePageIndicator">
+        
+        <attr format="boolean" name="fades"/>
+        
+        <attr format="integer" name="fadeDelay"/>
+        
+        <attr format="integer" name="fadeLength"/>
+        
+        <attr name="selectedColor"/>
+        
+        <attr name="android:background"/>
+    </declare-styleable>
+    <declare-styleable name="ViewPagerIndicator">
+        
+        <attr format="reference" name="vpiCirclePageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiIconPageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiLinePageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiTitlePageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiTabPageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiUnderlinePageIndicatorStyle"/>
+    </declare-styleable>
+</resources>

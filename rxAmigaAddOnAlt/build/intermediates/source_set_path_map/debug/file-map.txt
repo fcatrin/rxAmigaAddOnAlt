@@ -1,0 +1,12 @@
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-support-media-compat-26.1.0-0 /home/fcatrin/.gradle/caches/transforms-3/0e03ec9e149d53caf1e35124a69b6998/transformed/support-media-compat-26.1.0/res
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-support-compat-26.1.0-1 /home/fcatrin/.gradle/caches/transforms-3/48c0538cafdcf213d7341ac14a7a1090/transformed/support-compat-26.1.0/res
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-packaged_res-2 /home/fcatrin/git-as/rxAmigaAddOnAlt/retroXUtils/build/intermediates/packaged_res/debug
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-pngs-3 /home/fcatrin/git-as/rxAmigaAddOnAlt/rxAmigaAddOnAlt/build/generated/res/pngs/debug
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-resValues-4 /home/fcatrin/git-as/rxAmigaAddOnAlt/rxAmigaAddOnAlt/build/generated/res/resValues/debug
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-rs-5 /home/fcatrin/git-as/rxAmigaAddOnAlt/rxAmigaAddOnAlt/build/generated/res/rs/debug
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-mergeDebugResources-6 /home/fcatrin/git-as/rxAmigaAddOnAlt/rxAmigaAddOnAlt/build/intermediates/incremental/debug/mergeDebugResources/merged.dir
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-mergeDebugResources-7 /home/fcatrin/git-as/rxAmigaAddOnAlt/rxAmigaAddOnAlt/build/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8 /home/fcatrin/git-as/rxAmigaAddOnAlt/rxAmigaAddOnAlt/build/intermediates/merged_res/debug
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-debug-9 /home/fcatrin/git-as/rxAmigaAddOnAlt/rxAmigaAddOnAlt/src/debug/res
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10 /home/fcatrin/git-as/rxAmigaAddOnAlt/rxAmigaAddOnAlt/src/main/res
+retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-packaged_res-11 /home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/build/intermediates/packaged_res/debug

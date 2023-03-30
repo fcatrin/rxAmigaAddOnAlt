@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="button_bar_padding">2dp</dimen>
+    <dimen name="button_bar_radius">2dp</dimen>
+    <dimen name="button_bar_stroke_width">1dp</dimen>
+    <dimen name="gamepad_height">180dp</dimen>
+    <dimen name="gamepad_width">270dp</dimen>
+    <dimen name="progress_gap">8dp</dimen>
+    <dimen name="progress_height">14dp</dimen>
+    <dimen name="progress_info">14dp</dimen>
+    <dimen name="progress_padding">12dp</dimen>
+    <dimen name="savestates_grid_height">265dp</dimen>
+    <dimen name="savestates_grid_width">380dp</dimen>
+    <dimen name="screenshot_height">75dp</dimen>
+    <dimen name="screenshot_width">100dp</dimen>
+    <dimen name="spacing_big">16dp</dimen>
+    <dimen name="spacing_bigger">24dp</dimen>
+    <dimen name="spacing_fine">1dp</dimen>
+    <dimen name="spacing_normal">8dp</dimen>
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="spacing_tiny">2dp</dimen>
+    <dimen name="text_big">26dp</dimen>
+    <dimen name="text_bigger">48dp</dimen>
+    <dimen name="text_medium">11dp</dimen>
+    <dimen name="text_normal">12dp</dimen>
+    <dimen name="text_normal_pad">6dp</dimen>
+    <dimen name="text_small">10dp</dimen>
+    <style name="DialogProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/progress_height</item>
+        <item name="android:layout_marginLeft">@dimen/progress_padding</item>
+        <item name="android:layout_marginRight">@dimen/progress_padding</item>
+    </style>
+    <style name="SmallButton" parent="android:style/Widget.Button">
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+</resources>

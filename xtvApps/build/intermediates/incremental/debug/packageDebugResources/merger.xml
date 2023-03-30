@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res"/><source path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/build/generated/res/rs/debug"/><source path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="main" generated-set="main$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res"><file name="dialog_progress" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/layout/dialog_progress.xml" qualifiers="" type="layout"/><file name="menu_item" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/layout/menu_item.xml" qualifiers="" type="layout"/><file name="media_controller" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/layout/media_controller.xml" qualifiers="" type="layout"/><file name="webshell" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/layout/webshell.xml" qualifiers="" type="layout"/><file name="media_controllerold" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/layout/media_controllerold.xml" qualifiers="" type="layout"/><file name="number_preference" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/layout/number_preference.xml" qualifiers="" type="layout"/><file name="menu_item_icon" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/layout/menu_item_icon.xml" qualifiers="" type="layout"/><file name="ic_launcher" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-hdpi/ic_launcher.png" qualifiers="hdpi-v4" type="drawable"/><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values-v11/styles.xml" qualifiers="v11"><style name="AppBaseTheme" parent="android:Theme.Holo.Light">
+        
+    </style></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values-es/strings.xml" qualifiers="es"><string name="VideoView_error_title">No se puede reproducir el video</string><string name="VideoView_error_text_invalid_progressive_playback">El video no es compatible con este dispositivo</string><string name="VideoView_error_text_unknown">No se puede reproducir el video</string><string name="VideoView_error_button">OK</string><string name="mc_previous">Anterior</string><string name="mc_rewind">Atrás</string><string name="mc_playpause">Iniciar/Pausa</string><string name="mc_fforward">Adelante</string><string name="mc_next">Siguiente</string><string name="msg_default_ok">Aceptar</string><string name="msg_default_cancel">Cancelar</string><string name="no_share_title">No se puede compartir</string><string name="no_share_msg">No se encontraron aplicaciones para compartir.  Por favor instale Twitter, Facebook u otra aplicación para compartir contenido</string><string name="title_share_default">Compartir en…</string></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values/dimen.xml" qualifiers=""><dimen name="progress_info">22dp</dimen><dimen name="progress_padding">12dp</dimen><dimen name="progress_gap">10dp</dimen><dimen name="line_indicator_min_width">10dp</dimen></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values/vpi__attrs.xml" qualifiers=""><declare-styleable name="ViewPagerIndicator">
+        
+        <attr format="reference" name="vpiCirclePageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiIconPageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiLinePageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiTitlePageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiTabPageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiUnderlinePageIndicatorStyle"/>
+    </declare-styleable><attr format="boolean" name="dotted"/><attr format="boolean" name="centered"/><attr format="color" name="selectedColor"/><attr format="dimension" name="strokeWidth"/><attr format="color" name="unselectedColor"/><declare-styleable name="LinePageIndicator">
+        
+        <attr name="centered"/>
+        
+        <attr name="unselectedColor"/>
+        
+        <attr name="selectedColor"/>
+        
+        <attr format="dimension" name="lineWidth"/>
+        
+        <attr name="strokeWidth"/>
+        
+        <attr format="dimension" name="gapWidth"/>
+        
+        <attr name="android:background"/>
+        <attr name="dotted"/>
+    </declare-styleable><declare-styleable name="TitlePageIndicator">
+        
+        <attr format="dimension" name="clipPadding"/>
+        
+        <attr format="color" name="footerColor"/>
+        
+        <attr format="dimension" name="footerLineHeight"/>
+        
+        <attr name="footerIndicatorStyle">
+            <enum name="none" value="0"/>
+            <enum name="triangle" value="1"/>
+            <enum name="underline" value="2"/>
+        </attr>
+        
+        <attr format="dimension" name="footerIndicatorHeight"/>
+        
+        <attr format="dimension" name="footerIndicatorUnderlinePadding"/>
+        
+        <attr format="dimension" name="footerPadding"/>
+        
+        <attr name="linePosition">
+            <enum name="bottom" value="0"/>
+            <enum name="top" value="1"/>
+        </attr>
+        
+        <attr name="selectedColor"/>
+        
+        <attr format="boolean" name="selectedBold"/>
+        
+        <attr name="android:textColor"/>
+        
+        <attr name="android:textSize"/>
+        
+        <attr format="dimension" name="titlePadding"/>
+        
+        <attr format="dimension" name="topPadding"/>
+        
+        <attr name="android:background"/>
+    </declare-styleable><declare-styleable name="UnderlinePageIndicator">
+        
+        <attr format="boolean" name="fades"/>
+        
+        <attr format="integer" name="fadeDelay"/>
+        
+        <attr format="integer" name="fadeLength"/>
+        
+        <attr name="selectedColor"/>
+        
+        <attr name="android:background"/>
+    </declare-styleable></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values/attrs.xml" qualifiers=""><declare-styleable name="NumberPickerPreference">
+        <attr format="integer" name="minValue"/>
+        <attr format="integer" name="maxValue"/>
+    </declare-styleable></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values/vpi__defaults.xml" qualifiers=""><bool name="default_circle_indicator_centered">true</bool><color name="default_circle_indicator_fill_color">#FFFFFFFF</color><color name="default_circle_indicator_page_color">#00000000</color><integer name="default_circle_indicator_orientation">0</integer><dimen name="default_circle_indicator_radius">3dp</dimen><bool name="default_circle_indicator_snap">false</bool><color name="default_circle_indicator_stroke_color">#FFDDDDDD</color><dimen name="default_circle_indicator_stroke_width">1dp</dimen><dimen name="default_line_indicator_line_width">16dp</dimen><dimen name="default_line_indicator_gap_width">4dp</dimen><dimen name="default_line_indicator_stroke_width">4dp</dimen><color name="default_line_indicator_selected_color">#FF465AAA</color><color name="default_line_indicator_unselected_color">#FFCCCCCC</color><bool name="default_line_indicator_centered">true</bool><bool name="default_line_indicator_dotted">true</bool><dimen name="default_title_indicator_clip_padding">4dp</dimen><color name="default_title_indicator_footer_color">#FF33B5E5</color><dimen name="default_title_indicator_footer_line_height">2dp</dimen><integer name="default_title_indicator_footer_indicator_style">2</integer><dimen name="default_title_indicator_footer_indicator_height">4dp</dimen><dimen name="default_title_indicator_footer_indicator_underline_padding">20dp</dimen><dimen name="default_title_indicator_footer_padding">7dp</dimen><integer name="default_title_indicator_line_position">0</integer><color name="default_title_indicator_selected_color">#FFFFFFFF</color><bool name="default_title_indicator_selected_bold">true</bool><color name="default_title_indicator_text_color">#BBFFFFFF</color><dimen name="default_title_indicator_text_size">15dp</dimen><dimen name="default_title_indicator_title_padding">5dp</dimen><dimen name="default_title_indicator_top_padding">7dp</dimen><bool name="default_underline_indicator_fades">true</bool><integer name="default_underline_indicator_fade_delay">300</integer><integer name="default_underline_indicator_fade_length">400</integer><color name="default_underline_indicator_selected_color">#FF33B5E5</color></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values/colors.xml" qualifiers=""><color name="media_title">#F0FB9309</color><color name="media_info">#F0C0C0C0</color><color name="media_extra_info">#F0F0F0F0</color><color name="media_time">#F0F0F0F0</color><color name="transparentblack">#00000000</color></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values/strings.xml" qualifiers=""><string name="VideoView_error_title">Cannot play video</string><string name="VideoView_error_text_invalid_progressive_playback">Sorry, this video is not valid for streaming to this device.</string><string name="VideoView_error_text_unknown">Sorry, this video cannot be played.</string><string name="VideoView_error_button">OK</string><string name="mc_previous">Previous</string><string name="mc_rewind">Rewind</string><string name="mc_playpause">Play/Pause</string><string name="mc_fforward">Forward</string><string name="mc_next">Next</string><string name="msg_default_ok">OK</string><string name="msg_default_cancel">Cancel</string><string name="no_share_title">No share providers</string><string name="no_share_msg">No applications found for sharing.  Please install Twitter, Facebook or another sharing application</string><string name="title_share_default">Share on…</string><string name="xtv_not_enough_space_download">
+There is not enough storage space available to download this file\n
+Available: {available}\n
+Required: {required}
+   </string><string name="xtv_not_enough_space_uncompress">
+There is not enough storage space available to uncompress this file\n
+Available: {available}\n
+Required: {required}
+   </string></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values/styles.xml" qualifiers=""><style name="AppBaseTheme" parent="android:Theme.Light">
+        
+    </style><style name="AppTheme" parent="AppBaseTheme">
+        
+    </style><style name="media_title">
+        <item name="android:textColor">@color/media_title</item>
+        <item name="android:textSize">32px</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left</item>
+    </style><style name="media_info">
+        <item name="android:textColor">@color/media_info</item>
+        <item name="android:textSize">24px</item>
+        <item name="android:paddingLeft">6px</item>
+    </style><style name="media_extra_info">
+        <item name="android:textColor">@color/media_extra_info</item>
+        <item name="android:textSize">24px</item>
+    </style><style name="media_time">
+        <item name="android:textColor">@color/media_time</item>
+        <item name="android:textSize">24px</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style><style name="SmallButton" parent="android:style/Widget.Button">
+        <item name="android:padding">6dp</item>
+    </style><style name="ProgressDialog" parent="android:Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+    </style><style name="DialogProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/progress_padding</item>
+        <item name="android:layout_marginRight">@dimen/progress_padding</item>
+    </style><style name="DialogProgressTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/progress_info</item>
+    </style></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values-v14/styles.xml" qualifiers="v14"><style name="AppBaseTheme" parent="android:Theme.Holo">
+        
+    </style></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values-sw720dp/dimen.xml" qualifiers="sw720dp-v13"><dimen name="progress_info">24dp</dimen><dimen name="progress_padding">12dp</dimen><dimen name="progress_gap">8dp</dimen><dimen name="progress_height">14dp</dimen></file><file name="ic_media_pause" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-xhdpi/ic_media_pause.png" qualifiers="xhdpi-v4" type="drawable"/><file name="ic_media_fullscreen_shrink" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-xhdpi/ic_media_fullscreen_shrink.png" qualifiers="xhdpi-v4" type="drawable"/><file name="ic_media_fullscreen_stretch" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-xhdpi/ic_media_fullscreen_stretch.png" qualifiers="xhdpi-v4" type="drawable"/><file name="ic_media_play" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-xhdpi/ic_media_play.png" qualifiers="xhdpi-v4" type="drawable"/><file name="ic_launcher" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-xhdpi/ic_launcher.png" qualifiers="xhdpi-v4" type="drawable"/><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values-sw320dp/dimen.xml" qualifiers="sw320dp-v13"><dimen name="progress_info">14dp</dimen><dimen name="progress_padding">12dp</dimen><dimen name="progress_gap">8dp</dimen><dimen name="progress_height">14dp</dimen></file><file path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/values-sw320dp/styles.xml" qualifiers="sw320dp-v13"><style name="SmallButton" parent="android:style/Widget.Button">
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style><style name="DialogProgressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">@dimen/progress_height</item>
+        <item name="android:layout_marginLeft">@dimen/progress_padding</item>
+        <item name="android:layout_marginRight">@dimen/progress_padding</item>
+    </style></file><file name="xtv_scrubber_disabled" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-mdpi/xtv_scrubber_disabled.png" qualifiers="mdpi-v4" type="drawable"/><file name="media_button_focused" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-mdpi/media_button_focused.9.png" qualifiers="mdpi-v4" type="drawable"/><file name="xtv_scrubber_focused" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-mdpi/xtv_scrubber_focused.png" qualifiers="mdpi-v4" type="drawable"/><file name="xtv_scrubber_normal" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-mdpi/xtv_scrubber_normal.png" qualifiers="mdpi-v4" type="drawable"/><file name="xtv_scrubber_pressed" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-mdpi/xtv_scrubber_pressed.png" qualifiers="mdpi-v4" type="drawable"/><file name="list_selectorbox" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-mdpi/list_selectorbox.9.png" qualifiers="mdpi-v4" type="drawable"/><file name="ic_launcher" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable-mdpi/ic_launcher.png" qualifiers="mdpi-v4" type="drawable"/><file name="seekbar_background_unfocused" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar_background_unfocused.xml" qualifiers="" type="drawable"/><file name="seekbar_fill_unfocused" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar_fill_unfocused.xml" qualifiers="" type="drawable"/><file name="seekbar_fill" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar_fill.xml" qualifiers="" type="drawable"/><file name="seekbar_fill_focused" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar_fill_focused.xml" qualifiers="" type="drawable"/><file name="progress_bg" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/progress_bg.xml" qualifiers="" type="drawable"/><file name="seekbar_background" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar_background.xml" qualifiers="" type="drawable"/><file name="seekbar_fill_secondary_focused" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar_fill_secondary_focused.xml" qualifiers="" type="drawable"/><file name="seekbar_fill_secondary" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar_fill_secondary.xml" qualifiers="" type="drawable"/><file name="media_button_selector" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/media_button_selector.xml" qualifiers="" type="drawable"/><file name="seekbar_scrubber" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar_scrubber.xml" qualifiers="" type="drawable"/><file name="list_selector" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/list_selector.xml" qualifiers="" type="drawable"/><file name="seekbar_background_focused" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar_background_focused.xml" qualifiers="" type="drawable"/><file name="seekbar" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar.xml" qualifiers="" type="drawable"/><file name="gradient_background" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/gradient_background.xml" qualifiers="" type="drawable"/><file name="seekbar_fill_secondary_unfocused" path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/main/res/drawable/seekbar_fill_secondary_unfocused.xml" qualifiers="" type="drawable"/></source><source path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/build/generated/res/rs/debug"/><source path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/build/generated/res/resValues/debug"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="debug" generated-set="debug$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"><source path="/home/fcatrin/git-as/rxAmigaAddOnAlt/xtvApps/src/debug/res"/></dataSet><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated$Generated" generated="true" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"/><dataSet aapt-namespace="http://schemas.android.com/apk/res-auto" config="generated" generated-set="generated$Generated" ignore_pattern="!.svn:!.git:!.ds_store:!*.scc:.*:&lt;dir>_*:!CVS:!thumbs.db:!picasa.ini:!*~"/><mergedItems><configuration qualifiers=""><declare-styleable name="ViewPagerIndicator">
+        
+        <attr format="reference" name="vpiCirclePageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiIconPageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiLinePageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiTitlePageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiTabPageIndicatorStyle"/>
+        
+        <attr format="reference" name="vpiUnderlinePageIndicatorStyle"/>
+    </declare-styleable><declare-styleable name="NumberPickerPreference">
+        <attr format="integer" name="minValue"/>
+        <attr format="integer" name="maxValue"/>
+    </declare-styleable><declare-styleable name="LinePageIndicator">
+        
+        <attr name="centered"/>
+        
+        <attr name="unselectedColor"/>
+        
+        <attr name="selectedColor"/>
+        
+        <attr format="dimension" name="lineWidth"/>
+        
+        <attr name="strokeWidth"/>
+        
+        <attr format="dimension" name="gapWidth"/>
+        
+        <attr name="android:background"/>
+        <attr name="dotted"/>
+    </declare-styleable><declare-styleable name="UnderlinePageIndicator">
+        
+        <attr format="boolean" name="fades"/>
+        
+        <attr format="integer" name="fadeDelay"/>
+        
+        <attr format="integer" name="fadeLength"/>
+        
+        <attr name="selectedColor"/>
+        
+        <attr name="android:background"/>
+    </declare-styleable><declare-styleable name="TitlePageIndicator">
+        
+        <attr format="dimension" name="clipPadding"/>
+        
+        <attr format="color" name="footerColor"/>
+        
+        <attr format="dimension" name="footerLineHeight"/>
+        
+        <attr name="footerIndicatorStyle">
+            <enum name="none" value="0"/>
+            <enum name="triangle" value="1"/>
+            <enum name="underline" value="2"/>
+        </attr>
+        
+        <attr format="dimension" name="footerIndicatorHeight"/>
+        
+        <attr format="dimension" name="footerIndicatorUnderlinePadding"/>
+        
+        <attr format="dimension" name="footerPadding"/>
+        
+        <attr name="linePosition">
+            <enum name="bottom" value="0"/>
+            <enum name="top" value="1"/>
+        </attr>
+        
+        <attr name="selectedColor"/>
+        
+        <attr format="boolean" name="selectedBold"/>
+        
+        <attr name="android:textColor"/>
+        
+        <attr name="android:textSize"/>
+        
+        <attr format="dimension" name="titlePadding"/>
+        
+        <attr format="dimension" name="topPadding"/>
+        
+        <attr name="android:background"/>
+    </declare-styleable></configuration></mergedItems></merger>

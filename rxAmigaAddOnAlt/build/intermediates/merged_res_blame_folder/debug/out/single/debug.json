@@ -1,0 +1,130 @@
+[
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_arrow_upr.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/arrow_upr.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_arrow_downl.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/arrow_downl.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable-xhdpi_retrobox.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable-xhdpi/retrobox.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_file.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/file.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_sym_keyboard_done.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/sym_keyboard_done.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_sym_keyboard_space.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/sym_keyboard_space.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_folder.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/folder.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_button.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/button.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable-xxhdpi_retrobox.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable-xxhdpi/retrobox.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable-xxxhdpi_retrobox.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable-xxxhdpi/retrobox.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_arrow_downr.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/arrow_downr.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_arrow_down.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/arrow_down.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/layout_main.xml.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/layout/main.xml"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_arrow_right.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/arrow_right.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_sym_keyboard_delete.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/sym_keyboard_delete.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_arrow_left.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/arrow_left.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/xml_qwerty.xml.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/xml/qwerty.xml"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_uae4all.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/uae4all.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/xml_qwerty2.xml.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/xml/qwerty2.xml"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable-hdpi_retrobox.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable-hdpi/retrobox.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_dpad5.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/dpad5.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_arrow_upl.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/arrow_upl.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable-ldpi_retrobox.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable-ldpi/retrobox.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/layout_start.xml.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/layout/start.xml"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_retrobox.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/retrobox.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_icon32.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/icon32.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_sym_keyboard_shift.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/sym_keyboard_shift.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_arrow_up.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/arrow_up.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/layout_file_row.xml.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/layout/file_row.xml"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable-mdpi_retrobox.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable-mdpi/retrobox.png"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/xml_joystick.xml.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/xml/joystick.xml"
+    },
+    {
+        "merged": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-merged_res-8:/drawable_dpad.png.flat",
+        "source": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-main-10:/drawable/dpad.png"
+    }
+]

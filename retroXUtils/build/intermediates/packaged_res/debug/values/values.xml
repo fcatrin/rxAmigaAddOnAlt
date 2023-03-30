@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="button_bar_focused_bottom">#F0202020</color>
+    <color name="button_bar_focused_center">#F0303030</color>
+    <color name="button_bar_focused_top">#F0202020</color>
+    <color name="button_bar_normal_bottom">#F0202020</color>
+    <color name="button_bar_normal_center">#F0282828</color>
+    <color name="button_bar_normal_top">#F0202020</color>
+    <color name="button_bar_selected_bottom">#F0303030</color>
+    <color name="button_bar_selected_center">#F0404040</color>
+    <color name="button_bar_selected_focused_bottom">#FFFF5500</color>
+    <color name="button_bar_selected_focused_center">#C0FF5500</color>
+    <color name="button_bar_selected_focused_top">#A0FF5500</color>
+    <color name="button_bar_selected_top">#F0303030</color>
+    <color name="button_bar_stroke_color_focused">#C0FF5500</color>
+    <color name="button_bar_stroke_color_normal">#20E0E0E0</color>
+    <color name="button_bar_stroke_color_selected">#80E0E0E0</color>
+    <color name="gamepad_press_analog_border">#E04040E0</color>
+    <color name="gamepad_press_analog_center">#E00000FF</color>
+    <color name="gamepad_press_analog_end">#E0F0F0F0</color>
+    <color name="gamepad_press_analog_start">#E0E0E0E0</color>
+    <color name="gamepad_press_border">#E0E04040</color>
+    <color name="gamepad_press_center">#E0FF0000</color>
+    <color name="gamepad_press_end">#E0F0F0F0</color>
+    <color name="gamepad_press_start">#E0E0E0E0</color>
+    <color name="loading_bar_bg_center">#30FFFFFF</color>
+    <color name="loading_bar_bg_end">#30FFFFFF</color>
+    <color name="loading_bar_bg_start">#30FFFFFF</color>
+    <color name="loading_bar_center">#FFCA7A26</color>
+    <color name="loading_bar_end">#FFCA7A26</color>
+    <color name="loading_bar_start">#FFCA7A26</color>
+    <color name="modal_background">#D0000000</color>
+    <color name="modal_background_gamepad">#FF141414</color>
+    <color name="pal_base1">#FF141414</color>
+    <color name="pal_base15">#FF1C1C1C</color>
+    <color name="pal_base2">#FF242424</color>
+    <color name="pal_base3">#FF2C2C2C</color>
+    <color name="pal_base4">#FF3C3C3C</color>
+    <color name="pal_base5">#FF4C4C4C</color>
+    <color name="pal_hl_background">#D0FF6600</color>
+    <color name="pal_text1">#B0FFFFFF</color>
+    <color name="pal_text2">#D0FFFFFF</color>
+    <color name="pal_text3">#E8FFFFFF</color>
+    <color name="pal_text_dim">#90FFFFFF</color>
+    <color name="pal_text_dim2">#80FFFFFF</color>
+    <color name="pal_text_dim3">#40FFFFFF</color>
+    <color name="pal_text_disabled">#30FFFFFF</color>
+    <color name="pal_text_hl">#F0FFCC66</color>
+    <color name="sidebar_background_center">#F8141414</color>
+    <color name="sidebar_background_end">#E8141414</color>
+    <color name="sidebar_background_start">#FF141414</color>
+    <dimen name="button_bar_padding">4dp</dimen>
+    <dimen name="button_bar_radius">4dp</dimen>
+    <dimen name="button_bar_stroke_width">2dp</dimen>
+    <dimen name="gamepad_height">360dp</dimen>
+    <dimen name="gamepad_width">540dp</dimen>
+    <dimen name="savestates_grid_height">308dp</dimen>
+    <dimen name="savestates_grid_width">736dp</dimen>
+    <dimen name="screenshot_height">150dp</dimen>
+    <dimen name="screenshot_width">200dp</dimen>
+    <dimen name="spacing_big">32dp</dimen>
+    <dimen name="spacing_bigger">48dp</dimen>
+    <dimen name="spacing_fine">2dp</dimen>
+    <dimen name="spacing_normal">16dp</dimen>
+    <dimen name="spacing_small">8dp</dimen>
+    <dimen name="spacing_tiny">4dp</dimen>
+    <dimen name="text_big">40dp</dimen>
+    <dimen name="text_bigger">80dp</dimen>
+    <dimen name="text_medium">18dp</dimen>
+    <dimen name="text_normal">20dp</dimen>
+    <dimen name="text_normal_pad">10dp</dimen>
+    <dimen name="text_small">14dp</dimen>
+    <string name="addon_installed">The {addon} for RetroX has been installed successfully</string>
+    <string name="addon_rbx_missing_msg">RetroX is not installed</string>
+    <string name="addon_rbx_missing_no">Cancel</string>
+    <string name="addon_rbx_missing_yes">Go to Play Store</string>
+    <string name="browser_required">This action requires a web browser like Google Chrome or Firefox to be installed in your device</string>
+    <string name="cancel">Cancel</string>
+    <string name="emu_amiga_less_height">Decrease Height</string>
+    <string name="emu_amiga_more_height">Increase Height</string>
+    <string name="emu_disk_insert">Insert disk {n}</string>
+    <string name="emu_disk_inserted">Disk inserted: {name}</string>
+    <string name="emu_disk_inserted_n">Disk {n} inserted</string>
+    <string name="emu_disk_select">Select disk</string>
+    <string name="emu_n64_control_goldeneye">Using GOLDEN EYE optimized controls mode</string>
+    <string name="emu_n64_control_opt_goldeneye">Optimized for Golden Eye</string>
+    <string name="emu_n64_control_opt_original">Original</string>
+    <string name="emu_n64_control_opt_swapped">Analog controls swapped</string>
+    <string name="emu_n64_control_opt_title">Controls Mode</string>
+    <string name="emu_n64_control_original">Using ORIGINAL controls mode</string>
+    <string name="emu_n64_control_swapped">Using SWAPPED controls mode</string>
+    <string name="emu_opt_cancel">Cancel</string>
+    <string name="emu_opt_disk_change">Change disk</string>
+    <string name="emu_opt_disk_swap">Swap disk</string>
+    <string name="emu_opt_extra_buttons">Extra Buttons</string>
+    <string name="emu_opt_help">Help</string>
+    <string name="emu_opt_open_keyboard">Show keyboard</string>
+    <string name="emu_opt_open_mapper">Map gamepad buttons</string>
+    <string name="emu_opt_quit">Quit</string>
+    <string name="emu_opt_state_load">Load State</string>
+    <string name="emu_opt_state_save">Save State</string>
+    <string name="emu_opt_title">RetroX Options</string>
+    <string name="emu_screenshot_failed">Screenshot failed</string>
+    <string name="emu_screenshot_failed_max">Unable to take screenshot (max of {n} files reached)</string>
+    <string name="emu_screenshot_taken">Screenshot taken</string>
+    <string name="emu_slot_load_title">Select slot to load from</string>
+    <string name="emu_slot_loaded">State restored from slot #{n}</string>
+    <string name="emu_slot_save_title">Select slot to save on</string>
+    <string name="emu_slot_saved">State saved to slot #{n}</string>
+    <string name="folder_elements_0">Empty folder</string>
+    <string name="folder_elements_1">1 element</string>
+    <string name="folder_elements_n">{n} elements</string>
+    <string name="folder_free">{free} free of {total} ({percent}%)</string>
+    <string name="folder_loading">Loading folder</string>
+    <string name="folder_parent">Go to parent folder</string>
+    <string name="folder_select">Select this folder</string>
+    <string name="gamepad_label_a">Button A</string>
+    <string name="gamepad_label_b">Button B</string>
+    <string name="gamepad_label_down">Down</string>
+    <string name="gamepad_label_left">Left</string>
+    <string name="gamepad_label_right">Right</string>
+    <string name="gamepad_label_select">Select</string>
+    <string name="gamepad_label_start">Start</string>
+    <string name="gamepad_label_tl">Button L</string>
+    <string name="gamepad_label_tl2">Button L2</string>
+    <string name="gamepad_label_tl3">Button L3</string>
+    <string name="gamepad_label_tr">Button R</string>
+    <string name="gamepad_label_tr2">Button R2</string>
+    <string name="gamepad_label_tr3">Button R3</string>
+    <string name="gamepad_label_up">Up</string>
+    <string name="gamepad_label_x">Button X</string>
+    <string name="gamepad_label_y">Button Y</string>
+    <string name="login_no">Cancel</string>
+    <string name="login_pass">Password</string>
+    <string name="login_user">User</string>
+    <string name="login_yes">Log in</string>
+    <string name="no_browser">Your device doesn\'t seem to have a web browser\n\nPlease open\n{url}\nin any other device</string>
+    <string name="quit_msg">Confirm that you want to Quit this game</string>
+    <string name="quit_no">No</string>
+    <string name="quit_title">Quit Game</string>
+    <string name="quit_yes">Yes, Quit</string>
+    <string name="slot_empty">EMPTY</string>
+    <string name="slot_latest">latest</string>
+    <string name="slot_latest_n">latest - {n}</string>
+    <string name="slot_v_empty">E\nM\nP\nT\nY</string>
+    <string name="slot_v_latest">L\nA\nT\nE\nS\nT</string>
+    <string name="slot_v_latest_n">-\n-\n-\n-\n-\n-\n-\n</string>
+    <style name="ActionButton">
+        <item name="android:textColor">@color/pal_text1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">@dimen/text_big</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+        <item name="android:background">@drawable/button_bar</item>
+        <item name="android:alpha">0.8</item>
+		<item name="android:layout_marginLeft">@dimen/spacing_small</item>
+		<item name="android:layout_marginRight">@dimen/spacing_small</item>
+	</style>
+    <style name="ActionButtonMapping" parent="ActionButton">
+	      <item name="android:layout_width">wrap_content</item>
+	      <item name="android:paddingLeft">@dimen/spacing_small</item>
+	      <item name="android:paddingRight">@dimen/spacing_small</item>
+	      <item name="android:layout_marginLeft">@dimen/spacing_big</item>
+	      <item name="android:layout_marginRight">@dimen/spacing_big</item>
+	      <item name="android:layout_gravity">center_vertical</item>
+	</style>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        
+    </style>
+    <style name="EmuMoviesProgress" parent="DialogProgressBar">
+      <item name="android:layout_width">match_parent</item>
+      <item name="android:layout_height">@dimen/spacing_tiny</item>
+      <item name="android:layout_marginTop">@dimen/spacing_tiny</item>
+      <item name="android:layout_marginLeft">0dp</item>
+      <item name="android:layout_marginRight">0dp</item>
+      <item name="android:progressDrawable">@drawable/loading_bar</item>
+   </style>
+    <style name="EmuMoviesProgressText">
+      <item name="android:textColor">@color/pal_text1</item>
+      <item name="android:textSize">@dimen/text_normal</item>
+      <item name="android:layout_width">wrap_content</item>
+      <item name="android:layout_height">wrap_content</item>
+      <item name="android:singleLine">true</item>
+      <item name="android:gravity">left</item>
+      <item name="android:ellipsize">middle</item>
+   </style>
+    <style name="GamepadLabel">
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textColor">@color/pal_text_hl</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+	</style>
+    <style name="KeyButton">
+		<item name="android:textColor">@color/pal_text1</item>
+		<item name="android:textSize">@dimen/text_normal</item>
+		<item name="android:background">@drawable/button_key</item>
+		<item name="android:gravity">center</item>
+		<item name="android:minHeight">0dp</item>
+   </style>
+    <style name="NormalFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/text_normal</item>
+    </style>
+    <style name="TitleFont" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">@dimen/text_normal</item>
+    </style>
+</resources>

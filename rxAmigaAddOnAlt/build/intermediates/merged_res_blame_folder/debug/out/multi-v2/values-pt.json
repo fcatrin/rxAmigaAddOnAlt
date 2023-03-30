@@ -1,0 +1,36 @@
+{
+    "logs": [
+        {
+            "outputFile": "retrobox.v2.amiga.uae4droid.rxAmigaAddOnAlt-mergeDebugResources-6:/values-pt/values-pt.xml",
+            "map": [
+                {
+                    "source": "/home/fcatrin/git-as/rxAmigaAddOnAlt/retroXUtils/build/intermediates/packaged_res/debug/values-pt/values-pt.xml",
+                    "from": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,153,229,287,364,505,549,607,664,724,801,861,927,990,1036,1081,1128,1173,1336,1413,1453,1506,1553,1598,1652,1713,1768,1833",
+                        "endColumns": "97,75,57,76,140,43,57,56,59,76,59,65,62,45,44,46,44,162,76,39,52,46,44,53,60,54,64,65",
+                        "endOffsets": "148,224,282,359,500,544,602,659,719,796,856,922,985,1031,1076,1123,1168,1331,1408,1448,1501,1548,1593,1647,1708,1763,1828,1894"
+                    }
+                },
+                {
+                    "source": "/home/fcatrin/.gradle/caches/transforms-3/48c0538cafdcf213d7341ac14a7a1090/transformed/support-compat-26.1.0/res/values-pt/values-pt.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "100",
+                        "endOffsets": "151"
+                    },
+                    "to": {
+                        "startLines": "30",
+                        "startColumns": "4",
+                        "startOffsets": "1899",
+                        "endColumns": "100",
+                        "endOffsets": "1995"
+                    }
+                }
+            ]
+        }
+    ]
+}

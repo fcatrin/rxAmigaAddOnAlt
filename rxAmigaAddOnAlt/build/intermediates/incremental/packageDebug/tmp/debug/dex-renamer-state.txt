@@ -1,0 +1,4 @@
+#Thu Mar 30 17:36:31 CLST 2023
+base.0=/home/fcatrin/git-as/rxAmigaAddOnAlt/rxAmigaAddOnAlt/build/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
